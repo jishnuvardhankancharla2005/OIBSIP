@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E3A857"/>
+      <stop offset="30%" stop-color="#4FA88F"/>
+      <stop offset="70%" stop-color="#6FA1D6"/>
+      <stop offset="100%" stop-color="#C1594A"/>
+    </linearGradient>
+
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.4)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&amp;display=swap');
+      
+      .main-title {
+        font-family: 'Fraunces', serif;
+        font-size: 38px;
+        font-weight: 600;
+        fill: #EDEAE2;
+      }
+      .highlight {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        fill: url(#headerGrad);
+      }
+      .tagline {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        fill: #7C8399;
+        letter-spacing: 1px;
+      }
+      .tag-pill {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .pulse-glow {
+        animation: pulseHeader 3s ease-in-out infinite alternate;
+      }
+      @keyframes pulseHeader {
+        0% { opacity: 0.8; }
+        100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(227,168,87,0.6)); }
+      }
+
+      .shimmer-line {
+        stroke-dasharray: 200, 600;
+        animation: shimmerMove 4s linear infinite;
+      }
+      @keyframes shimmerMove {
+        from { stroke-dashoffset: 800; }
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(10, 20)">
+    <!-- Pill Badge -->
+    <rect x="0" y="0" width="220" height="24" rx="12" fill="rgba(227,168,87,0.12)" stroke="rgba(227,168,87,0.4)" stroke-width="1"/>
+    <circle cx="12" cy="12" r="4" fill="#E3A857" class="pulse-glow"/>
+    <text x="24" y="16" class="tag-pill" fill="#E3A857">OIBSIP LEVEL 1 &#8226; TASK 2</text>
+
+    <!-- Main Title -->
+    <text x="0" y="62" class="main-title">Signal <tspan class="highlight">&amp; Spend</tspan> Intelligence</text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="88" class="tagline">CUSTOMER SEGMENTATION VIA RFM MODELING &amp; K-MEANS CLUSTERING</text>
+
+    <!-- Animated Accent Line -->
+    <line x1="0" y1="98" x2="860" y2="98" stroke="rgba(237,234,226,0.1)" stroke-width="2"/>
+    <line x1="0" y1="98" x2="860" y2="98" stroke="url(#headerGrad)" stroke-width="2.5" class="shimmer-line"/>
+  </g>
+</svg>

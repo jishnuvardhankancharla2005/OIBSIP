@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bgGlow1" cx="20%" cy="10%" r="60%">
+      <stop offset="0%" stop-color="#E3A857" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0F1420" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlow2" cx="80%" cy="90%" r="60%">
+      <stop offset="0%" stop-color="#4FA88F" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0F1420" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B2438"/>
+      <stop offset="100%" stop-color="#111724"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E3A857"/>
+      <stop offset="100%" stop-color="#FFD188"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4FA88F"/>
+      <stop offset="100%" stop-color="#72D6BC"/>
+    </linearGradient>
+    <linearGradient id="brickGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C1594A"/>
+      <stop offset="100%" stop-color="#E67E70"/>
+    </linearGradient>
+
+    <!-- Glowing Filters -->
+    <filter id="glowAmber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowTeal" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .title-text { font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; fill: #EDEAE2; font-size: 16px; }
+      .sub-text { font-family: 'Inter', -apple-system, sans-serif; font-size: 12px; fill: #7C8399; }
+      .badge-text { font-family: 'Inter', -apple-system, sans-serif; font-size: 10.5px; font-weight: 600; }
+      .code-text { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; fill: #B7BCCB; }
+      .heading-main { font-family: 'Inter', -apple-system, sans-serif; font-weight: 800; fill: #EDEAE2; font-size: 20px; letter-spacing: -0.5px; }
+
+      /* Pulse Animations */
+      @keyframes pulseBorder {
+        0%, 100% { stroke-opacity: 0.3; }
+        50% { stroke-opacity: 0.9; }
+      }
+      @keyframes flowDash {
+        0% { stroke-dashoffset: 40; }
+        100% { stroke-dashoffset: 0; }
+      }
+
+      .flow-line {
+        stroke-dasharray: 6 6;
+        animation: flowDash 1.2s linear infinite;
+      }
+      .pulse-box-1 { animation: pulseBorder 3s ease-in-out infinite; }
+      .pulse-box-2 { animation: pulseBorder 3s ease-in-out infinite 1s; }
+      .pulse-box-3 { animation: pulseBorder 3s ease-in-out infinite 2s; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="520" rx="16" fill="#0A0E17"/>
+  <rect width="1000" height="520" rx="16" fill="url(#bgGlow1)"/>
+  <rect width="1000" height="520" rx="16" fill="url(#bgGlow2)"/>
+  <rect x="0.5" y="0.5" width="999" height="519" rx="15.5" fill="none" stroke="rgba(237,234,226,0.12)"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 40)">
+    <text class="heading-main" x="0" y="0">System Architecture &amp; Intelligence Pipeline</text>
+    <text class="sub-text" x="0" y="20">End-to-end data pipeline from raw retail transactional ledger to reactive BI dashboard</text>
+    <rect x="740" y="-14" width="180" height="28" rx="14" fill="#161D2E" stroke="rgba(227,168,87,0.3)"/>
+    <circle cx="756" cy="0" r="4" fill="#4FA88F">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="768" y="4" class="badge-text" fill="#E3A857">LIVE REACTIVE ENGINE</text>
+  </g>
+
+  <!-- ==================== FLOW CONNECTOR PATHS ==================== -->
+  <g fill="none">
+    <!-- Path 1: Ingestion to Processing -->
+    <path d="M 240 230 L 330 230" stroke="#E3A857" stroke-width="2.5" class="flow-line" filter="url(#glowAmber)"/>
+    <polygon points="332,230 324,225 324,235" fill="#E3A857"/>
+
+    <!-- Path 2: Processing to EDA & Presentation Split -->
+    <path d="M 550 200 L 630 150" stroke="#4FA88F" stroke-width="2.5" class="flow-line" filter="url(#glowTeal)"/>
+    <polygon points="632,150 622,148 626,157" fill="#4FA88F"/>
+
+    <path d="M 550 260 L 630 320" stroke="#E3A857" stroke-width="2.5" class="flow-line" filter="url(#glowAmber)"/>
+    <polygon points="632,320 626,312 622,321" fill="#E3A857"/>
+
+    <!-- Feedback Sync Loop -->
+    <path d="M 850 435 C 850 480, 440 480, 440 375" stroke="rgba(227,168,87,0.4)" stroke-width="2" stroke-dasharray="4 4"/>
+    <polygon points="440,373 435,382 445,382" fill="#E3A857" opacity="0.7"/>
+    <text x="610" y="488" text-anchor="middle" class="sub-text" fill="#7A5B2E" font-size="11">Real-time Cross-Filter State Dispatch</text>
+  </g>
+
+  <!-- ==================== STAGE 1: RAW INGESTION ==================== -->
+  <g transform="translate(40, 110)">
+    <rect width="200" height="260" rx="14" fill="url(#cardGrad1)" stroke="#C1594A" stroke-width="1.5" stroke-opacity="0.5" class="pulse-box-1"/>
+    
+    <!-- Header -->
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="rgba(193,89,74,0.2)" stroke="#C1594A"/>
+    <text x="32" y="37" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#C1594A">📂</text>
+    <text class="title-text" x="58" y="30">Raw Ingestion</text>
+    <text class="sub-text" x="58" y="45">CSV Ledger Source</text>
+
+    <!-- Content Card -->
+    <rect x="16" y="65" width="168" height="175" rx="8" fill="#0F1420" stroke="rgba(237,234,226,0.06)"/>
+    <text class="code-text" x="26" y="90" fill="#E3A857">retail_sales.csv</text>
+    <text class="sub-text" x="26" y="112">• 1,000 Transactions</text>
+    <text class="sub-text" x="26" y="130">• Jan 2023 – Jan 2024</text>
+    <text class="sub-text" x="26" y="148">• 3 Product Categories</text>
+    <text class="sub-text" x="26" y="166">• Quantities (1 to 4)</text>
+    <text class="sub-text" x="26" y="184">• Prices ($25 – $500)</text>
+
+    <rect x="26" y="202" width="148" height="24" rx="6" fill="rgba(193,89,74,0.15)"/>
+    <text x="100" y="218" text-anchor="middle" class="badge-text" fill="#E67E70">Zero Missing Data</text>
+  </g>
+
+  <!-- ==================== STAGE 2: ANALYTICAL ENGINE ==================== -->
+  <g transform="translate(330, 110)">
+    <rect width="220" height="260" rx="14" fill="url(#cardGrad1)" stroke="#E3A857" stroke-width="1.5" stroke-opacity="0.5" class="pulse-box-2"/>
+
+    <!-- Header -->
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="rgba(227,168,87,0.2)" stroke="#E3A857"/>
+    <text x="32" y="37" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#E3A857">⚡</text>
+    <text class="title-text" x="58" y="30">Compute Engine</text>
+    <text class="sub-text" x="58" y="45">Feature Prep &amp; Stats</text>
+
+    <!-- Content Card -->
+    <rect x="16" y="65" width="188" height="175" rx="8" fill="#0F1420" stroke="rgba(237,234,226,0.06)"/>
+    <text class="code-text" x="26" y="90" fill="#4FA88F">Demographic Binning</text>
+    <text class="sub-text" x="26" y="110">18–25, 26–35, ..., 56–64</text>
+    
+    <text class="code-text" x="26" y="134" fill="#4FA88F">Pearson Correlation</text>
+    <text class="sub-text" x="26" y="154">Age × Price × Qty × Total</text>
+
+    <text class="code-text" x="26" y="178" fill="#4FA88F">Time Aggregation</text>
+    <text class="sub-text" x="26" y="198">Monthly &amp; Quarterly Rollups</text>
+
+    <rect x="26" y="206" width="168" height="22" rx="5" fill="rgba(227,168,87,0.15)"/>
+    <text x="110" y="221" text-anchor="middle" class="badge-text" fill="#E3A857">Live In-Memory Aggregation</text>
+  </g>
+
+  <!-- ==================== STAGE 3A: EDA NOTEBOOK (TOP RIGHT) ==================== -->
+  <g transform="translate(640, 80)">
+    <rect width="320" height="145" rx="14" fill="url(#cardGrad1)" stroke="#4FA88F" stroke-width="1.5" stroke-opacity="0.5" class="pulse-box-3"/>
+
+    <!-- Header -->
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="rgba(79,168,143,0.2)" stroke="#4FA88F"/>
+    <text x="32" y="37" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#4FA88F">📓</text>
+    <text class="title-text" x="58" y="30">Exploratory Data Analysis</text>
+    <text class="sub-text" x="58" y="45">Jupyter Notebook (EDA &amp; Stats)</text>
+
+    <!-- Details -->
+    <rect x="16" y="60" width="288" height="70" rx="8" fill="#0F1420" stroke="rgba(237,234,226,0.06)"/>
+    <text class="sub-text" x="28" y="82"><tspan fill="#72D6BC" font-weight="600">• Pandas &amp; NumPy:</tspan> Descriptive stats, skew, IQR</text>
+    <text class="sub-text" x="28" y="100"><tspan fill="#72D6BC" font-weight="600">• Seaborn &amp; Matplotlib:</tspan> Heatmaps, KDE, Boxplots</text>
+    <text class="sub-text" x="28" y="118"><tspan fill="#72D6BC" font-weight="600">• Strategic Findings:</tspan> Age vs spend correlation = -0.00</text>
+  </g>
+
+  <!-- ==================== STAGE 3B: INTERACTIVE DASHBOARD (BOTTOM RIGHT) ==================== -->
+  <g transform="translate(640, 245)">
+    <rect width="320" height="190" rx="14" fill="url(#cardGrad1)" stroke="#E3A857" stroke-width="1.5" stroke-opacity="0.7" class="pulse-box-2"/>
+
+    <!-- Header -->
+    <rect x="16" y="16" width="32" height="32" rx="8" fill="rgba(227,168,87,0.2)" stroke="#E3A857"/>
+    <text x="32" y="37" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#E3A857">📊</text>
+    <text class="title-text" x="58" y="30">Ledger &amp; Aisle BI Dashboard</text>
+    <text class="sub-text" x="58" y="45">Interactive Single-Page Application</text>
+
+    <!-- Features Grid -->
+    <rect x="16" y="60" width="288" height="115" rx="8" fill="#0F1420" stroke="rgba(237,234,226,0.06)"/>
+    <text class="sub-text" x="28" y="82"><tspan fill="#FFD188" font-weight="600">• 4 Dynamic KPIs:</tspan> $456K Rev, 1K Txns, $456 AOV</text>
+    <text class="sub-text" x="28" y="100"><tspan fill="#FFD188" font-weight="600">• 7 Chart.js Views:</tspan> Trends, Demographics, Mix</text>
+    <text class="sub-text" x="28" y="118"><tspan fill="#FFD188" font-weight="600">• Cross-Filtering:</tspan> Click any chart/chip to filter</text>
+    <text class="sub-text" x="28" y="136"><tspan fill="#FFD188" font-weight="600">• 2 Matrix Heatmaps:</tspan> Correlations &amp; Cohort AOV</text>
+    <text class="sub-text" x="28" y="154"><tspan fill="#FFD188" font-weight="600">• Smart Insights:</tspan> Automated dynamic narratives</text>
+  </g>
+
+  <!-- Bottom Metric Ticker -->
+  <g transform="translate(40, 410)">
+    <rect width="510" height="70" rx="10" fill="#161D2E" stroke="rgba(237,234,226,0.08)"/>
+    
+    <g transform="translate(20, 20)">
+      <text class="sub-text" x="0" y="0">DATASET FIDELITY</text>
+      <text class="title-text" x="0" y="24" fill="#4FA88F">1,000 Txns / 100%</text>
+    </g>
+
+    <g transform="translate(180, 20)">
+      <text class="sub-text" x="0" y="0">FILTER LATENCY</text>
+      <text class="title-text" x="0" y="24" fill="#E3A857">&lt; 16ms (Instant)</text>
+    </g>
+
+    <g transform="translate(340, 20)">
+      <text class="sub-text" x="0" y="0">DEPENDENCIES</text>
+      <text class="title-text" x="0" y="24" fill="#EDEAE2">Zero Server Build</text>
+    </g>
+  </g>
+</svg>

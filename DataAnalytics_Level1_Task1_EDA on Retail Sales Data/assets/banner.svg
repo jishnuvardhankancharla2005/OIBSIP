@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080C14"/>
+      <stop offset="40%" stop-color="#0F1420"/>
+      <stop offset="100%" stop-color="#06090F"/>
+    </linearGradient>
+
+    <!-- Radial Glows -->
+    <radialGradient id="glowGold" cx="18%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#E3A857" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#080C14" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowTeal" cx="88%" cy="70%" r="55%">
+      <stop offset="0%" stop-color="#4FA88F" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#080C14" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Metallic Gold Text Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FDFBF7"/>
+      <stop offset="35%" stop-color="#E3A857"/>
+      <stop offset="70%" stop-color="#F3C37A"/>
+      <stop offset="100%" stop-color="#EDEAE2"/>
+    </linearGradient>
+
+    <!-- Chart Fill Gradient -->
+    <linearGradient id="chartAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E3A857" stop-opacity="0.38"/>
+      <stop offset="80%" stop-color="#E3A857" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#E3A857" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Card Background -->
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182032"/>
+      <stop offset="100%" stop-color="#101624"/>
+    </linearGradient>
+
+    <!-- Glowing Filters -->
+    <filter id="glowPulse" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <style>
+      .font-serif { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; }
+      .font-sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, Helvetica, Arial, sans-serif; }
+      .font-mono { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+
+      @keyframes beaconPulse {
+        0%, 100% { opacity: 0.9; }
+        50% { opacity: 0.35; }
+      }
+      .beacon-dot { animation: beaconPulse 2s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Base Canvas & Ambient Glows -->
+  <rect width="1200" height="320" rx="16" fill="url(#bgGrad)"/>
+  <rect width="1200" height="320" rx="16" fill="url(#glowGold)"/>
+  <rect width="1200" height="320" rx="16" fill="url(#glowTeal)"/>
+  <rect x="0.5" y="0.5" width="1199" height="319" rx="15.5" fill="none" stroke="rgba(237,234,226,0.12)"/>
+
+  <!-- Background Grid Mesh Accent -->
+  <g opacity="0.08" stroke="#EDEAE2" stroke-width="1">
+    <line x1="60" y1="0" x2="60" y2="320"/>
+    <line x1="180" y1="0" x2="180" y2="320"/>
+    <line x1="300" y1="0" x2="300" y2="320"/>
+    <line x1="420" y1="0" x2="420" y2="320"/>
+    <line x1="540" y1="0" x2="540" y2="320"/>
+    <line x1="660" y1="0" x2="660" y2="320"/>
+    <line x1="780" y1="0" x2="780" y2="320"/>
+    <line x1="900" y1="0" x2="900" y2="320"/>
+    <line x1="1020" y1="0" x2="1020" y2="320"/>
+    <line x1="1140" y1="0" x2="1140" y2="320"/>
+    <line x1="0" y1="60" x2="1200" y2="60"/>
+    <line x1="0" y1="140" x2="1200" y2="140"/>
+    <line x1="0" y1="220" x2="1200" y2="220"/>
+  </g>
+
+  <!-- ==================== LEFT COLUMN: BRANDING & DETAILS ==================== -->
+  <g transform="translate(60, 44)">
+    
+    <!-- 1. Top Track Pill Badge -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="345" height="28" rx="14" fill="#141B2B" stroke="rgba(227,168,87,0.35)"/>
+      <circle cx="16" cy="14" r="4.5" fill="#E3A857" class="beacon-dot"/>
+      <circle cx="16" cy="14" r="8" fill="none" stroke="#E3A857" stroke-width="1" opacity="0.4"/>
+      <text x="32" y="18" class="font-sans" font-size="11.5" font-weight="700" fill="#E3A857" letter-spacing="0.6px">OASIS INFOBYTE · DATA ANALYTICS LEVEL 1</text>
+    </g>
+
+    <!-- 2. Main Project Title -->
+    <g transform="translate(0, 72)">
+      <text class="font-serif" font-size="46" font-weight="600" fill="#EDEAE2" letter-spacing="-0.5px">
+        Ledger <tspan fill="#E3A857" font-style="italic">&amp; Aisle</tspan>
+      </text>
+    </g>
+
+    <!-- 3. Subtitle / Tagline -->
+    <g transform="translate(0, 108)">
+      <text class="font-sans" font-size="15" fill="#B7BCCB" font-weight="400">
+        Retail Sales Exploratory Data Analysis &amp; In-Memory Reactive BI Dashboard
+      </text>
+    </g>
+
+    <!-- 4. Feature Badges Row -->
+    <g transform="translate(0, 145)">
+      <!-- Badge 1: Transactions -->
+      <g transform="translate(0, 0)">
+        <rect width="135" height="28" rx="6" fill="#141C2C" stroke="rgba(237,234,226,0.12)"/>
+        <circle cx="14" cy="14" r="3" fill="#4FA88F"/>
+        <text x="24" y="18" class="font-sans" font-size="12" font-weight="500" fill="#EDEAE2">1,000 Transactions</text>
+      </g>
+
+      <!-- Badge 2: Revenue -->
+      <g transform="translate(145, 0)">
+        <rect width="120" height="28" rx="6" fill="#141C2C" stroke="rgba(237,234,226,0.12)"/>
+        <circle cx="14" cy="14" r="3" fill="#E3A857"/>
+        <text x="24" y="18" class="font-sans" font-size="12" font-weight="500" fill="#EDEAE2">$456K Revenue</text>
+      </g>
+
+      <!-- Badge 3: Cross Filter -->
+      <g transform="translate(275, 0)">
+        <rect width="135" height="28" rx="6" fill="#141C2C" stroke="rgba(237,234,226,0.12)"/>
+        <circle cx="14" cy="14" r="3" fill="#C1594A"/>
+        <text x="24" y="18" class="font-sans" font-size="12" font-weight="500" fill="#EDEAE2">Live Cross-Filter</text>
+      </g>
+
+      <!-- Badge 4: Chart.js -->
+      <g transform="translate(420, 0)">
+        <rect width="115" height="28" rx="6" fill="#141C2C" stroke="rgba(237,234,226,0.12)"/>
+        <circle cx="14" cy="14" r="3" fill="#5A80B8"/>
+        <text x="24" y="18" class="font-sans" font-size="12" font-weight="500" fill="#EDEAE2">Chart.js 4.4</text>
+      </g>
+    </g>
+
+    <!-- 5. Micro Footer Line -->
+    <g transform="translate(0, 198)">
+      <text class="font-mono" font-size="11" fill="#7C8399">
+        FY2023–2024 · 3 Categories (Beauty · Clothing · Electronics) · 0ms Ingestion
+      </text>
+    </g>
+
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: METRICS CARD ==================== -->
+  <g transform="translate(800, 42)">
+    <!-- Smooth SVG Native Float Animation -->
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      values="800,42; 800,37; 800,42"
+      dur="5s"
+      repeatCount="indefinite"
+    />
+
+    <!-- Card Frame -->
+    <rect width="345" height="236" rx="14" fill="url(#cardBg)" stroke="rgba(227,168,87,0.3)" stroke-width="1.2"/>
+
+    <!-- Card Header / Title Bar -->
+    <g transform="translate(18, 16)">
+      <!-- Window Dots -->
+      <circle cx="4" cy="6" r="3.5" fill="#C1594A" opacity="0.85"/>
+      <circle cx="15" cy="6" r="3.5" fill="#E3A857" opacity="0.85"/>
+      <circle cx="26" cy="6" r="3.5" fill="#4FA88F" opacity="0.85"/>
+
+      <text x="44" y="10" class="font-sans" font-size="12.5" font-weight="600" fill="#EDEAE2">Revenue Trajectory</text>
+      <rect x="247" y="-2" width="58" height="18" rx="9" fill="rgba(79,168,143,0.15)" stroke="rgba(79,168,143,0.4)"/>
+      <text x="276" y="11" text-anchor="middle" class="font-sans" font-size="9.5" font-weight="700" fill="#4FA88F">FY2023</text>
+    </g>
+
+    <line x1="18" y1="44" x2="327" y2="44" stroke="rgba(237,234,226,0.08)"/>
+
+    <!-- Mini Chart Canvas Area -->
+    <g transform="translate(18, 50)">
+      <!-- Grid Ticks -->
+      <line x1="0" y1="85" x2="309" y2="85" stroke="rgba(237,234,226,0.06)" stroke-dasharray="3 3"/>
+      <line x1="0" y1="45" x2="309" y2="45" stroke="rgba(237,234,226,0.06)" stroke-dasharray="3 3"/>
+      <line x1="0" y1="10" x2="309" y2="10" stroke="rgba(237,234,226,0.06)" stroke-dasharray="3 3"/>
+
+      <!-- Filled Area Path -->
+      <path d="M 10 75 Q 45 60, 80 40 T 155 18 T 228 52 T 298 30 L 298 95 L 10 95 Z" fill="url(#chartAreaGrad)"/>
+
+      <!-- Spline Line -->
+      <path d="M 10 75 Q 45 60, 80 40 T 155 18 T 228 52 T 298 30" fill="none" stroke="#E3A857" stroke-width="2.5"/>
+
+      <!-- Highlight Peak Dot at (155, 18) -->
+      <circle cx="155" cy="18" r="4.5" fill="#E3A857"/>
+      <circle cx="155" cy="18" r="9" fill="none" stroke="#E3A857" stroke-width="1.2" opacity="0.6">
+        <animate attributeName="r" values="6;14;6" dur="2.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0;0.8" dur="2.4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Month Label Ticks -->
+      <text x="12" y="108" class="font-mono" font-size="9.5" fill="#7C8399">Jan '23</text>
+      <text x="145" y="108" class="font-mono" font-size="9.5" fill="#E3A857" font-weight="600">May (Peak)</text>
+      <text x="268" y="108" class="font-mono" font-size="9.5" fill="#7C8399">Jan '24</text>
+    </g>
+
+    <!-- Bottom KPI Stat Strip -->
+    <g transform="translate(18, 178)">
+      <rect width="309" height="42" rx="8" fill="#0C101A" stroke="rgba(237,234,226,0.08)"/>
+      
+      <!-- KPI 1 -->
+      <g transform="translate(14, 12)">
+        <text class="font-sans" font-size="9.5" font-weight="600" fill="#7C8399" letter-spacing="0.3px">MAX MONTH</text>
+        <text class="font-sans" font-size="13" font-weight="700" fill="#4FA88F" y="18">$43.1K <tspan font-size="10" font-weight="400" fill="#B7BCCB">(May)</tspan></text>
+      </g>
+
+      <line x1="154" y1="8" x2="154" y2="34" stroke="rgba(237,234,226,0.1)"/>
+
+      <!-- KPI 2 -->
+      <g transform="translate(168, 12)">
+        <text class="font-sans" font-size="9.5" font-weight="600" fill="#7C8399" letter-spacing="0.3px">AVG ORDER VALUE</text>
+        <text class="font-sans" font-size="13" font-weight="700" fill="#E3A857" y="18">$456 <tspan font-size="10" font-weight="400" fill="#B7BCCB">/ basket</tspan></text>
+      </g>
+    </g>
+
+  </g>
+</svg>
