@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="uiBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F1420" />
+      <stop offset="100%" stop-color="#0A0E17" />
+    </linearGradient>
+
+    <linearGradient id="sidebarBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0A0E17" />
+      <stop offset="100%" stop-color="#0D121D" />
+    </linearGradient>
+
+    <linearGradient id="panelBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161D2E" />
+      <stop offset="100%" stop-color="#1B2438" />
+    </linearGradient>
+
+    <linearGradient id="tealBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2C5850" />
+      <stop offset="100%" stop-color="#4FA88F" />
+    </linearGradient>
+
+    <linearGradient id="brickBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5C2E27" />
+      <stop offset="100%" stop-color="#C1594A" />
+    </linearGradient>
+
+    <filter id="switchGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+      .sans { font-family: 'Inter', -apple-system, sans-serif; }
+      .serif { font-family: 'Fraunces', Georgia, serif; }
+    </style>
+  </defs>
+
+  <!-- Browser Frame Wrapper -->
+  <rect width="1200" height="540" rx="14" fill="url(#uiBg)" stroke="rgba(237,234,226,0.12)" stroke-width="1.5" />
+  
+  <!-- Browser Window Header -->
+  <rect width="1200" height="38" rx="14" fill="#0A0E17" />
+  <rect y="24" width="1200" height="14" fill="#0A0E17" />
+  <line x1="0" y1="38" x2="1200" y2="38" stroke="rgba(237,234,226,0.08)" stroke-width="1" />
+  
+  <!-- Traffic Light Window Buttons -->
+  <circle cx="24" cy="19" r="5" fill="#C1594A" />
+  <circle cx="42" cy="19" r="5" fill="#E3A857" />
+  <circle cx="60" cy="19" r="5" fill="#4FA88F" />
+
+  <!-- URL Address Bar -->
+  <rect x="180" y="8" width="840" height="22" rx="6" fill="#161D2E" stroke="rgba(237,234,226,0.08)" />
+  <text x="600" y="23" text-anchor="middle" fill="#7C8399" font-size="11" class="mono">
+    dashboard.html — Interactive Data Restoration Intelligence Console
+  </text>
+
+  <!-- ================= SIDEBAR RAIL ================= -->
+  <g transform="translate(0, 38)">
+    <rect width="240" height="502" fill="url(#sidebarBg)" />
+    <line x1="240" y1="0" x2="240" y2="502" stroke="rgba(237,234,226,0.08)" stroke-width="1" />
+
+    <!-- Brand -->
+    <g transform="translate(24, 28)">
+      <text x="0" y="16" fill="#EDEAE2" font-size="18" font-weight="600" class="serif">Clean Slate <tspan fill="#4FA88F" font-style="italic">.io</tspan></text>
+      <text x="0" y="34" fill="#7C8399" font-size="11" class="sans">Cafe Sales Data Restoration</text>
+    </g>
+
+    <!-- Nav Links -->
+    <g transform="translate(16, 85)">
+      <!-- Link 1 Active -->
+      <rect x="0" y="0" width="208" height="32" rx="6" fill="#1B2438" />
+      <circle cx="16" cy="16" r="3" fill="#4FA88F" />
+      <text x="30" y="20" fill="#4FA88F" font-size="12.5" font-weight="600" class="sans">01. Overview &amp; State</text>
+
+      <circle cx="16" cy="48" r="3" fill="#7C8399" />
+      <text x="30" y="52" fill="#B7BCCB" font-size="12.5" class="sans">02. Recovery Waterfall</text>
+
+      <circle cx="16" cy="80" r="3" fill="#7C8399" />
+      <text x="30" y="84" fill="#B7BCCB" font-size="12.5" class="sans">03. Statistical Outliers</text>
+
+      <circle cx="16" cy="112" r="3" fill="#7C8399" />
+      <text x="30" y="116" fill="#B7BCCB" font-size="12.5" class="sans">04. Item Revenue</text>
+
+      <circle cx="16" cy="144" r="3" fill="#7C8399" />
+      <text x="30" y="148" fill="#B7BCCB" font-size="12.5" class="sans">05. Multi-Attribute Filter</text>
+    </g>
+
+    <!-- Sidebar Interactive Filters Preview -->
+    <g transform="translate(20, 290)">
+      <line x1="0" y1="0" x2="200" y2="0" stroke="rgba(237,234,226,0.08)" stroke-width="1" />
+      <text x="0" y="24" fill="#7C8399" font-size="10.5" font-weight="600" letter-spacing="0.8" class="mono">FILTER BY ITEM</text>
+      
+      <!-- Chips -->
+      <g transform="translate(0, 36)">
+        <rect x="0" y="0" width="56" height="22" rx="11" fill="#4FA88F">
+          <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+        </rect>
+        <text x="28" y="15" text-anchor="middle" fill="#08201A" font-size="10.5" font-weight="700" class="sans">Coffee</text>
+
+        <rect x="62" y="0" width="44" height="22" rx="11" fill="transparent" stroke="rgba(237,234,226,0.15)" />
+        <text x="84" y="15" text-anchor="middle" fill="#B7BCCB" font-size="10.5" class="sans">Tea</text>
+
+        <rect x="112" y="0" width="48" height="22" rx="11" fill="transparent" stroke="rgba(237,234,226,0.15)" />
+        <text x="136" y="15" text-anchor="middle" fill="#B7BCCB" font-size="10.5" class="sans">Cake</text>
+
+        <rect x="0" y="28" width="62" height="22" rx="11" fill="transparent" stroke="rgba(237,234,226,0.15)" />
+        <text x="31" y="43" text-anchor="middle" fill="#B7BCCB" font-size="10.5" class="sans">Cookie</text>
+
+        <rect x="68" y="28" width="70" height="22" rx="11" fill="transparent" stroke="rgba(237,234,226,0.15)" />
+        <text x="103" y="43" text-anchor="middle" fill="#B7BCCB" font-size="10.5" class="sans">Sandwich</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <g transform="translate(264, 52)">
+    
+    <!-- Hero Header + State Toggle Switch -->
+    <g transform="translate(0, 10)">
+      <text x="0" y="22" fill="#EDEAE2" font-size="22" font-weight="600" class="serif">Executive Restoration Scorecard</text>
+      <text x="0" y="40" fill="#7C8399" font-size="12" class="sans">Compare baseline raw POS corruption against verified mathematically-recovered dataset</text>
+
+      <!-- Animated Toggle Switch -->
+      <g transform="translate(680, 4)">
+        <rect x="0" y="0" width="168" height="34" rx="17" fill="#161D2E" stroke="rgba(237,234,226,0.15)" />
+        
+        <!-- Sliding Thumb with SMIL Animation -->
+        <rect x="4" y="4" width="80" height="26" rx="13" fill="#4FA88F" filter="url(#switchGlow)">
+          <animate attributeName="x" values="4; 84; 84; 4; 4" dur="6s" repeatCount="indefinite" />
+        </rect>
+        
+        <text x="44" y="21" text-anchor="middle" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">BEFORE</text>
+        <text x="124" y="21" text-anchor="middle" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">AFTER</text>
+      </g>
+    </g>
+
+    <!-- 4 KPI Cards in Main View -->
+    <g transform="translate(0, 64)">
+      <!-- KPI 1 -->
+      <rect x="0" y="0" width="206" height="74" rx="8" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+      <text x="14" y="22" fill="#7C8399" font-size="10" font-weight="600" class="mono">TOTAL RECORDS</text>
+      <text x="14" y="48" fill="#EDEAE2" font-size="20" font-weight="700" class="sans">10,000</text>
+      <text x="14" y="64" fill="#4FA88F" font-size="10" class="sans">✓ 0 Rows Dropped</text>
+
+      <!-- KPI 2 -->
+      <rect x="222" y="0" width="206" height="74" rx="8" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+      <text x="236" y="22" fill="#7C8399" font-size="10" font-weight="600" class="mono">MISSING CELLS</text>
+      <text x="236" y="48" fill="#4FA88F" font-size="20" font-weight="700" class="sans">460 <tspan fill="#7C8399" font-size="11">(NaT)</tspan></text>
+      <text x="236" y="64" fill="#7C8399" font-size="10" class="sans">Down from 10,082 cells</text>
+
+      <!-- KPI 3 -->
+      <rect x="444" y="0" width="206" height="74" rx="8" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+      <text x="458" y="22" fill="#7C8399" font-size="10" font-weight="600" class="mono">DUPLICATE ROWS</text>
+      <text x="458" y="48" fill="#EDEAE2" font-size="20" font-weight="700" class="sans">0</text>
+      <text x="458" y="64" fill="#4FA88F" font-size="10" class="sans">✓ 100% Unique Keys</text>
+
+      <!-- KPI 4 -->
+      <rect x="666" y="0" width="206" height="74" rx="8" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+      <text x="680" y="22" fill="#7C8399" font-size="10" font-weight="600" class="mono">DTYPE ACCURACY</text>
+      <text x="680" y="48" fill="#EDEAE2" font-size="20" font-weight="700" class="sans">8 / 8</text>
+      <text x="680" y="64" fill="#4FA88F" font-size="10" class="sans">Strict Typing Coerced</text>
+    </g>
+
+    <!-- Visual Charts Panel Row -->
+    <g transform="translate(0, 154)">
+      
+      <!-- Chart Left: Missing Value Delta Distribution -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="428" height="280" rx="10" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+        <text x="20" y="28" fill="#EDEAE2" font-size="13.5" font-weight="600" class="sans">Missing Cells Per Column</text>
+        <text x="20" y="44" fill="#7C8399" font-size="10.5" class="sans">Dynamic Bar Animation reflecting Current State</text>
+        
+        <!-- Bars -->
+        <g transform="translate(20, 68)">
+          <text x="0" y="16" fill="#B7BCCB" font-size="11" class="mono">Item</text>
+          <rect x="100" y="5" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="5" width="180" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="180; 10; 10; 180; 180" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+
+          <text x="0" y="46" fill="#B7BCCB" font-size="11" class="mono">Quantity</text>
+          <rect x="100" y="35" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="35" width="140" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="140; 8; 8; 140; 140" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+
+          <text x="0" y="76" fill="#B7BCCB" font-size="11" class="mono">Price Unit</text>
+          <rect x="100" y="65" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="65" width="150" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="150; 6; 6; 150; 150" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+
+          <text x="0" y="106" fill="#B7BCCB" font-size="11" class="mono">Total Spent</text>
+          <rect x="100" y="95" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="95" width="145" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="145; 6; 6; 145; 145" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+
+          <text x="0" y="136" fill="#B7BCCB" font-size="11" class="mono">Payment</text>
+          <rect x="100" y="125" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="125" width="240" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="240; 10; 10; 240; 240" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+
+          <text x="0" y="166" fill="#B7BCCB" font-size="11" class="mono">Location</text>
+          <rect x="100" y="155" width="260" height="14" rx="3" fill="#111726" />
+          <rect x="100" y="155" width="255" height="14" rx="3" fill="url(#brickBar)">
+            <animate attributeName="width" values="255; 10; 10; 255; 255" dur="6s" repeatCount="indefinite" />
+            <animate attributeName="fill" values="#C1594A; #4FA88F; #4FA88F; #C1594A; #C1594A" dur="6s" repeatCount="indefinite" />
+          </rect>
+        </g>
+      </g>
+
+      <!-- Chart Right: Recovery Method Stacked Distribution -->
+      <g transform="translate(444, 0)">
+        <rect x="0" y="0" width="428" height="280" rx="10" fill="url(#panelBg)" stroke="rgba(237,234,226,0.08)" />
+        <text x="20" y="28" fill="#EDEAE2" font-size="13.5" font-weight="600" class="sans">Data Recovery Strategy Breakdown</text>
+        <text x="20" y="44" fill="#7C8399" font-size="10.5" class="sans">Derivation vs. Median Imputation vs. Controlled Categorical</text>
+
+        <!-- Legend -->
+        <g transform="translate(20, 60)">
+          <rect x="0" y="0" width="10" height="10" rx="2" fill="#4FA88F" />
+          <text x="16" y="9" fill="#EDEAE2" font-size="10" class="sans">Derivation (95.6%)</text>
+
+          <rect x="130" y="0" width="10" height="10" rx="2" fill="#E3A857" />
+          <text x="146" y="9" fill="#EDEAE2" font-size="10" class="sans">Median Fill</text>
+
+          <rect x="230" y="0" width="10" height="10" rx="2" fill="#6B7A99" />
+          <text x="246" y="9" fill="#EDEAE2" font-size="10" class="sans">Unknown Class</text>
+        </g>
+
+        <!-- Stacked Bars -->
+        <g transform="translate(20, 92)">
+          <!-- Row 1: Item -->
+          <text x="0" y="18" fill="#B7BCCB" font-size="11" class="mono">Item</text>
+          <rect x="90" y="6" width="170" height="16" rx="2" fill="#4FA88F" />
+          <rect x="262" y="6" width="116" height="16" rx="2" fill="#6B7A99" />
+
+          <!-- Row 2: Quantity -->
+          <text x="0" y="52" fill="#B7BCCB" font-size="11" class="mono">Qty</text>
+          <rect x="90" y="40" width="270" height="16" rx="2" fill="#4FA88F" />
+          <rect x="362" y="40" width="16" height="16" rx="2" fill="#E3A857" />
+
+          <!-- Row 3: Price -->
+          <text x="0" y="86" fill="#B7BCCB" font-size="11" class="mono">Price</text>
+          <rect x="90" y="74" width="280" height="16" rx="2" fill="#4FA88F" />
+          <rect x="372" y="74" width="8" height="16" rx="2" fill="#E3A857" />
+
+          <!-- Row 4: Total Spent -->
+          <text x="0" y="120" fill="#B7BCCB" font-size="11" class="mono">Total</text>
+          <rect x="90" y="108" width="288" height="16" rx="2" fill="#4FA88F" />
+
+          <!-- Row 5: Payment -->
+          <text x="0" y="154" fill="#B7BCCB" font-size="11" class="mono">Payment</text>
+          <rect x="90" y="142" width="288" height="16" rx="2" fill="#6B7A99" />
+        </g>
+      </g>
+    </g>
+
+  </g>
+</svg>

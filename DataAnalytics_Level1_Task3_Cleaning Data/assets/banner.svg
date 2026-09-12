@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 450" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A0E17" />
+      <stop offset="50%" stop-color="#0F1420" />
+      <stop offset="100%" stop-color="#070A10" />
+    </linearGradient>
+
+    <radialGradient id="tealGlow" cx="20%" cy="15%" r="65%">
+      <stop offset="0%" stop-color="#4FA88F" stop-opacity="0.25" />
+      <stop offset="50%" stop-color="#4FA88F" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#4FA88F" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="amberGlow" cx="85%" cy="85%" r="60%">
+      <stop offset="0%" stop-color="#E3A857" stop-opacity="0.20" />
+      <stop offset="60%" stop-color="#E3A857" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#E3A857" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#EDEAE2" />
+      <stop offset="80%" stop-color="#4FA88F" />
+      <stop offset="100%" stop-color="#E3A857" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161D2E" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#111726" stop-opacity="0.80" />
+    </linearGradient>
+
+    <linearGradient id="tealLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4FA88F" stop-opacity="0" />
+      <stop offset="50%" stop-color="#4FA88F" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#E3A857" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(237,234,226,0.035)" stroke-width="1" />
+      <circle cx="40" cy="40" r="1" fill="rgba(79,168,143,0.18)" />
+    </pattern>
+
+    <!-- Filter Glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .mono-text { font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace; }
+      .sans-text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .serif-text { font-family: 'Fraunces', 'Georgia', serif; }
+    </style>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="1200" height="450" rx="16" fill="url(#bgGrad)" />
+  <rect width="1200" height="450" rx="16" fill="url(#tealGlow)" />
+  <rect width="1200" height="450" rx="16" fill="url(#amberGlow)" />
+  <rect width="1200" height="450" rx="16" fill="url(#grid)">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="8s" repeatCount="indefinite" />
+  </rect>
+
+  <!-- Outer Border Frame with Animated Stroke Glow -->
+  <rect x="1" y="1" width="1198" height="448" rx="15" fill="none" stroke="rgba(79,168,143,0.3)" stroke-width="1.5">
+    <animate attributeName="stroke" values="rgba(79,168,143,0.3); rgba(227,168,87,0.4); rgba(79,168,143,0.3)" dur="6s" repeatCount="indefinite" />
+  </rect>
+
+  <!-- Animated Ambient Floating Particles -->
+  <circle cx="180" cy="90" r="3" fill="#4FA88F" filter="url(#glow)">
+    <animate attributeName="cy" values="90;76;90" dur="5s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.3;0.9;0.3" dur="5s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="380" cy="360" r="2.5" fill="#E3A857" filter="url(#glow)">
+    <animate attributeName="cy" values="360;346;360" dur="7s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.2;0.8;0.2" dur="7s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="920" cy="110" r="3" fill="#4FA88F" filter="url(#glow)">
+    <animate attributeName="cy" values="110;98;110" dur="6s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.3;0.9;0.3" dur="6s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="1060" cy="320" r="2" fill="#E3A857" filter="url(#glow)">
+    <animate attributeName="cy" values="320;308;320" dur="8s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.2;0.7;0.2" dur="8s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="680" cy="70" r="2" fill="#6B7A99">
+    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- ================= TOP HEADER BAR ================= -->
+  <!-- Left Pill Tag -->
+  <g transform="translate(60, 36)">
+    <rect x="0" y="0" width="310" height="30" rx="15" fill="#161D2E" stroke="rgba(79,168,143,0.4)" stroke-width="1" />
+    <circle cx="16" cy="15" r="4.5" fill="#4FA88F" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="30" y="19.5" fill="#EDEAE2" font-size="11" font-weight="600" letter-spacing="1" class="mono-text">
+      OASIS INFOBYTE // LEVEL 1 · TASK 3
+    </text>
+  </g>
+
+  <!-- Right Project ID Tag -->
+  <g transform="translate(1140, 56)">
+    <text x="0" y="0" text-anchor="end" fill="#7C8399" font-size="12" font-weight="500" class="mono-text">
+      ETL &amp; RESTORATION PIPELINE v2.0
+    </text>
+  </g>
+
+  <!-- ================= HERO TITLE & SUBTITLE ================= -->
+  <text x="60" y="125" fill="url(#titleGrad)" font-size="40" font-weight="700" letter-spacing="-0.5" class="serif-text">
+    Clean Slate <tspan fill="#4FA88F" font-style="italic" font-weight="400">—</tspan> Cafe Sales Restoration
+  </text>
+
+  <text x="60" y="160" fill="#B7BCCB" font-size="15.5" font-weight="400" class="sans-text">
+    Industrial Data Quality Engineering, Mathematical Derivation &amp; High-Fidelity BI Analytics
+  </text>
+
+  <!-- Divider Line -->
+  <line x1="60" y1="192" x2="1140" y2="192" stroke="rgba(237,234,226,0.08)" stroke-width="1" />
+  <line x1="200" y1="192" x2="850" y2="192" stroke="url(#tealLine)" stroke-width="2">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+  </line>
+
+  <!-- ================= 4 METRIC CARDS (PROPERLY ALIGNED) ================= -->
+  <!-- Total Card Row Width: 4 * 252 + 3 * 24 = 1080px (X: 60 -> 1140) -->
+
+  <!-- Card 1: Data Retention -->
+  <g transform="translate(60, 218)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-4; 0,0" dur="4s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="252" height="135" rx="12" fill="url(#cardGrad)" stroke="rgba(79,168,143,0.35)" stroke-width="1.2" />
+      <rect x="0" y="0" width="252" height="4" rx="2" fill="#4FA88F" />
+      <text x="20" y="32" fill="#7C8399" font-size="11" font-weight="600" letter-spacing="1" class="mono-text">DATA INTEGRITY</text>
+      <text x="20" y="74" fill="#EDEAE2" font-size="28" font-weight="700" class="sans-text">10,000 <tspan fill="#4FA88F" font-size="16">/ 10K</tspan></text>
+      <text x="20" y="106" fill="#4FA88F" font-size="12" font-weight="600" class="sans-text">✓ 0 Rows Lost (100% Retention)</text>
+    </g>
+  </g>
+
+  <!-- Card 2: Math Derivation -->
+  <g transform="translate(336, 218)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-4; 0,0" dur="4s" begin="1s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="252" height="135" rx="12" fill="url(#cardGrad)" stroke="rgba(227,168,87,0.35)" stroke-width="1.2" />
+      <rect x="0" y="0" width="252" height="4" rx="2" fill="#E3A857" />
+      <text x="20" y="32" fill="#7C8399" font-size="11" font-weight="600" letter-spacing="1" class="mono-text">ALGEBRAIC RECOVERY</text>
+      <text x="20" y="74" fill="#EDEAE2" font-size="28" font-weight="700" class="sans-text">95.6%</text>
+      <text x="20" y="106" fill="#E3A857" font-size="12" font-weight="600" class="sans-text">Total = Qty × Price Triangulation</text>
+    </g>
+  </g>
+
+  <!-- Card 3: Schema Typing -->
+  <g transform="translate(612, 218)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-4; 0,0" dur="4s" begin="2s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="252" height="135" rx="12" fill="url(#cardGrad)" stroke="rgba(107,122,153,0.35)" stroke-width="1.2" />
+      <rect x="0" y="0" width="252" height="4" rx="2" fill="#6B7A99" />
+      <text x="20" y="32" fill="#7C8399" font-size="11" font-weight="600" letter-spacing="1" class="mono-text">SCHEMA COERCION</text>
+      <text x="20" y="74" fill="#EDEAE2" font-size="28" font-weight="700" class="sans-text">8 / 8 <tspan fill="#6B7A99" font-size="16">Cols</tspan></text>
+      <text x="20" y="106" fill="#B7BCCB" font-size="12" font-weight="600" class="sans-text">Strict Numerical &amp; Datetime Types</text>
+    </g>
+  </g>
+
+  <!-- Card 4: Dashboard -->
+  <g transform="translate(888, 218)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-4; 0,0" dur="4s" begin="3s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="252" height="135" rx="12" fill="url(#cardGrad)" stroke="rgba(193,89,74,0.35)" stroke-width="1.2" />
+      <rect x="0" y="0" width="252" height="4" rx="2" fill="#C1594A" />
+      <text x="20" y="32" fill="#7C8399" font-size="11" font-weight="600" letter-spacing="1" class="mono-text">INTERACTIVE DASHBOARD</text>
+      <text x="20" y="74" fill="#EDEAE2" font-size="28" font-weight="700" class="sans-text">100% <tspan fill="#4FA88F" font-size="16">Live</tspan></text>
+      <text x="20" y="106" fill="#4FA88F" font-size="12" font-weight="600" class="sans-text">State Toggle &amp; Dynamic Drilldown</text>
+    </g>
+  </g>
+
+  <!-- ================= FOOTER ================= -->
+  <g transform="translate(60, 412)">
+    <text x="0" y="0" fill="#7C8399" font-size="11" class="mono-text">
+      PYTHON 3.10+ · PANDAS · NUMPY · CHART.JS · HTML5/CSS3 GLASSMORPHISM
+    </text>
+  </g>
+  <g transform="translate(1140, 412)">
+    <circle cx="-145" cy="-3.5" r="3.5" fill="#4FA88F">
+      <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="0" text-anchor="end" fill="#4FA88F" font-size="11" font-weight="600" class="mono-text">
+      PRODUCTION READY
+    </text>
+  </g>
+</svg>

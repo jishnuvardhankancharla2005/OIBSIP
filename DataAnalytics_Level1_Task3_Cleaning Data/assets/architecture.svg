@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="100%" height="100%">
+  <defs>
+    <!-- Dark Canvas Gradient -->
+    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16" />
+      <stop offset="50%" stop-color="#0F1422" />
+      <stop offset="100%" stop-color="#070A10" />
+    </linearGradient>
+
+    <!-- Card Fills -->
+    <linearGradient id="stepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#182030" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#111622" stop-opacity="0.90" />
+    </linearGradient>
+
+    <!-- Glowing Lines -->
+    <linearGradient id="streamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C1594A" stop-opacity="0.8" />
+      <stop offset="30%" stop-color="#E3A857" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#4FA88F" stop-opacity="1" />
+      <stop offset="100%" stop-color="#4FA88F" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Grid Pattern -->
+    <pattern id="archGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(237,234,226,0.03)" stroke-width="1" />
+      <circle cx="30" cy="30" r="0.8" fill="rgba(79,168,143,0.15)" />
+    </pattern>
+
+    <!-- Filter Glow -->
+    <filter id="glowArch" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+      .sans { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .serif { font-family: 'Fraunces', 'Georgia', serif; }
+      
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -32; }
+      }
+      .flow-line {
+        stroke-dasharray: 8 8;
+        animation: dashFlow 1.5s linear infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="600" rx="16" fill="url(#archBg)" />
+  <rect width="1200" height="600" rx="16" fill="url(#archGrid)" />
+  <rect x="1" y="1" width="1198" height="598" rx="15" fill="none" stroke="rgba(237,234,226,0.08)" stroke-width="1.5" />
+
+  <!-- ================= SECTION HEADER ================= -->
+  <g transform="translate(60, 32)">
+    <rect x="0" y="0" width="152" height="24" rx="6" fill="#161D2E" stroke="rgba(79,168,143,0.4)" stroke-width="1" />
+    <circle cx="12" cy="12" r="3.5" fill="#4FA88F">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="24" y="16" fill="#4FA88F" font-size="10.5" font-weight="700" letter-spacing="1" class="mono">PIPELINE DESIGN</text>
+    
+    <text x="0" y="52" fill="#EDEAE2" font-size="24" font-weight="600" class="serif">
+      End-to-End Data Restoration &amp; Analytics Pipeline
+    </text>
+    <text x="0" y="74" fill="#7C8399" font-size="13" class="sans">
+      Deterministic Multi-Stage Transformation Architecture from Raw Corrupted POS Logs to Validated Analytics
+    </text>
+  </g>
+
+  <!-- ================= CONNECTING FLOW STREAM ================= -->
+  <!-- Line connecting center of Stage 1 (160) to Stage 5 (1040) at Y=230 -->
+  <path d="M 160 230 L 1040 230" fill="none" stroke="url(#streamGrad)" stroke-width="3" class="flow-line" filter="url(#glowArch)" />
+
+  <!-- ================= 5 STAGE CARDS (EXACTLY SPACED & ALIGNED) ================= -->
+  <!-- Card Width: 200px, Gap: 20px, Left: 60px -> Total: 5*200 + 4*20 = 1080px (X: 60 to 1140) -->
+
+  <!-- ================= STAGE 1 ================= -->
+  <g transform="translate(60, 135)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="4s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="200" height="390" rx="12" fill="url(#stepGrad)" stroke="rgba(193,89,74,0.45)" stroke-width="1.2" />
+      <rect x="0" y="0" width="200" height="4" rx="2" fill="#C1594A" />
+      
+      <!-- Stage Tag -->
+      <rect x="14" y="16" width="64" height="20" rx="4" fill="rgba(193,89,74,0.15)" stroke="rgba(193,89,74,0.3)" />
+      <text x="46" y="30" text-anchor="middle" fill="#C1594A" font-size="10" font-weight="700" class="mono">STAGE 01</text>
+      
+      <text x="14" y="58" fill="#EDEAE2" font-size="15.5" font-weight="600" class="sans">Raw Ingestion</text>
+      <text x="14" y="74" fill="#7C8399" font-size="11" class="mono">dirty_cafe_sales.csv</text>
+      
+      <!-- Flow Node -->
+      <circle cx="100" cy="95" r="14" fill="#161D2E" stroke="#C1594A" stroke-width="2" />
+      <text x="100" y="99" text-anchor="middle" fill="#C1594A" font-size="11" font-weight="700" class="mono">01</text>
+      
+      <!-- Specs Group -->
+      <g transform="translate(14, 130)">
+        <rect x="0" y="0" width="172" height="42" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="17" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">10,000 Transactions</text>
+        <text x="10" y="31" fill="#7C8399" font-size="9.5" class="mono">8 Raw Columns</text>
+
+        <rect x="0" y="50" width="172" height="52" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="67" fill="#C1594A" font-size="11" font-weight="600" class="sans">Object Dtypes (All)</text>
+        <text x="10" y="80" fill="#7C8399" font-size="9" class="sans">Mixed Text &amp; Sentinels</text>
+        <text x="10" y="92" fill="#C1594A" font-size="9" class="mono">"ERROR", "UNKNOWN"</text>
+
+        <rect x="0" y="110" width="172" height="52" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="127" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">10,082 Missing Cells</text>
+        <text x="10" y="140" fill="#7C8399" font-size="9" class="sans">Missing Items (969)</text>
+        <text x="10" y="152" fill="#7C8399" font-size="9" class="sans">Missing Totals (502)</text>
+      </g>
+
+      <rect x="14" y="348" width="172" height="26" rx="6" fill="rgba(193,89,74,0.12)" stroke="rgba(193,89,74,0.3)" />
+      <text x="100" y="365" text-anchor="middle" fill="#C1594A" font-size="10" font-weight="600" class="mono">⚠ UNVALIDATED STATE</text>
+    </g>
+  </g>
+
+  <!-- ================= STAGE 2 ================= -->
+  <g transform="translate(280, 135)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="4s" begin="0.8s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="200" height="390" rx="12" fill="url(#stepGrad)" stroke="rgba(227,168,87,0.45)" stroke-width="1.2" />
+      <rect x="0" y="0" width="200" height="4" rx="2" fill="#E3A857" />
+      
+      <rect x="14" y="16" width="64" height="20" rx="4" fill="rgba(227,168,87,0.15)" stroke="rgba(227,168,87,0.3)" />
+      <text x="46" y="30" text-anchor="middle" fill="#E3A857" font-size="10" font-weight="700" class="mono">STAGE 02</text>
+      
+      <text x="14" y="58" fill="#EDEAE2" font-size="15.5" font-weight="600" class="sans">Sentinel Parsing</text>
+      <text x="14" y="74" fill="#7C8399" font-size="11" class="mono">Normalization Engine</text>
+      
+      <circle cx="100" cy="95" r="14" fill="#161D2E" stroke="#E3A857" stroke-width="2" />
+      <text x="100" y="99" text-anchor="middle" fill="#E3A857" font-size="11" font-weight="700" class="mono">02</text>
+      
+      <g transform="translate(14, 130)">
+        <rect x="0" y="0" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="17" fill="#E3A857" font-size="11" font-weight="600" class="sans">Sentinel Masking</text>
+        <text x="10" y="31" fill="#7C8399" font-size="9" class="mono">["ERROR","UNKNOWN"]</text>
+        <text x="10" y="41" fill="#4FA88F" font-size="8.5" class="mono">→ Converted to NaN</text>
+
+        <rect x="0" y="54" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="70" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Whitespace Clean</text>
+        <text x="10" y="84" fill="#7C8399" font-size="9" class="sans">Regex string strip</text>
+        <text x="10" y="94" fill="#7C8399" font-size="9" class="mono">.str.strip().title()</text>
+
+        <rect x="0" y="108" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="125" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Null Map Matrix</text>
+        <text x="10" y="139" fill="#7C8399" font-size="9" class="sans">Separation of true nulls</text>
+        <text x="10" y="149" fill="#7C8399" font-size="9" class="sans">vs recorded sentinels</text>
+      </g>
+
+      <rect x="14" y="348" width="172" height="26" rx="6" fill="rgba(227,168,87,0.12)" stroke="rgba(227,168,87,0.3)" />
+      <text x="100" y="365" text-anchor="middle" fill="#E3A857" font-size="10" font-weight="600" class="mono">⚡ STANDARDIZED NULLS</text>
+    </g>
+  </g>
+
+  <!-- ================= STAGE 3 ================= -->
+  <g transform="translate(500, 135)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="4s" begin="1.6s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="200" height="390" rx="12" fill="url(#stepGrad)" stroke="rgba(79,168,143,0.65)" stroke-width="1.5" />
+      <rect x="0" y="0" width="200" height="4" rx="2" fill="#4FA88F" />
+      
+      <rect x="14" y="16" width="64" height="20" rx="4" fill="rgba(79,168,143,0.2)" stroke="rgba(79,168,143,0.4)" />
+      <text x="46" y="30" text-anchor="middle" fill="#4FA88F" font-size="10" font-weight="700" class="mono">STAGE 03</text>
+      
+      <text x="14" y="58" fill="#EDEAE2" font-size="15.5" font-weight="600" class="sans">Math Derivations</text>
+      <text x="14" y="74" fill="#4FA88F" font-size="11" class="mono">Algebraic Engine</text>
+      
+      <circle cx="100" cy="95" r="14" fill="#161D2E" stroke="#4FA88F" stroke-width="2.5" />
+      <text x="100" y="99" text-anchor="middle" fill="#4FA88F" font-size="11" font-weight="700" class="mono">03</text>
+      
+      <g transform="translate(14, 130)">
+        <rect x="0" y="0" width="172" height="52" rx="6" fill="#0A0E17" stroke="rgba(79,168,143,0.25)" />
+        <text x="10" y="16" fill="#4FA88F" font-size="10.5" font-weight="700" class="mono">Total = Qty × Price</text>
+        <text x="10" y="30" fill="#EDEAE2" font-size="9" class="sans">Qty = Total / Price (456)</text>
+        <text x="10" y="42" fill="#EDEAE2" font-size="9" class="sans">Price = Total / Qty (527)</text>
+
+        <rect x="0" y="60" width="172" height="52" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="76" fill="#4FA88F" font-size="11" font-weight="600" class="sans">Bijective Item Map</text>
+        <text x="10" y="90" fill="#7C8399" font-size="9" class="sans">Cookie($1), Tea($1.5), Coffee($2)</text>
+        <text x="10" y="102" fill="#4FA88F" font-size="9" class="sans">Salad($5) → 489 Restored</text>
+
+        <rect x="0" y="120" width="172" height="38" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="136" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Total Spent Filled</text>
+        <text x="10" y="148" fill="#4FA88F" font-size="9" class="mono">502 / 502 (100% Math)</text>
+      </g>
+
+      <rect x="14" y="348" width="172" height="26" rx="6" fill="rgba(79,168,143,0.18)" stroke="rgba(79,168,143,0.4)" />
+      <text x="100" y="365" text-anchor="middle" fill="#4FA88F" font-size="10" font-weight="700" class="mono">★ 95.6% MATH SOLVED</text>
+    </g>
+  </g>
+
+  <!-- ================= STAGE 4 ================= -->
+  <g transform="translate(720, 135)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="4s" begin="2.4s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="200" height="390" rx="12" fill="url(#stepGrad)" stroke="rgba(107,122,153,0.45)" stroke-width="1.2" />
+      <rect x="0" y="0" width="200" height="4" rx="2" fill="#6B7A99" />
+      
+      <rect x="14" y="16" width="64" height="20" rx="4" fill="rgba(107,122,153,0.15)" stroke="rgba(107,122,153,0.3)" />
+      <text x="46" y="30" text-anchor="middle" fill="#6B7A99" font-size="10" font-weight="700" class="mono">STAGE 04</text>
+      
+      <text x="14" y="58" fill="#EDEAE2" font-size="15.5" font-weight="600" class="sans">Impute &amp; Validate</text>
+      <text x="14" y="74" fill="#7C8399" font-size="11" class="mono">Statistical Governance</text>
+      
+      <circle cx="100" cy="95" r="14" fill="#161D2E" stroke="#6B7A99" stroke-width="2" />
+      <text x="100" y="99" text-anchor="middle" fill="#6B7A99" font-size="11" font-weight="700" class="mono">04</text>
+      
+      <g transform="translate(14, 130)">
+        <rect x="0" y="0" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="17" fill="#6B7A99" font-size="11" font-weight="600" class="sans">Controlled Labeling</text>
+        <text x="10" y="31" fill="#7C8399" font-size="9" class="sans">Pay/Loc → 'Unknown' tag</text>
+        <text x="10" y="41" fill="#7C8399" font-size="8.5" class="mono">(Preserves true variance)</text>
+
+        <rect x="0" y="54" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="70" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">IQR Outlier Audit</text>
+        <text x="10" y="84" fill="#7C8399" font-size="9" class="sans">Q1=4, Q3=12, Upper=$24</text>
+        <text x="10" y="94" fill="#4FA88F" font-size="9" class="sans">269 Catering Validated</text>
+
+        <rect x="0" y="108" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="125" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Date &amp; Type Coerce</text>
+        <text x="10" y="139" fill="#7C8399" font-size="9" class="sans">ISO YYYY-MM-DD</text>
+        <text x="10" y="149" fill="#6B7A99" font-size="8.5" class="mono">NaT retained (0 Row drop)</text>
+      </g>
+
+      <rect x="14" y="348" width="172" height="26" rx="6" fill="rgba(107,122,153,0.12)" stroke="rgba(107,122,153,0.3)" />
+      <text x="100" y="365" text-anchor="middle" fill="#6B7A99" font-size="10" font-weight="600" class="mono">✓ 8/8 DTYPES COERCED</text>
+    </g>
+  </g>
+
+  <!-- ================= STAGE 5 ================= -->
+  <g transform="translate(940, 135)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="4s" begin="3.2s" repeatCount="indefinite" />
+      <rect x="0" y="0" width="200" height="390" rx="12" fill="url(#stepGrad)" stroke="rgba(79,168,143,0.55)" stroke-width="1.2" />
+      <rect x="0" y="0" width="200" height="4" rx="2" fill="#4FA88F" />
+      
+      <rect x="14" y="16" width="64" height="20" rx="4" fill="rgba(79,168,143,0.2)" stroke="rgba(79,168,143,0.35)" />
+      <text x="46" y="30" text-anchor="middle" fill="#4FA88F" font-size="10" font-weight="700" class="mono">STAGE 05</text>
+      
+      <text x="14" y="58" fill="#EDEAE2" font-size="15.5" font-weight="600" class="sans">Delivery &amp; BI</text>
+      <text x="14" y="74" fill="#7C8399" font-size="11" class="mono">cleaned_cafe_sales.csv</text>
+      
+      <circle cx="100" cy="95" r="14" fill="#161D2E" stroke="#4FA88F" stroke-width="2" />
+      <text x="100" y="99" text-anchor="middle" fill="#4FA88F" font-size="11" font-weight="700" class="mono">05</text>
+      
+      <g transform="translate(14, 130)">
+        <rect x="0" y="0" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="17" fill="#4FA88F" font-size="11" font-weight="600" class="sans">Clean CSV Export</text>
+        <text x="10" y="31" fill="#7C8399" font-size="9" class="mono">10,000 Rows · 0 Loss</text>
+        <text x="10" y="41" fill="#7C8399" font-size="8.5" class="sans">Ready for Pandas/SQL</text>
+
+        <rect x="0" y="54" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="70" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Interactive Dashboard</text>
+        <text x="10" y="84" fill="#7C8399" font-size="9" class="sans">Vanilla JS + Chart.js 4</text>
+        <text x="10" y="94" fill="#4FA88F" font-size="8.5" class="mono">Zero Server Dependencies</text>
+
+        <rect x="0" y="108" width="172" height="46" rx="6" fill="#0A0E17" stroke="rgba(237,234,226,0.06)" />
+        <text x="10" y="125" fill="#EDEAE2" font-size="11" font-weight="600" class="sans">Before/After Switch</text>
+        <text x="10" y="139" fill="#7C8399" font-size="9" class="sans">Live Delta Comparison</text>
+        <text x="10" y="149" fill="#7C8399" font-size="8.5" class="sans">Multi-Filter Drilldown</text>
+      </g>
+
+      <rect x="14" y="348" width="172" height="26" rx="6" fill="rgba(79,168,143,0.15)" stroke="rgba(79,168,143,0.3)" />
+      <text x="100" y="365" text-anchor="middle" fill="#4FA88F" font-size="10" font-weight="700" class="mono">🚀 READY FOR BI &amp; ML</text>
+    </g>
+  </g>
+
+  <!-- ================= GLOBAL FOOTER ================= -->
+  <g transform="translate(60, 560)">
+    <text x="0" y="0" fill="#7C8399" font-size="11" class="mono">
+      METRIC EQUIVALENCE: 100% OF RECOVERED NUMERICAL ROWS STRICTLY VERIFIED (TOTAL == QTY × PRICE)
+    </text>
+    <text x="1080" y="0" text-anchor="end" fill="#4FA88F" font-size="11" font-weight="600" class="mono">
+      STATUS: VERIFIED
+    </text>
+  </g>
+</svg>
