@@ -299,6 +299,7 @@ jupyter notebook Retail_Sales_EDA.ipynb
 - **Internship Track:** Data Analytics Internship
 - **Assignment:** Level 1 — Task 1: Retail Sales Exploratory Data Analysis (EDA)
 - **Status:** Completed & Verified
+- **Developer:** Jishnu Vardhan Kancharla
 
 ---
 
