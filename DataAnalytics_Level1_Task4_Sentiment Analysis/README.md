@@ -243,7 +243,7 @@ python -m http.server 8000
 This project was developed as part of the **Oasis Infobyte Data Analytics Internship (Level 1 · Task 4)**.
 - **Dataset:** [Amazon Fine Food Reviews (Kaggle)](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews)
 - **Focus:** Natural Language Processing, Supervised Machine Learning, Imbalanced Data Mitigation & Business Intelligence Dashboarding.
-- **Developer:** Jishnu Vardhan Kancharla
+- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
 
 ---
 
