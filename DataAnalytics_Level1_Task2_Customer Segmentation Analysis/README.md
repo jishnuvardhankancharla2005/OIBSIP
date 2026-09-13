@@ -60,7 +60,7 @@ This project delivers an **end-to-end customer segmentation system** developed f
 | :---: | :--- | :--- | :--- |
 | **01** | **Data Ingestion & Hygiene** | Ingests `global_ecommerce_sales.csv` with multi-regional order lines, product categories, quantities, and prices | 2,000 sanitized order records |
 | **02** | **RFM Feature Matrix** | Computes Recency ($R$), Frequency ($F$), and Monetary ($M$) per customer ID with zero leakage | 1,534 unique customer RFM vectors |
-| **03** | **Statistical Standardization** | Normalizes features with `StandardScaler` ($\mu=0, \sigma=1$) to remove monetary magnitude dominance | Unit-variance feature space $\mathbf{X}_{\text{scaled}}$ |
+| **03** | **Statistical Standardization** | Normalizes features with `StandardScaler` ($\mu=0, \sigma=1$) to remove monetary magnitude dominance | Unit-variance feature space $\mathbf{X}_{\mathrm{scaled}}$ |
 | **04** | **Optimal K Tuning** | Evaluates Elbow inertia curve ($K=1 \dots 8$) and Silhouette coefficient analysis | Validated optimal cluster count ($K=4$) |
 | **05** | **K-Means Clustering** | Unsupervised clustering partitioning customer profiles into 4 distinct behavioural personas | 4 distinct actionable buyer segments |
 | **06** | **BI Dashboard & Diagnostics** | Client-side reactive dashboard with dynamic cross-filtering and segment drilldowns | Standalone `dashboard.html` |
@@ -89,11 +89,11 @@ The dashboard (`dashboard.html`) provides real-time client-side analytics. Filte
 
 For each customer $i \in \{1, \dots, N\}$ across transaction history $T_i$:
 
-$$\text{Recency } (R_i) = \max(\text{Order\_Date}) - \max_{t \in T_i}(\text{Order\_Date}_t) \quad [\text{days}]$$
+$$\text{Recency } (R_i) = \max(\text{Order Date}) - \max_{t \in T_i}(\text{Order Date}_t) \quad [\text{days}]$$
 
 $$\text{Frequency } (F_i) = |T_i| = \sum_{t \in T_i} 1 \quad [\text{order count}]$$
 
-$$\text{Monetary } (M_i) = \sum_{t \in T_i} \text{Total\_Sales}_t \quad [\$ \text{ USD}]$$
+$$\text{Monetary } (M_i) = \sum_{t \in T_i} \text{Total Sales}_t \quad [\$ \text{ USD}]$$
 
 ### 2. Standardization & Scaling
 
