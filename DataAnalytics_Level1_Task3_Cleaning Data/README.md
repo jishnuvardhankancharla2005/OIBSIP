@@ -69,23 +69,14 @@ The pipeline follows a modular, deterministic ETL architecture that separates se
 
 ### 🔄 Multi-Stage Pipeline Breakdown
 
-```mermaid
-flowchart LR
-    A["Raw POS CSV\n(dirty_cafe_sales.csv)"] --> B["Stage 01:\nSentinel Normalization"]
-    B --> C["Stage 02:\nAlgebraic Derivation Engine"]
-    C --> D["Stage 03:\nStatistical Fallback & Categorical Labeling"]
-    D --> E["Stage 04:\nIQR Outlier Audit & Datetime Coercion"]
-    E --> F["Cleaned CSV Export\n(cleaned_cafe_sales.csv)"]
-    E --> G["Interactive BI Dashboard\n(dashboard.html)"]
-
-    style A fill:#0A0E17,stroke:#C1594A,stroke-width:2px,color:#EDEAE2
-    style B fill:#161D2E,stroke:#E3A857,stroke-width:2px,color:#EDEAE2
-    style C fill:#161D2E,stroke:#4FA88F,stroke-width:2px,color:#EDEAE2
-    style D fill:#161D2E,stroke:#6B7A99,stroke-width:2px,color:#EDEAE2
-    style E fill:#161D2E,stroke:#4FA88F,stroke-width:2px,color:#EDEAE2
-    style F fill:#0F1420,stroke:#4FA88F,stroke-width:2px,color:#EDEAE2
-    style G fill:#0F1420,stroke:#E3A857,stroke-width:2px,color:#EDEAE2
-```
+| Stage | Focus Area | Core Operations & Logic | Outcome / Verification |
+| :---: | :--- | :--- | :--- |
+| **01** | **Sentinel Normalization** | Convert `"UNKNOWN"`, `"ERROR"`, `""`, `"nan"`, `"None"` to `np.nan` | Uniform `pd.NA` representation across 10,000 records |
+| **02** | **Algebraic Derivation Engine** | Triangulate missing cells: $\text{Total} = \text{Qty} \times \text{Price}$, $\text{Price} = \text{Total} / \text{Qty}$ | 1,974 missing values recovered with 100% mathematical precision |
+| **03** | **Menu Lookup & Fallback** | Item-to-price mapping and median imputation for single missing items | Imputed consistent menu pricing and typical basket sizes |
+| **04** | **Payment & Location Imputation**| Mode imputation stratified by transaction hour & location | Category coherence preserved across all rows |
+| **05** | **IQR Outlier Audit & Typing** | Boxplot IQR validation and strict cast to `int64`, `float64`, `datetime64` | Retained 269 true catering events; zero invalid formats |
+| **06** | **BI Dashboard & Export** | Clean CSV serialization and zero-dependency interactive dashboard | `cleaned_cafe_sales.csv` & `dashboard.html` |
 
 ---
 

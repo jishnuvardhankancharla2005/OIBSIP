@@ -56,23 +56,14 @@ This project delivers an **end-to-end customer segmentation system** developed f
 
 ### 🔄 Pipeline Stages Breakdown
 
-```mermaid
-flowchart LR
-    A["📦 1. Raw Data Ingestion<br/>2,000 Global Orders"] --> B["⚙️ 2. RFM Aggregation<br/>1,534 Customer Profiles"]
-    B --> C["📐 3. Standardization<br/>StandardScaler (Z-Score)"]
-    C --> D["🎯 4. K-Means (K=4)<br/>Elbow & Silhouette Tuning"]
-    D --> E1["👑 Cluster 3: High-Value Spenders"]
-    D --> E2["💎 Cluster 2: Loyal Repeat Buyers"]
-    D --> E3["🌱 Cluster 0: New / Recent One-Time"]
-    D --> E4["⚠️ Cluster 1: Lapsed / At-Risk"]
-    E1 & E2 & E3 & E4 --> F["📊 5. Interactive Dashboard<br/>Signal & Spend Analytics UI"]
-```
-
-1. **Data Ingestion & Hygiene:** Ingests `global_ecommerce_sales.csv` containing multi-regional order lines, product categories, quantities, unit prices, discounts, and customer identifiers.
-2. **RFM Feature Matrix:** Computes Recency ($R$), Frequency ($F$), and Monetary ($M$) per customer with zero data leakage.
-3. **Statistical Scaling:** Normalizes multi-scale units with `StandardScaler` to prevent monetary magnitude bias in Euclidean distance calculations.
-4. **K-Means Clustering ($K=4$):** Partitions the 3D RFM vector space into 4 distinct behavioural groups.
-5. **Interactive UI & Presentation:** Serves real-time dynamic analysis through `dashboard.html` without requiring any backend server.
+| Stage | Focus Area | Technical Execution & Details | Key Outcome |
+| :---: | :--- | :--- | :--- |
+| **01** | **Data Ingestion & Hygiene** | Ingests `global_ecommerce_sales.csv` with multi-regional order lines, product categories, quantities, and prices | 2,000 sanitized order records |
+| **02** | **RFM Feature Matrix** | Computes Recency ($R$), Frequency ($F$), and Monetary ($M$) per customer ID with zero leakage | 1,534 unique customer RFM vectors |
+| **03** | **Statistical Standardization** | Normalizes features with `StandardScaler` ($\mu=0, \sigma=1$) to remove monetary magnitude dominance | Unit-variance feature space $\mathbf{X}_{\text{scaled}}$ |
+| **04** | **Optimal K Tuning** | Evaluates Elbow inertia curve ($K=1 \dots 8$) and Silhouette coefficient analysis | Validated optimal cluster count ($K=4$) |
+| **05** | **K-Means Clustering** | Unsupervised clustering partitioning customer profiles into 4 distinct behavioural personas | 4 distinct actionable buyer segments |
+| **06** | **BI Dashboard & Diagnostics** | Client-side reactive dashboard with dynamic cross-filtering and segment drilldowns | Standalone `dashboard.html` |
 
 ---
 

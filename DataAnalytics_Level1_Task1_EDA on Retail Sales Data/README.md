@@ -59,52 +59,12 @@ The end-to-end data pipeline transforms raw, granular retail checkout entries in
   <img src="assets/architecture.svg" alt="Animated Architecture Pipeline" width="100%" />
 </p>
 
-### Pipeline Breakdown:
-
-```mermaid
-flowchart LR
-    subgraph S1["1. Raw Ledger Ingestion"]
-        A["retail_sales_dataset.csv\n(1,000 Transactions)"]
-    end
-
-    subgraph S2["2. Feature Engineering & Stats"]
-        B["Clean & Validate Schema"]
-        C["Age Cohort Binning\n(18-25, 26-35, ..., 56-64)"]
-        D["Pearson Matrix Engine\n(Age × Qty × Price × Total)"]
-        E["Time Rollup Engine\n(Monthly & Quarterly)"]
-    end
-
-    subgraph S3["3. Exploratory Analysis (Python)"]
-        F["Jupyter Notebook (EDA)\nPandas, Seaborn, Matplotlib"]
-        G["Distribution Testing &\nDescriptive Statistics"]
-    end
-
-    subgraph S4["4. Reactive BI Dashboard"]
-        H["In-Memory Ledger Store"]
-        I["Live Multi-Filter State\n(Cat, Gender, Age Cohort)"]
-        J["Chart.js 4.4 Visualizations\n(7 Charts + 2 Matrix Grids)"]
-        K["Dynamic Narrative Generator"]
-    end
-
-    A --> B
-    B --> C & D & E
-    C & D & E --> F
-    F --> G
-    C & D & E --> H
-    H --> I
-    I --> J
-    J --> K
-    I -. "Real-Time Re-computation (<16ms)" .-> J
-
-    classDef s1 fill:#1B2438,stroke:#C1594A,stroke-width:2px,color:#EDEAE2;
-    classDef s2 fill:#1B2438,stroke:#E3A857,stroke-width:2px,color:#EDEAE2;
-    classDef s3 fill:#1B2438,stroke:#4FA88F,stroke-width:2px,color:#EDEAE2;
-    classDef s4 fill:#161D2E,stroke:#E3A857,stroke-width:2px,color:#EDEAE2;
-    class S1 s1;
-    class S2 s2;
-    class S3 s3;
-    class S4 s4;
-```
+| Phase | Subsystem | Engineering Operations & Analytical Scope | Deliverables |
+| :---: | :--- | :--- | :--- |
+| **01** | **Raw Ledger Ingestion** | Ingestion & integrity checking of `retail_sales_dataset.csv` (1,000 transactions) | Strict schema validation & zero null integrity |
+| **02** | **Feature Engineering** | Age cohort binning (18–25, 26–35, ..., 56–64), monthly/quarterly time rollups | Augmented feature dataframe |
+| **03** | **Exploratory Analysis** | Pearson correlation matrix engine, parametric & non-parametric distribution tests | Jupyter Notebook (`EDA_on_Retail_Sales.ipynb`) |
+| **04** | **BI Dashboard Engine** | In-memory ledger store, multi-dimensional instant filtering, 7 Chart.js visuals | Interactive `dashboard.html` |
 
 ---
 

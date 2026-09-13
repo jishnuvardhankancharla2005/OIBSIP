@@ -53,25 +53,16 @@ This project delivers a **rigorous 3-class sentiment intelligence pipeline** by:
 
 ### 🔄 End-to-End Pipeline Stages
 
-```mermaid
-flowchart LR
-    A[Raw Amazon Reviews<br/>568,454 Samples] --> B[Star Rating Mapping<br/>1-2★ Neg | 3★ Neu | 4-5★ Pos]
-    B --> C[Stratified Balanced Sampling<br/>18,000 Reviews]
-    C --> D[NLP Cleaning & Normalization<br/>Regex, Stopwords, Lowercase]
-    D --> E[TF-IDF Vectorization<br/>Unigrams + Bigrams · 5K Vocab]
-    E --> F1[Multinomial Naive Bayes]
-    E --> F2[Logistic Regression L2]
-    F1 & F2 --> G[Evaluation Suite<br/>Confusion Matrix & F1 Scores]
-    G --> H[Interactive BI Dashboard<br/>dashboard.html & Chart.js]
-
-    classDef primary fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
-    classDef secondary fill:#0f172a,stroke:#3b82f6,stroke-width:1.5px,color:#e2e8f0;
-    classDef highlight fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#ecfdf5;
-    class A,B,C secondary;
-    class D,E primary;
-    class F1,F2,G primary;
-    class H highlight;
-```
+| Stage | Component | Operations & Transformations | Artifacts / Output |
+| :---: | :--- | :--- | :--- |
+| **01** | **Raw Ingestion** | Ingestion of 568,454 Amazon Fine Food reviews | Raw text & 5-star ratings |
+| **02** | **Sentiment Mapping** | Polarities mapped: 1–2★ (Negative), 3★ (Neutral), 4–5★ (Positive) | Discrete ternary labels |
+| **03** | **Stratified Sampling** | Class-balanced subsetting (6,000 samples per class) | 18,000 balanced rows (`sampled_reviews.csv`) |
+| **04** | **NLP Preprocessing** | Lowercasing, HTML/URL stripping, punctuation & contractions removal | Cleaned token sequences |
+| **05** | **TF-IDF Vectorization** | Sublinear term frequency, unigram + bigram n-grams, top 5,000 features | Sparse feature matrix $\mathbf{X} \in \mathbb{R}^{18000 \times 5000}$ |
+| **06** | **Model Training** | Multinomial Naive Bayes ($\alpha=1.0$) vs. Logistic Regression ($C=1.0$, L2) | Trained classifier weights & log-probs |
+| **07** | **Evaluation & Audit** | 80/20 train-test split, per-class Precision/Recall/F1, Confusion Matrix | Classification reports & validation curves |
+| **08** | **BI Dashboard** | Offline-capable reactive dashboard with Chart.js & dynamic test explorer | `dashboard.html` + standalone assets |
 
 ---
 
