@@ -1,0 +1,237 @@
+<svg fill="none" viewBox="0 0 900 340" width="100%" height="340" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <style>
+        .length-card {
+          background: #0d0c1d;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          width: 900px;
+          height: 340px;
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+          box-sizing: border-box;
+          padding: 22px 28px;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .bg-mesh {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(rgba(232, 182, 90, 0.07) 1px, transparent 1px);
+          background-size: 16px 16px;
+          pointer-events: none;
+        }
+
+        .header-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          z-index: 2;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          padding-bottom: 10px;
+        }
+
+        .header-title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #f8fafc;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .chart-area {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          position: relative;
+          z-index: 2;
+          margin-top: 10px;
+        }
+
+        .box-card {
+          background: rgba(26, 23, 41, 0.7);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 10px;
+          padding: 14px 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          position: relative;
+          backdrop-filter: blur(8px);
+        }
+
+        .box-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .box-class {
+          font-size: 13px;
+          font-weight: 700;
+        }
+
+        .box-class.neg { color: #f87171; }
+        .box-class.neu { color: #fbbf24; }
+        .box-class.pos { color: #34d399; }
+
+        .stat-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .stat-cell {
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 6px;
+          padding: 6px 8px;
+          border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .stat-label {
+          font-size: 9.5px;
+          color: #94a3b8;
+          text-transform: uppercase;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+
+        .stat-val {
+          font-size: 15px;
+          font-weight: 800;
+          color: #f1f5f9;
+          margin-top: 2px;
+        }
+
+        .visual-bar-container {
+          height: 16px;
+          background: rgba(255, 255, 255, 0.04);
+          border-radius: 4px;
+          position: relative;
+          overflow: hidden;
+          margin-top: 4px;
+        }
+
+        .iqr-range {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          border-radius: 3px;
+          animation: slideIn 2s ease-out forwards;
+        }
+
+        .iqr-neg { left: 18%; width: 35%; background: rgba(239, 68, 68, 0.4); border: 1px solid #f87171; }
+        .iqr-neu { left: 19%; width: 39%; background: rgba(245, 158, 11, 0.4); border: 1px solid #fbbf24; }
+        .iqr-pos { left: 16%; width: 29%; background: rgba(16, 185, 129, 0.4); border: 1px solid #34d399; }
+
+        .median-line {
+          position: absolute;
+          top: -2px;
+          bottom: -2px;
+          width: 3px;
+          background: #ffffff;
+          box-shadow: 0 0 6px #ffffff;
+          z-index: 5;
+        }
+
+        .med-neg { left: 31%; }
+        .med-neu { left: 33%; }
+        .med-pos { left: 26%; }
+
+        @keyframes slideIn {
+          from { opacity: 0; transform: scaleX(0); }
+          to { opacity: 1; transform: scaleX(1); }
+        }
+
+        .bottom-banner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 11px;
+          color: #cbd5e1;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          padding: 8px 14px;
+          border-radius: 6px;
+          position: relative;
+          z-index: 2;
+        }
+      </style>
+      
+      <div class="length-card">
+        <div class="bg-mesh"></div>
+
+        <div class="header-box">
+          <div class="header-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e8b65a" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Review Word Length Distributions by Sentiment
+          </div>
+          <span style="font-size:11px; color:#94a3b8; font-weight:600;">Interquartile Range (IQR) &amp; Median Word Count</span>
+        </div>
+
+        <div class="chart-area">
+          <!-- Negative Card -->
+          <div class="box-card">
+            <div class="box-header">
+              <span class="box-class neg">● Negative (1–2★)</span>
+              <span style="font-size:11px; color:#f87171; font-weight:700;">31 Words</span>
+            </div>
+            <div class="visual-bar-container">
+              <div class="iqr-range iqr-neg"></div>
+              <div class="median-line med-neg"></div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="stat-label">Median</div><div class="stat-val">31 w</div></div>
+              <div class="stat-cell"><div class="stat-label">IQR (25–75%)</div><div class="stat-val">18–53 w</div></div>
+            </div>
+          </div>
+
+          <!-- Neutral Card -->
+          <div class="box-card">
+            <div class="box-header">
+              <span class="box-class neu">● Neutral (3★)</span>
+              <span style="font-size:11px; color:#fbbf24; font-weight:700;">33 Words</span>
+            </div>
+            <div class="visual-bar-container">
+              <div class="iqr-range iqr-neu"></div>
+              <div class="median-line med-neu"></div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="stat-label">Median</div><div class="stat-val">33 w</div></div>
+              <div class="stat-cell"><div class="stat-label">IQR (25–75%)</div><div class="stat-val">19–58 w</div></div>
+            </div>
+          </div>
+
+          <!-- Positive Card -->
+          <div class="box-card">
+            <div class="box-header">
+              <span class="box-class pos">● Positive (4–5★)</span>
+              <span style="font-size:11px; color:#34d399; font-weight:700;">26 Words</span>
+            </div>
+            <div class="visual-bar-container">
+              <div class="iqr-range iqr-pos"></div>
+              <div class="median-line med-pos"></div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="stat-label">Median</div><div class="stat-val">26 w</div></div>
+              <div class="stat-cell"><div class="stat-label">IQR (25–75%)</div><div class="stat-val">16–45 w</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-banner">
+          <span>📊 <strong>Linguistic Trend:</strong> Dissatisfied customers write +19.2% longer reviews than satisfied customers to explain specific complaints.</span>
+          <span style="color:#a855f7; font-weight:700;">N = 18,000 Sample</span>
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>

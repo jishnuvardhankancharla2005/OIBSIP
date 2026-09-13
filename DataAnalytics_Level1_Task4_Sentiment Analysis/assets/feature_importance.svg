@@ -1,0 +1,227 @@
+<svg fill="none" viewBox="0 0 900 360" width="100%" height="360" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <style>
+        .feature-card {
+          background: #0d0c1d;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          width: 900px;
+          height: 360px;
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+          box-sizing: border-box;
+          padding: 22px 28px;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .bg-pattern {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+          background-size: 16px 16px;
+          pointer-events: none;
+        }
+
+        .header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          z-index: 2;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          padding-bottom: 10px;
+        }
+
+        .header-title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #f8fafc;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .dual-columns {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+          position: relative;
+          z-index: 2;
+          margin-top: 10px;
+        }
+
+        .col-box {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .col-title {
+          font-size: 12px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 2px;
+        }
+
+        .col-title.pos { color: #34d399; }
+        .col-title.neg { color: #f87171; }
+
+        .term-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .term-name {
+          width: 90px;
+          font-size: 11px;
+          font-weight: 600;
+          color: #e2e8f0;
+          text-align: right;
+          font-family: 'JetBrains Mono', monospace;
+        }
+
+        .bar-track {
+          flex: 1;
+          height: 18px;
+          background: rgba(255, 255, 255, 0.04);
+          border-radius: 4px;
+          overflow: hidden;
+          position: relative;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bar-fill {
+          height: 100%;
+          border-radius: 3px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: 6px;
+          font-size: 10px;
+          font-weight: 700;
+          color: #0f172a;
+          box-sizing: border-box;
+          animation: growBar 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes growBar {
+          from { width: 0% !important; }
+        }
+
+        /* Positive Bars */
+        .bar-pos-1 { width: 95%; background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-pos-2 { width: 92%; background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-pos-3 { width: 82%; background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-pos-4 { width: 79%; background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-pos-5 { width: 73%; background: linear-gradient(90deg, #059669, #34d399); }
+        .bar-pos-6 { width: 69%; background: linear-gradient(90deg, #059669, #34d399); }
+
+        /* Negative Bars */
+        .bar-neg-1 { width: 92%; background: linear-gradient(90deg, #dc2626, #f87171); }
+        .bar-neg-2 { width: 84%; background: linear-gradient(90deg, #dc2626, #f87171); }
+        .bar-neg-3 { width: 81%; background: linear-gradient(90deg, #dc2626, #f87171); }
+        .bar-neg-4 { width: 80%; background: linear-gradient(90deg, #dc2626, #f87171); }
+        .bar-neg-5 { width: 75%; background: linear-gradient(90deg, #dc2626, #f87171); }
+        .bar-neg-6 { width: 74%; background: linear-gradient(90deg, #dc2626, #f87171); }
+
+        .footer-caption {
+          font-size: 11px;
+          color: #94a3b8;
+          text-align: center;
+          position: relative;
+          z-index: 2;
+          background: rgba(255, 255, 255, 0.02);
+          padding: 6px 12px;
+          border-radius: 6px;
+          border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+      </style>
+      
+      <div class="feature-card">
+        <div class="bg-pattern"></div>
+
+        <div class="header-row">
+          <div class="header-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Logistic Regression Feature Coefficients (Sentiment Drivers)
+          </div>
+          <span style="font-size:11px; color:#94a3b8; font-weight:600;">TF-IDF Unigrams + Bigrams (Top 5,000)</span>
+        </div>
+
+        <div class="dual-columns">
+          <!-- Positive Column -->
+          <div class="col-box">
+            <div class="col-title pos">🟢 Top Positive Predictors</div>
+            
+            <div class="term-row">
+              <span class="term-name">great</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-1">+4.64</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">love</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-2">+4.51</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">best</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-3">+3.97</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">perfect</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-4">+3.84</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">delicious</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-5">+3.58</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">excellent</span>
+              <div class="bar-track"><div class="bar-fill bar-pos-6">+3.39</div></div>
+            </div>
+          </div>
+
+          <!-- Negative Column -->
+          <div class="col-box">
+            <div class="col-title neg">🔴 Top Negative Predictors</div>
+            
+            <div class="term-row">
+              <span class="term-name">terrible</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-1">+3.10</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">awful</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-2">+2.85</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">even</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-3">+2.73</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">worst</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-4">+2.71</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">disappointing</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-5">+2.55</div></div>
+            </div>
+            <div class="term-row">
+              <span class="term-name">horrible</span>
+              <div class="bar-track"><div class="bar-fill bar-neg-6">+2.52</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-caption">
+          💡 <strong>Interpretability Insight:</strong> High positive coefficients represent strong affirmative product sentiment, while high negative weights detect visceral dissatisfaction and defective product experiences.
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>
