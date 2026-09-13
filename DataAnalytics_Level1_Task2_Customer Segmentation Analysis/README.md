@@ -248,7 +248,7 @@ To reproduce the Python clustering pipeline, exploratory data analysis, and char
 - **Task:** Level 1, Task 2 — Customer Segmentation Analysis
 - **Domain:** Global E-Commerce & Retail Intelligence
 - **Dataset:** `global_ecommerce_sales.csv`
-- **Developer:** Jishnu Vardhan Kancharla
+- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
 
 <div align="center">
   <sub>Built with ❤️ for Oasis Infobyte Data Analytics Internship</sub>
