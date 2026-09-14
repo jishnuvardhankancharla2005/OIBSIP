@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F080D"/>
+      <stop offset="40%" stop-color="#1E101B"/>
+      <stop offset="80%" stop-color="#160D14"/>
+      <stop offset="100%" stop-color="#0A0509"/>
+    </linearGradient>
+
+    <radialGradient id="glowWine" cx="25%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#7B3F61" stop-opacity="0.38"/>
+      <stop offset="60%" stop-color="#7B3F61" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#7B3F61" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glowGold" cx="85%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#D3A24C" stop-opacity="0.28"/>
+      <stop offset="50%" stop-color="#D3A24C" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#D3A24C" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="textGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F3E5AB"/>
+      <stop offset="50%" stop-color="#D3A24C"/>
+      <stop offset="100%" stop-color="#E5C158"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#241520" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#1A0E17" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7B3F61" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#7B3F61"/>
+      <stop offset="50%" stop-color="#D3A24C"/>
+      <stop offset="75%" stop-color="#6FA07E"/>
+      <stop offset="100%" stop-color="#6FA07E" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <filter id="glowFilter">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      @keyframes pulseOrb {
+        0%, 100% { opacity: 0.35; transform: scale(1) translate(0, 0); }
+        50% { opacity: 0.65; transform: scale(1.12) translate(-10px, 8px); }
+      }
+      @keyframes floatParticle {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+        50% { transform: translateY(-15px) rotate(180deg); opacity: 0.85; }
+      }
+      @keyframes shimmerBorder {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: 600; }
+      }
+      @keyframes badgePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+      .anim-orb-1 { animation: pulseOrb 8s ease-in-out infinite; transform-origin: 300px 120px; }
+      .anim-orb-2 { animation: pulseOrb 10s ease-in-out infinite reverse; transform-origin: 950px 100px; }
+      .p1 { animation: floatParticle 6s ease-in-out infinite; }
+      .p2 { animation: floatParticle 8s ease-in-out infinite 1.5s; }
+      .p3 { animation: floatParticle 7s ease-in-out infinite 3s; }
+      .p4 { animation: floatParticle 9s ease-in-out infinite 0.5s; }
+      .badge-glow { animation: badgePulse 4s ease-in-out infinite; }
+      .title-font { font-family: 'Fraunces', 'Georgia', serif; }
+      .ui-font { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .mono-font { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="420" rx="20" fill="url(#bgGrad)" stroke="rgba(237,227,231,0.12)" stroke-width="1.5"/>
+
+  <!-- Glowing Animated Orbs -->
+  <circle cx="280" cy="120" r="260" fill="url(#glowWine)" class="anim-orb-1"/>
+  <circle cx="960" cy="110" r="240" fill="url(#glowGold)" class="anim-orb-2"/>
+
+  <!-- Subtle Ambient Grid Lines -->
+  <g stroke="rgba(237,227,231,0.035)" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="420"/>
+    <line x1="300" y1="0" x2="300" y2="420"/>
+    <line x1="500" y1="0" x2="500" y2="420"/>
+    <line x1="700" y1="0" x2="700" y2="420"/>
+    <line x1="900" y1="0" x2="900" y2="420"/>
+    <line x1="1100" y1="0" x2="1100" y2="420"/>
+    <line x1="0" y1="70" x2="1200" y2="70"/>
+    <line x1="0" y1="140" x2="1200" y2="140"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="280" x2="1200" y2="280"/>
+    <line x1="0" y1="350" x2="1200" y2="350"/>
+  </g>
+
+  <!-- Ambient Floating Chemical / Wine Node Particles -->
+  <g fill="none">
+    <g class="p1">
+      <circle cx="140" cy="130" r="4" fill="#D3A24C" opacity="0.6"/>
+      <line x1="140" y1="130" x2="190" y2="90" stroke="rgba(211,162,76,0.25)" stroke-width="1"/>
+      <circle cx="190" cy="90" r="3" fill="#7B3F61" opacity="0.7"/>
+    </g>
+    <g class="p2">
+      <circle cx="1060" cy="270" r="4.5" fill="#6FA07E" opacity="0.7"/>
+      <line x1="1060" y1="270" x2="1120" y2="220" stroke="rgba(111,160,126,0.3)" stroke-width="1"/>
+      <circle cx="1120" cy="220" r="3" fill="#D3A24C" opacity="0.5"/>
+    </g>
+    <g class="p3">
+      <circle cx="80" cy="310" r="3" fill="#B85C4F" opacity="0.6"/>
+      <circle cx="1110" cy="80" r="3.5" fill="#D3A24C" opacity="0.7"/>
+    </g>
+    <g class="p4">
+      <polygon points="620,38 625,48 635,50 627,58 630,68 620,62 610,68 613,58 605,50 615,48" fill="#D3A24C" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- Top Decorative Accent Line -->
+  <rect x="150" y="24" width="900" height="2" fill="url(#accentLine)"/>
+
+  <!-- Eyebrow Category -->
+  <g class="ui-font">
+    <rect x="64" y="52" width="220" height="28" rx="14" fill="#291624" stroke="rgba(211,162,76,0.35)" stroke-width="1"/>
+    <circle cx="78" cy="66" r="4" fill="#D3A24C"/>
+    <text x="92" y="71" font-size="11.5" font-weight="600" fill="#EDE3E7" letter-spacing="1.2">MACHINE LEARNING &amp; EDA</text>
+  </g>
+
+  <!-- Main Hero Title -->
+  <text x="64" y="130" class="title-font" font-size="44" font-weight="600" fill="#EDE3E7" letter-spacing="-0.5">
+    The Tasting Room <tspan fill="url(#textGold)" font-style="italic">— Wine Quality</tspan>
+  </text>
+  <text x="64" y="176" class="title-font" font-size="28" font-weight="400" fill="#C4AEBA">
+    Physicochemical Classification, Benchmarking &amp; Live Inference
+  </text>
+
+  <!-- Subtitle / Tagline -->
+  <text x="64" y="215" class="ui-font" font-size="14.5" fill="#A8929F" font-weight="400">
+    Comprehensive Data Science &amp; Multi-Model Benchmarking (Random Forest · SGD · SVC) on 1,599 UCI Red Wine samples.
+  </text>
+
+  <!-- Key Metrics Floating Ribbon -->
+  <g transform="translate(64, 252)" class="ui-font" filter="url(#subtleShadow)">
+    
+    <!-- Card 1: Random Forest Best Acc -->
+    <g transform="translate(0, 0)">
+      <rect width="248" height="96" rx="14" fill="url(#cardGrad)" stroke="rgba(211,162,76,0.4)" stroke-width="1.2"/>
+      <text x="18" y="28" font-size="11" font-weight="600" fill="#A8929F" letter-spacing="0.8">RANDOM FOREST ACCURACY</text>
+      <text x="18" y="66" class="title-font" font-size="34" font-weight="600" fill="#D3A24C">86.6%</text>
+      <text x="122" y="64" class="mono-font" font-size="11.5" fill="#6FA07E" font-weight="600">★ Top Performer</text>
+      <text x="18" y="85" font-size="11" fill="#8C7482">200 Estimators · Stratified Split</text>
+    </g>
+
+    <!-- Card 2: Key Signal Driver -->
+    <g transform="translate(264, 0)">
+      <rect width="248" height="96" rx="14" fill="url(#cardGrad)" stroke="rgba(237,227,231,0.12)" stroke-width="1"/>
+      <text x="18" y="28" font-size="11" font-weight="600" fill="#A8929F" letter-spacing="0.8">DOMINANT CHEMICAL SIGNAL</text>
+      <text x="18" y="66" class="title-font" font-size="30" font-weight="600" fill="#EDE3E7">Alcohol</text>
+      <text x="135" y="64" class="mono-font" font-size="12" fill="#D3A24C">r = +0.48</text>
+      <text x="18" y="85" font-size="11" fill="#8C7482">14.8% Gini Model Importance</text>
+    </g>
+
+    <!-- Card 3: Top Negative Defect -->
+    <g transform="translate(528, 0)">
+      <rect width="248" height="96" rx="14" fill="url(#cardGrad)" stroke="rgba(237,227,231,0.12)" stroke-width="1"/>
+      <text x="18" y="28" font-size="11" font-weight="600" fill="#A8929F" letter-spacing="0.8">STRONGEST DEFECT DRIVER</text>
+      <text x="18" y="66" class="title-font" font-size="28" font-weight="600" fill="#EDE3E7">Volatile Acidity</text>
+      <text x="18" y="85" class="mono-font" font-size="11.5" fill="#B85C4F">r = -0.39 (Vinegar Defect)</text>
+    </g>
+
+    <!-- Card 4: Architecture / Deployment -->
+    <g transform="translate(792, 0)">
+      <rect width="280" height="96" rx="14" fill="url(#cardGrad)" stroke="rgba(111,160,126,0.35)" stroke-width="1.2"/>
+      <text x="18" y="28" font-size="11" font-weight="600" fill="#A8929F" letter-spacing="0.8">SURROGATE INFERENCE</text>
+      <text x="18" y="64" class="title-font" font-size="26" font-weight="600" fill="#6FA07E">Zero-Latency</text>
+      <text x="18" y="85" font-size="11" fill="#8C7482">30-Tree Client-Side Forest</text>
+    </g>
+  </g>
+
+  <!-- Bottom Badges Row -->
+  <g transform="translate(64, 380)" class="ui-font" font-size="11" font-weight="500">
+    <g transform="translate(0, 0)">
+      <rect width="130" height="22" rx="11" fill="#1C1019" stroke="rgba(237,227,231,0.15)"/>
+      <circle cx="12" cy="11" r="3" fill="#D3A24C"/>
+      <text x="22" y="15" fill="#C4AEBA">1,599 Samples</text>
+    </g>
+    <g transform="translate(142, 0)">
+      <rect width="130" height="22" rx="11" fill="#1C1019" stroke="rgba(237,227,231,0.15)"/>
+      <circle cx="12" cy="11" r="3" fill="#7B3F61"/>
+      <text x="22" y="15" fill="#C4AEBA">11 Physicochemicals</text>
+    </g>
+    <g transform="translate(284, 0)">
+      <rect width="150" height="22" rx="11" fill="#1C1019" stroke="rgba(237,227,231,0.15)"/>
+      <circle cx="12" cy="11" r="3" fill="#6FA07E"/>
+      <text x="22" y="15" fill="#C4AEBA">Low / Med / High Bins</text>
+    </g>
+    <g transform="translate(446, 0)">
+      <rect width="160" height="22" rx="11" fill="#1C1019" stroke="rgba(237,227,231,0.15)"/>
+      <circle cx="12" cy="11" r="3" fill="#D3A24C"/>
+      <text x="22" y="15" fill="#C4AEBA">6 Key Drivers Mode</text>
+    </g>
+    <g transform="translate(618, 0)">
+      <rect width="170" height="22" rx="11" fill="#1C1019" stroke="rgba(237,227,231,0.15)"/>
+      <circle cx="12" cy="11" r="3" fill="#6FA07E"/>
+      <text x="22" y="15" fill="#C4AEBA">Interactive Dashboard</text>
+    </g>
+  </g>
+
+  <!-- Right Decorative Wine Glass / Chemistry Graphic -->
+  <g transform="translate(1080, 70)" opacity="0.35" stroke="#EDE3E7" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <path d="M 0,0 C 0,40 40,40 40,0 Z" fill="rgba(123,63,97,0.4)"/>
+    <line x1="20" y1="40" x2="20" y2="75"/>
+    <ellipse cx="20" cy="75" rx="18" ry="4"/>
+  </g>
+</svg>

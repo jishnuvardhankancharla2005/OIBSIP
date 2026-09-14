@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 640" width="100%" height="100%">
+  <defs>
+    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F080D"/>
+      <stop offset="100%" stop-color="#160D14"/>
+    </linearGradient>
+
+    <linearGradient id="nodeGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#261722"/>
+      <stop offset="100%" stop-color="#1B0E17"/>
+    </linearGradient>
+
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D3A24C"/>
+      <stop offset="100%" stop-color="#F5CF78"/>
+    </linearGradient>
+
+    <filter id="boxShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <style>
+      .arch-title { font-family: 'Fraunces', 'Georgia', serif; }
+      .arch-font { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .arch-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+      .step-num { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; fill: #D3A24C; }
+      .card-title { font-size: 14px; font-weight: 600; fill: #EDE3E7; }
+      .card-desc { font-size: 11.5px; fill: #A8929F; line-height: 1.5; }
+      .pill { font-size: 10px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="640" rx="16" fill="url(#archBg)" stroke="rgba(237,227,231,0.1)" stroke-width="1.5"/>
+
+  <!-- Subtle Grid -->
+  <g stroke="rgba(237,227,231,0.03)" stroke-width="1">
+    <line x1="0" y1="160" x2="1100" y2="160"/>
+    <line x1="0" y1="320" x2="1100" y2="320"/>
+    <line x1="0" y1="480" x2="1100" y2="480"/>
+    <line x1="366" y1="0" x2="366" y2="640"/>
+    <line x1="733" y1="0" x2="733" y2="640"/>
+  </g>
+
+  <!-- Diagram Header -->
+  <g transform="translate(50, 48)" class="arch-font">
+    <text x="0" y="0" class="arch-title" font-size="24" font-weight="600" fill="#EDE3E7">System Architecture &amp; Machine Learning Pipeline</text>
+    <text x="0" y="24" font-size="13" fill="#A8929F">End-to-end flow from physicochemical data ingestion to multi-model training and live interactive surrogate inference.</text>
+  </g>
+
+  <!-- Flow Connectors (Lines and Arrows) -->
+  <!-- Top Row: Box 1 -> Box 2 -> Box 3 -->
+  <path d="M 340 185 L 390 185" stroke="#D3A24C" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  <polygon points="390,181 398,185 390,189" fill="#D3A24C"/>
+
+  <path d="M 700 185 L 750 185" stroke="#D3A24C" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  <polygon points="750,181 758,185 750,189" fill="#D3A24C"/>
+
+  <!-- Row 1 to Row 2: Box 3 down to Box 4 -->
+  <path d="M 900 250 L 900 330 L 890 330" stroke="#D3A24C" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  <polygon points="890,326 882,330 890,334" fill="#D3A24C"/>
+
+  <!-- Bottom Row: Box 4 -> Box 5 -> Box 6 -->
+  <path d="M 540 435 L 490 435" stroke="#D3A24C" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  <polygon points="490,431 482,435 490,439" fill="#D3A24C"/>
+
+  <path d="M 180 435 L 180 495 L 190 495" stroke="#D3A24C" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  <polygon points="190,491 198,495 190,499" fill="#D3A24C"/>
+
+  <!-- ================= STAGE 1: Data Ingestion ================= -->
+  <g transform="translate(50, 110)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="290" height="150" rx="12" fill="url(#nodeGrad1)" stroke="rgba(237,227,231,0.15)" stroke-width="1.2"/>
+    <rect x="0" y="0" width="290" height="6" rx="3" fill="#7B3F61"/>
+    <text x="20" y="32" class="step-num">01</text>
+    <text x="54" y="32" class="card-title">Data Ingestion &amp; Audit</text>
+    <text x="20" y="60" class="card-desc">• 1,599 Red Wine samples from UCI repository</text>
+    <text x="20" y="80" class="card-desc">• 11 continuous physicochemical features</text>
+    <text x="20" y="100" class="card-desc">• 0 missing / null values verified</text>
+    <!-- Tag -->
+    <rect x="20" y="118" width="94" height="20" rx="10" fill="#291A24" stroke="rgba(123,63,97,0.5)"/>
+    <text x="32" y="132" class="pill" fill="#EDE3E7">winequality-red.csv</text>
+  </g>
+
+  <!-- ================= STAGE 2: Binning & Imbalance ================= -->
+  <g transform="translate(410, 110)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="290" height="150" rx="12" fill="url(#nodeGrad1)" stroke="rgba(211,162,76,0.35)" stroke-width="1.2"/>
+    <rect x="0" y="0" width="290" height="6" rx="3" fill="#D3A24C"/>
+    <text x="20" y="32" class="step-num">02</text>
+    <text x="54" y="32" class="card-title">Class Binning &amp; Target</text>
+    <text x="20" y="60" class="card-desc">• Raw Quality (Scores 3-8) binned into 3 tiers:</text>
+    <text x="30" y="80" class="card-desc"><tspan fill="#B85C4F">■ Low (3-4)</tspan>: 63 wines (3.9%)</text>
+    <text x="30" y="98" class="card-desc"><tspan fill="#D3A24C">■ Medium (5-6)</tspan>: 1,319 wines (82.5%)</text>
+    <text x="30" y="116" class="card-desc"><tspan fill="#6FA07E">■ High (7-8)</tspan>: 217 wines (13.6%)</text>
+  </g>
+
+  <!-- ================= STAGE 3: Preprocessing ================= -->
+  <g transform="translate(770, 110)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="280" height="150" rx="12" fill="url(#nodeGrad1)" stroke="rgba(237,227,231,0.15)" stroke-width="1.2"/>
+    <rect x="0" y="0" width="280" height="6" rx="3" fill="#6FA07E"/>
+    <text x="20" y="32" class="step-num">03</text>
+    <text x="54" y="32" class="card-title">Preprocessing &amp; Scaling</text>
+    <text x="20" y="60" class="card-desc">• Stratified 80:20 Train/Test Split</text>
+    <text x="30" y="78" class="card-desc">1,279 Train samples · 320 Test samples</text>
+    <text x="20" y="98" class="card-desc">• StandardScaler (zero mean, unit variance)</text>
+    <text x="20" y="118" class="card-desc">• Preserves minority class distribution</text>
+  </g>
+
+  <!-- ================= STAGE 4: Model Benchmarking ================= -->
+  <g transform="translate(560, 360)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="490" height="150" rx="12" fill="url(#nodeGrad1)" stroke="rgba(211,162,76,0.5)" stroke-width="1.4"/>
+    <rect x="0" y="0" width="490" height="6" rx="3" fill="#D3A24C"/>
+    <text x="20" y="32" class="step-num">04</text>
+    <text x="54" y="32" class="card-title">Multi-Classifier Benchmarking</text>
+
+    <!-- Model 1 -->
+    <g transform="translate(20, 50)">
+      <rect width="138" height="85" rx="8" fill="#1F111B" stroke="rgba(211,162,76,0.3)"/>
+      <text x="12" y="22" font-size="12" font-weight="600" fill="#D3A24C">Random Forest</text>
+      <text x="12" y="42" class="arch-mono" font-size="14" font-weight="600" fill="#EDE3E7">86.6% Acc</text>
+      <text x="12" y="60" font-size="10" fill="#A8929F">200 Estimators</text>
+      <text x="12" y="74" font-size="10" fill="#6FA07E">★ Best Overall</text>
+    </g>
+
+    <!-- Model 2 -->
+    <g transform="translate(170, 50)">
+      <rect width="138" height="85" rx="8" fill="#1F111B" stroke="rgba(237,227,231,0.1)"/>
+      <text x="12" y="22" font-size="12" font-weight="600" fill="#EDE3E7">SVC (RBF)</text>
+      <text x="12" y="42" class="arch-mono" font-size="14" font-weight="600" fill="#EDE3E7">84.4% Acc</text>
+      <text x="12" y="60" font-size="10" fill="#A8929F">C=1.0, gamma='scale'</text>
+      <text x="12" y="74" font-size="10" fill="#C4AEBA">0.810 Weighted F1</text>
+    </g>
+
+    <!-- Model 3 -->
+    <g transform="translate(320, 50)">
+      <rect width="148" height="85" rx="8" fill="#1F111B" stroke="rgba(237,227,231,0.1)"/>
+      <text x="12" y="22" font-size="12" font-weight="600" fill="#EDE3E7">SGD Classifier</text>
+      <text x="12" y="42" class="arch-mono" font-size="14" font-weight="600" fill="#EDE3E7">82.5% Acc</text>
+      <text x="12" y="60" font-size="10" fill="#A8929F">Linear SGD Loss</text>
+      <text x="12" y="74" font-size="10" fill="#C4AEBA">0.796 Weighted F1</text>
+    </g>
+  </g>
+
+  <!-- ================= STAGE 5: Explainability & Insights ================= -->
+  <g transform="translate(200, 360)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="320" height="150" rx="12" fill="url(#nodeGrad1)" stroke="rgba(237,227,231,0.15)" stroke-width="1.2"/>
+    <rect x="0" y="0" width="320" height="6" rx="3" fill="#B85C4F"/>
+    <text x="20" y="32" class="step-num">05</text>
+    <text x="54" y="32" class="card-title">Explainability &amp; Analytics</text>
+    <text x="20" y="60" class="card-desc">• <tspan fill="#D3A24C" font-weight="600">Alcohol (14.8%)</tspan> &amp; <tspan fill="#D3A24C" font-weight="600">Volatile Acidity (12.8%)</tspan></text>
+    <text x="30" y="78" class="card-desc">identified as dominant predictive signals</text>
+    <text x="20" y="98" class="card-desc">• Pearson Correlation Matrix &amp; Gini Importance</text>
+    <text x="20" y="118" class="card-desc">• Confusion matrix reveals minority class bottleneck</text>
+  </g>
+
+  <!-- ================= STAGE 6: Interactive Deployment ================= -->
+  <g transform="translate(200, 525)" filter="url(#boxShadow)" class="arch-font">
+    <rect width="850" height="95" rx="12" fill="url(#nodeGrad1)" stroke="rgba(111,160,126,0.45)" stroke-width="1.4"/>
+    <rect x="0" y="0" width="850" height="6" rx="3" fill="#6FA07E"/>
+    <text x="20" y="32" class="step-num">06</text>
+    <text x="54" y="32" class="card-title">Interactive Deployment — Client-Side RF Surrogate &amp; Visual Dashboard</text>
+    <text x="20" y="58" class="card-desc">• <tspan fill="#6FA07E" font-weight="600">Zero-latency 30-tree Random Forest</tspan> executes purely inside the browser using JavaScript arrays &amp; threshold routing.</text>
+    <text x="20" y="76" class="card-desc">• <tspan fill="#D3A24C" font-weight="600">⭐ 6 Key Drivers Mode</tspan> simplifies input while preserving full predictive fidelity · Dynamic radar fingerprinting &amp; probability gauge.</text>
+  </g>
+</svg>

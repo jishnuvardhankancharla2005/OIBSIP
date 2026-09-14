@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Appraisal Desk — House Price Regression</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>window.Chart || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/script>')</script>
+<style>
+  :root{
+    --bg:#10151F; --bg-deep:#0A0E15; --panel:#17202E; --panel-alt:#1E2838;
+    --border:rgba(237,234,226,0.09); --border-strong:rgba(237,234,226,0.17);
+    --text:#EDEAE2; --text-dim:#B7C0CC; --text-mute:#78859A;
+    --copper:#CB8858; --copper-dim:#6E4A2E;
+    --sage:#7FA88C; --sage-dim:#3B5647;
+    --slate:#5C7A99; --slate-dim:#2E3F52;
+    --brick:#B85C4F; --brick-dim:#5C2E27;
+    --radius-lg:18px; --radius-sm:8px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif;
+    font-feature-settings:"tnum" 1,"lnum" 1; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:var(--copper); color:#1A0E06; }
+  h1,h2,h3,.serif{ font-family:'Fraunces',serif; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{ color:inherit; }
+
+  .app{ display:grid; grid-template-columns:264px 1fr; min-height:100vh; }
+  .rail{ position:sticky; top:0; height:100vh; background:var(--bg-deep); border-right:1px solid var(--border);
+    padding:28px 22px; display:flex; flex-direction:column; gap:26px; overflow-y:auto; }
+  .brand{ display:flex; flex-direction:column; gap:4px; }
+  .brand .mark{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; }
+  .brand .mark em{ color:var(--copper); font-style:italic; font-weight:500; }
+  .brand .tag{ font-size:12.5px; color:var(--text-mute); line-height:1.5; }
+
+  nav.sections{ display:flex; flex-direction:column; gap:2px; }
+  nav.sections a{ text-decoration:none; color:var(--text-dim); font-size:14px; padding:9px 10px; border-radius:8px;
+    display:flex; align-items:center; gap:10px; transition:background 0.15s ease, color 0.15s ease; }
+  nav.sections a:hover{ background:var(--panel-alt); color:var(--text); }
+  nav.sections a.active{ background:var(--panel-alt); color:var(--copper); }
+  nav.sections a .dot{ width:5px; height:5px; border-radius:50%; background:var(--text-mute); flex:none; }
+  nav.sections a.active .dot{ background:var(--copper); }
+
+  .rail-cta{ margin-top:auto; padding-top:20px; border-top:1px solid var(--border); }
+  .rail-cta a{ text-decoration:none; display:block; background:var(--copper); color:#1A0E06; text-align:center;
+    padding:12px 14px; border-radius:12px; font-weight:600; font-size:13.5px; }
+
+  main{ padding:0 0 100px 0; }
+  section{ padding:64px 56px 8px 56px; max-width:1220px; scroll-margin-top:20px; }
+  section.tight{ padding-top:36px; }
+
+  .eyebrow-line{ display:flex; align-items:baseline; gap:14px; margin-bottom:6px; }
+  .section-index{ font-size:13px; color:var(--copper); font-weight:600; }
+  .section-head h2{ font-size:30px; font-weight:500; margin:0 0 10px 0; line-height:1.2; }
+  .section-head p.lede{ font-size:15px; color:var(--text-dim); max-width:680px; line-height:1.6; margin:0 0 32px 0; }
+
+  .insight{ font-size:14px; color:var(--text-dim); line-height:1.65; max-width:740px; padding:16px 0 4px 0; }
+  .insight strong{ color:var(--text); font-weight:600; }
+  .insight .flag{ color:var(--copper); font-weight:600; }
+  .insight .flag.pos{ color:var(--sage); }
+  .insight .flag.neg{ color:var(--brick); }
+
+  .hero{ padding:72px 56px 40px 56px; border-bottom:1px solid var(--border);
+    background: radial-gradient(ellipse 900px 400px at 15% -10%, rgba(203,136,88,0.12), transparent 60%),
+                radial-gradient(ellipse 700px 500px at 100% 0%, rgba(127,168,140,0.08), transparent 60%); }
+  .hero h1{ font-size:44px; font-weight:500; line-height:1.08; margin:0 0 14px 0; max-width:820px; }
+  .hero h1 em{ font-style:italic; color:var(--copper); font-weight:400; }
+  .hero p.sub{ font-size:16px; color:var(--text-dim); max-width:620px; line-height:1.65; margin:0 0 40px 0; }
+
+  .kpi-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border);
+    border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+  .kpi{ background:var(--panel); padding:24px 24px 20px 24px; display:flex; flex-direction:column; gap:10px; }
+  .kpi .label{ font-size:12.5px; color:var(--text-mute); font-weight:500; }
+  .kpi .value{ font-family:'Fraunces',serif; font-size:32px; font-weight:500; line-height:1; }
+  .kpi .delta{ font-size:12px; color:var(--text-mute); }
+
+  .grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:24px; align-items:stretch; }
+  .grid-2.even{ grid-template-columns:1fr 1fr; }
+  .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-lg);
+    padding:22px 24px 20px 24px; display:flex; flex-direction:column; }
+  .card h3{ font-size:14px; font-weight:600; margin:0 0 3px 0; color:var(--text); }
+  .card .sub{ font-size:12.5px; color:var(--text-mute); margin-bottom:16px; }
+  .card .chart-wrap{ position:relative; flex:1; min-height:240px; }
+  .card .chart-wrap.tall{ min-height:340px; }
+
+  /* heatmap */
+  .heatmap{ display:grid; gap:3px; }
+  .heatmap .row-label, .heatmap .col-label{ font-size:11px; color:var(--text-mute); display:flex; align-items:center; }
+  .heatmap .col-label{ justify-content:center; text-align:center; padding-bottom:4px; }
+  .heatmap .cell{ border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px;
+    font-weight:600; min-height:44px; }
+
+  /* model compare cards */
+  .compare-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .compare-card{ background:var(--panel-alt); border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+    text-align:center; }
+  .compare-card.best{ border-color:var(--copper); }
+  .compare-card .cname{ font-size:12.5px; color:var(--text-mute); margin-bottom:8px; }
+  .compare-card .cr2{ font-family:'Fraunces',serif; font-size:24px; font-weight:600; }
+  .compare-card .crmse{ font-size:11.5px; color:var(--text-mute); margin-top:4px; }
+  .compare-card .badge{ display:inline-block; margin-top:8px; font-size:10.5px; padding:2px 8px; border-radius:10px;
+    background:var(--copper); color:#1A0E06; font-weight:600; }
+
+  /* PREDICTION TOOL */
+  /* PREDICTION TOOL */
+  .predict-layout{ display:grid; grid-template-columns:350px 1fr; gap:24px; align-items:start; }
+  .predict-form{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-lg); padding:22px; }
+  .predict-form h3{ font-size:14px; margin:0 0 4px 0; }
+  .predict-form .sub{ font-size:12px; color:var(--text-mute); margin-bottom:16px; }
+
+  /* Feature Mode Pill Toggle */
+  .feature-mode-toggle{ display:flex; background:var(--panel-alt); border:1px solid var(--border); border-radius:10px; padding:3px; margin-bottom:16px; gap:4px; }
+  .mode-pill{ flex:1; padding:7px 10px; border-radius:7px; border:none; background:transparent; color:var(--text-mute); font-size:11.5px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s ease; display:flex; align-items:center; justify-content:center; gap:5px; }
+  .mode-pill.active{ background:var(--panel); color:var(--copper); box-shadow:0 1px 3px rgba(0,0,0,0.25); }
+  .mode-pill:hover:not(.active){ color:var(--text); }
+
+  .field{ margin-bottom:15px; }
+  .field-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .field-title-wrap{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .field-name{ font-size:12.5px; color:var(--text-dim); font-weight:500; }
+  .impact-badge{ font-size:9.5px; padding:2px 6px; border-radius:4px; font-weight:600; letter-spacing:0.2px; }
+  .impact-badge.primary{ background:rgba(203,136,88,0.2); color:var(--copper); }
+  .impact-badge.high{ background:rgba(127,168,140,0.18); color:var(--sage); }
+  .impact-badge.moderate{ background:rgba(92,122,153,0.22); color:var(--slate); }
+  .impact-badge.minor{ background:rgba(237,234,226,0.06); color:var(--text-mute); }
+
+  .field label{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-dim); margin-bottom:6px; }
+  .field .fval{ color:var(--copper); font-weight:600; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .field input[type="range"]{ width:100%; accent-color:var(--copper); cursor:pointer; }
+
+  .held-note{ font-size:11.5px; color:var(--text-mute); background:var(--panel-alt); border:1px dashed var(--border-strong); border-radius:8px; padding:10px 12px; margin-top:14px; line-height:1.5; }
+  .held-note strong{ color:var(--text-dim); }
+
+  .btn-row{ display:flex; gap:10px; margin-top:18px; }
+  .btn{ flex:1; padding:11px 14px; border-radius:10px; border:1px solid var(--border-strong); font-size:13px;
+    font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s ease; }
+  .btn-primary{ background:var(--copper); color:#1A0E06; border-color:var(--copper); }
+  .btn-primary:hover{ opacity:0.9; }
+  .btn-secondary{ background:transparent; color:var(--text-dim); }
+  .btn-secondary:hover{ border-color:var(--sage); color:var(--text); }
+
+  .predict-result{ display:flex; flex-direction:column; gap:20px; }
+  .price-display{ background:linear-gradient(135deg, var(--panel-alt), var(--panel)); border:1px solid var(--border);
+    border-radius:var(--radius-lg); padding:28px 30px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:16px; }
+  .price-display .plabel{ font-size:13px; color:var(--text-mute); margin-bottom:6px; }
+  .price-display .pvalue{ font-family:'Fraunces',serif; font-size:48px; font-weight:600; color:var(--copper); line-height:1; }
+  .price-display .pctx{ font-size:13px; color:var(--text-dim); max-width:260px; text-align:right; }
+  .price-display .pctx b{ color:var(--sage); }
+
+  footer{ padding:40px 56px 60px 56px; color:var(--text-mute); font-size:12.5px; border-top:1px solid var(--border);
+    margin-top:40px; max-width:1220px; }
+
+  @media (max-width:980px){
+    .app{ grid-template-columns:1fr; }
+    .rail{ position:relative; height:auto; }
+    section{ padding:44px 22px 8px 22px; }
+    .hero{ padding:44px 22px 30px 22px; }
+    .kpi-grid{ grid-template-columns:repeat(2,1fr); }
+    .grid-2, .grid-2.even, .grid-3, .compare-grid, .predict-layout{ grid-template-columns:1fr; }
+    nav.sections{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; scroll-behavior:auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">The Appraisal <em>Desk</em></div>
+      <div class="tag">House Price Regression — 300 homes, linear model</div>
+    </div>
+
+    <nav class="sections" id="sectionNav">
+      <a href="#overview" class="active"><span class="dot"></span>Overview</a>
+      <a href="#correlation"><span class="dot"></span>Correlation</a>
+      <a href="#performance"><span class="dot"></span>Model Fit</a>
+      <a href="#coefficients"><span class="dot"></span>Coefficients</a>
+      <a href="#compare"><span class="dot"></span>Regularisation</a>
+      <a href="#predict"><span class="dot"></span>Price Predictor</a>
+    </nav>
+
+    <div class="rail-cta"><a href="#predict">Try the price predictor →</a></div>
+  </aside>
+
+  <main>
+    <section id="overview" class="hero">
+      <h1>Eight numbers,<br>one <em>appraisal</em>.</h1>
+      <p class="sub">A linear regression model trained on 300 houses predicts sale price from living area, quality, and five other structural features — explaining 97% of price variation on data it has never seen.</p>
+
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi">
+          <div class="label">R² score (test set)</div>
+          <div class="value" id="kpiR2">0</div>
+          <div class="delta">Share of price variance explained</div>
+        </div>
+        <div class="kpi">
+          <div class="label">RMSE</div>
+          <div class="value" id="kpiRmse">$0</div>
+          <div class="delta" id="kpiRmseDelta">&nbsp;</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Strongest predictor</div>
+          <div class="value" id="kpiTopFeature">—</div>
+          <div class="delta" id="kpiTopFeatureDelta">&nbsp;</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Houses in dataset</div>
+          <div class="value">300</div>
+          <div class="delta">240 train · 60 test</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview2" class="tight">
+      <div class="card">
+        <h3>Sale price distribution</h3>
+        <div class="sub">All 300 houses in the dataset</div>
+        <div class="chart-wrap tall"><canvas id="priceHistChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- CORRELATION -->
+    <section id="correlation">
+      <div class="section-head">
+        <div class="eyebrow-line"><span class="section-index">01</span></div>
+        <h2>Which features actually move the price?</h2>
+        <p class="lede">Correlation of each feature with sale price, before any model is trained.</p>
+      </div>
+      <div class="card" style="max-width:640px;">
+        <h3>Correlation with Sale Price</h3>
+        <div class="sub">Sorted strongest to weakest</div>
+        <div class="chart-wrap"><canvas id="corrChart"></canvas></div>
+      </div>
+      <div class="insight" id="corrInsight"></div>
+    </section>
+
+    <!-- MODEL FIT -->
+    <section id="performance">
+      <div class="section-head">
+        <div class="eyebrow-line"><span class="section-index">02</span></div>
+        <h2>How well does the model fit?</h2>
+        <p class="lede">Actual vs. predicted price on the 60 held-out test houses, and whether the errors show any systematic pattern.</p>
+      </div>
+
+      <div class="grid-2 even" style="margin-bottom:8px;">
+        <div class="card">
+          <h3>Actual vs. Predicted Price</h3>
+          <div class="sub">Closer to the diagonal = better prediction</div>
+          <div class="chart-wrap tall"><canvas id="actualPredChart"></canvas></div>
+        </div>
+        <div class="card">
+          <h3>Residuals vs. Predicted Price</h3>
+          <div class="sub">Random scatter around zero = healthy model</div>
+          <div class="chart-wrap tall"><canvas id="residualChart"></canvas></div>
+        </div>
+      </div>
+      <div class="insight" id="perfInsight"></div>
+    </section>
+
+    <!-- COEFFICIENTS -->
+    <section id="coefficients">
+      <div class="section-head">
+        <div class="eyebrow-line"><span class="section-index">03</span></div>
+        <h2>Reading the model's coefficients</h2>
+        <p class="lede">Each bar is the dollar change in predicted price for a one-unit increase in that feature, holding all others constant.</p>
+      </div>
+      <div class="card" style="max-width:700px;">
+        <h3>Linear Regression coefficients</h3>
+        <div class="sub">Green = increases price · Red = decreases price</div>
+        <div class="chart-wrap tall"><canvas id="coefChart"></canvas></div>
+      </div>
+      <div class="insight" id="coefInsight"></div>
+    </section>
+
+    <!-- REGULARISATION COMPARE -->
+    <section id="compare">
+      <div class="section-head">
+        <div class="eyebrow-line"><span class="section-index">04</span></div>
+        <h2>Bonus: does regularisation help?</h2>
+        <p class="lede">Ridge and Lasso penalise large coefficients to reduce overfitting risk. With this small, low-collinearity feature set, does either beat plain Linear Regression?</p>
+      </div>
+      <div class="compare-grid" id="compareGrid"></div>
+      <div class="insight" id="compareInsight"></div>
+    </section>
+
+    <!-- PREDICTION TOOL -->
+    <section id="predict">
+      <div class="section-head">
+        <div class="eyebrow-line"><span class="section-index">05</span></div>
+        <h2>Try the price predictor</h2>
+        <p class="lede">Adjust the sliders to describe a house, or hit "Random house" to pull a real combination from the dataset. The model recomputes instantly — no server round-trip.</p>
+      </div>
+
+      <div class="predict-layout">
+        <div class="predict-form">
+          <div class="feature-mode-toggle" id="featureModeToggle" role="tablist">
+            <button class="mode-pill active" id="modeKeyBtn" type="button">⭐ Key Drivers (5)</button>
+            <button class="mode-pill" id="modeAllBtn" type="button">All Features (8)</button>
+          </div>
+          <h3>House characteristics</h3>
+          <div class="sub" id="formSubText">Top 5 price drivers (less noise, high impact)</div>
+          <div id="fieldsContainer"></div>
+          <div id="heldFeaturesNote" class="held-note">
+            <strong>Baseline Notice:</strong> Secondary features are locked to dataset averages.
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="randomBtn">🎲 Random house</button>
+            <button class="btn btn-secondary" id="resetBtn">Reset to average</button>
+          </div>
+        </div>
+
+        <div class="predict-result">
+          <div class="price-display">
+            <div>
+              <div class="plabel">Predicted sale price</div>
+              <div class="pvalue" id="predictedPrice">$0</div>
+            </div>
+            <div class="pctx" id="predictedContext">&nbsp;</div>
+          </div>
+
+          <div class="card">
+            <h3>Why this price? Contribution vs. an average house</h3>
+            <div class="sub">Average house in this dataset predicts to <span id="avgPriceLabel">$0</span>. Each bar shows how much your inputs push above or below that baseline.</div>
+            <div class="chart-wrap tall"><canvas id="contributionChart"></canvas></div>
+          </div>
+
+          <div class="card">
+            <h3>Where this lands in the market</h3>
+            <div class="sub">Your predicted price against the full distribution of 300 houses</div>
+            <div class="chart-wrap"><canvas id="marketPositionChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      The Appraisal Desk — Linear Regression trained on 300 houses (80/20 split, R² = 0.97 on test data). The price predictor runs the exact trained coefficients client-side; nothing here is simulated or looked up from a table.
+    </footer>
+  </main>
+</div>
+
+<script id="dashboard-data" type="application/json">{"featureNames":["OverallQual","GrLivArea","GarageCars","TotalBsmtSF","YearBuilt","FullBath","BedroomAbvGr","LotArea"],"coefficients":{"OverallQual":11914.688135068387,"GrLivArea":55.4102570760875,"GarageCars":19109.641614330707,"TotalBsmtSF":25.19901823989916,"YearBuilt":746.370978337457,"FullBath":11040.343045739965,"BedroomAbvGr":4812.061994479206,"LotArea":-0.15952210790647475},"intercept":-1512820.5684315583,"featureStats":{"OverallQual":{"min":1,"max":10,"mean":5.326666666666667,"std":2.8730012197906594},"GrLivArea":{"min":504,"max":3998,"mean":2307.3866666666668,"std":1042.5613031014711},"GarageCars":{"min":0,"max":3,"mean":1.33,"std":1.109897702357743},"TotalBsmtSF":{"min":303,"max":2492,"mean":1468.7966666666666,"std":672.3337048603119},"YearBuilt":{"min":1950,"max":2023,"mean":1986.1633333333334,"std":21.37708871577456},"FullBath":{"min":0,"max":3,"mean":1.5233333333333334,"std":1.1315432777939272},"BedroomAbvGr":{"min":1,"max":5,"mean":2.9266666666666667,"std":1.45660376813556},"LotArea":{"min":2009,"max":14987,"mean":8969.453333333333,"std":3753.531132284058}},"metrics":{"mse":156386511.42,"rmse":12505.46,"r2":0.9724},"modelCompare":{"Linear Regression":{"rmse":12505.46,"r2":0.9724},"Ridge":{"rmse":12445.16,"r2":0.9727},"Lasso":{"rmse":12505.06,"r2":0.9724}},"actual":[224163,203881,380236,211664,122139,180067,275810,209025,213952,154885,395010,253397,115204,189831,300918,314526,135263,135385,222449,250335,221041,175831,206832,296330,319876,385176,225589,250604,289461,424406,397482,290763,137842,204186,294974,212206,350830,241072,240319,210194,215533,318772,294884,302167,353246,310812,212892,263814,226280,309211,303396,328244,131309,317598,184623,265591,179950,308101,311099,129364],"predicted":[239161.3631891252,190489.6679846805,398000.95746313967,223169.467552247,135188.39570785523,180259.03980676015,283708.2710114103,204535.2654771763,205837.9417306215,171505.3319599859,389527.7017837409,274163.79739932204,116220.90212356742,171343.53163323342,293879.43188669626,314821.0315674769,154945.4627553278,146162.96860437072,221221.0281341395,255128.94864959968,235772.5157203034,167430.54266849207,208978.16707483982,289813.47578979935,313188.74897606974,382651.9131318589,206610.7204340035,260775.0371667745,285214.2733702385,443345.98671709164,402224.27697765944,292287.6515727858,122222.08573630336,211039.07225072617,291045.6444575777,226581.7728536923,342146.6015107727,243378.66853477433,235856.80880210968,201521.50903894915,237379.0613858723,334582.4670174958,313689.69084593304,292464.38340657554,376959.3421533182,319400.67913444876,217324.6931631514,256908.21155235544,218997.8110661998,332431.87339145085,305659.9883324341,321564.58478163066,110394.39792685886,304824.13262279984,202320.80190838943,272444.61942839343,178702.26077917987,334291.062646121,292853.78021790436,139984.4476165676],"residuals":[-14998.3631891252,13391.332015319495,-17764.957463139668,-11505.467552246992,-13049.395707855234,-192.03980676014908,-7898.271011410281,4489.73452282371,8114.058269378496,-16620.331959985895,5482.298216259107,-20766.797399322037,-1016.9021235674154,18487.46836676658,7038.568113303743,-295.03156747692265,-19682.46275532781,-10777.968604370719,1227.9718658605125,-4793.9486495996825,-14731.515720303403,8400.457331507932,-2146.1670748398174,6516.524210200645,6687.251023930265,2524.0868681410793,18978.27956599649,-10171.037166774506,4246.726629761513,-18939.98671709164,-4742.276977659436,-1524.651572785806,15619.914263696643,-6853.072250726167,3928.3555424222723,-14375.772853692295,8683.398489227286,-2306.6685347743332,4462.191197890323,8672.490961050848,-21846.061385872308,-15810.467017495772,-18805.690845933044,9702.616593424464,-23713.342153318226,-8588.679134448757,-4432.693163151387,6905.7884476445615,7282.188933800207,-23220.87339145085,-2263.9883324340917,6679.415218369337,20914.60207314114,12773.867377200164,-17697.801908389432,-6853.619428393431,1247.7392208201345,-26190.06264612102,18245.219782095635,-10620.447616567602],"correlations":{"OverallQual":0.3529,"GrLivArea":0.7451,"GarageCars":0.3513,"TotalBsmtSF":0.2502,"YearBuilt":0.2221,"FullBath":0.2737,"BedroomAbvGr":0.0141,"LotArea":-0.039},"sampleRows":[{"OverallQual":7,"GrLivArea":3587,"GarageCars":3,"TotalBsmtSF":2072,"YearBuilt":2008,"FullBath":3,"BedroomAbvGr":5,"LotArea":4428,"SalePrice":435291},{"OverallQual":7,"GrLivArea":1650,"GarageCars":0,"TotalBsmtSF":945,"YearBuilt":1975,"FullBath":1,"BedroomAbvGr":2,"LotArea":2482,"SalePrice":178656},{"OverallQual":2,"GrLivArea":3316,"GarageCars":2,"TotalBsmtSF":2352,"YearBuilt":2021,"FullBath":1,"BedroomAbvGr":3,"LotArea":11777,"SalePrice":312483},{"OverallQual":4,"GrLivArea":511,"GarageCars":0,"TotalBsmtSF":1612,"YearBuilt":1973,"FullBath":3,"BedroomAbvGr":3,"LotArea":4493,"SalePrice":123716},{"OverallQual":3,"GrLivArea":768,"GarageCars":1,"TotalBsmtSF":2033,"YearBuilt":1990,"FullBath":2,"BedroomAbvGr":5,"LotArea":3072,"SalePrice":165288},{"OverallQual":5,"GrLivArea":2164,"GarageCars":2,"TotalBsmtSF":1246,"YearBuilt":1951,"FullBath":0,"BedroomAbvGr":4,"LotArea":2630,"SalePrice":215572},{"OverallQual":1,"GrLivArea":3069,"GarageCars":3,"TotalBsmtSF":1870,"YearBuilt":2023,"FullBath":1,"BedroomAbvGr":5,"LotArea":5713,"SalePrice":329909},{"OverallQual":5,"GrLivArea":1074,"GarageCars":1,"TotalBsmtSF":2206,"YearBuilt":1996,"FullBath":2,"BedroomAbvGr":2,"LotArea":5654,"SalePrice":210194},{"OverallQual":1,"GrLivArea":2724,"GarageCars":0,"TotalBsmtSF":685,"YearBuilt":2005,"FullBath":0,"BedroomAbvGr":2,"LotArea":2560,"SalePrice":158055},{"OverallQual":4,"GrLivArea":3308,"GarageCars":1,"TotalBsmtSF":2370,"YearBuilt":2011,"FullBath":3,"BedroomAbvGr":2,"LotArea":6895,"SalePrice":345796},{"OverallQual":1,"GrLivArea":1796,"GarageCars":1,"TotalBsmtSF":2234,"YearBuilt":1998,"FullBath":2,"BedroomAbvGr":1,"LotArea":10453,"SalePrice":203881},{"OverallQual":9,"GrLivArea":653,"GarageCars":3,"TotalBsmtSF":1873,"YearBuilt":2005,"FullBath":3,"BedroomAbvGr":5,"LotArea":13921,"SalePrice":280271},{"OverallQual":9,"GrLivArea":1667,"GarageCars":0,"TotalBsmtSF":988,"YearBuilt":1958,"FullBath":2,"BedroomAbvGr":1,"LotArea":14553,"SalePrice":204982},{"OverallQual":6,"GrLivArea":3059,"GarageCars":0,"TotalBsmtSF":1025,"YearBuilt":1963,"FullBath":1,"BedroomAbvGr":1,"LotArea":9311,"SalePrice":245441},{"OverallQual":3,"GrLivArea":3338,"GarageCars":2,"TotalBsmtSF":2170,"YearBuilt":1966,"FullBath":2,"BedroomAbvGr":5,"LotArea":11776,"SalePrice":312457},{"OverallQual":1,"GrLivArea":3117,"GarageCars":0,"TotalBsmtSF":1013,"YearBuilt":2016,"FullBath":1,"BedroomAbvGr":5,"LotArea":8441,"SalePrice":221041},{"OverallQual":8,"GrLivArea":690,"GarageCars":2,"TotalBsmtSF":2400,"YearBuilt":1979,"FullBath":0,"BedroomAbvGr":5,"LotArea":14057,"SalePrice":209288},{"OverallQual":4,"GrLivArea":2888,"GarageCars":3,"TotalBsmtSF":2338,"YearBuilt":1993,"FullBath":3,"BedroomAbvGr":3,"LotArea":2072,"SalePrice":349872},{"OverallQual":1,"GrLivArea":3274,"GarageCars":2,"TotalBsmtSF":1250,"YearBuilt":2004,"FullBath":2,"BedroomAbvGr":3,"LotArea":12123,"SalePrice":285964},{"OverallQual":4,"GrLivArea":3859,"GarageCars":3,"TotalBsmtSF":971,"YearBuilt":1978,"FullBath":3,"BedroomAbvGr":4,"LotArea":12737,"SalePrice":343597},{"OverallQual":3,"GrLivArea":3233,"GarageCars":1,"TotalBsmtSF":966,"YearBuilt":1950,"FullBath":2,"BedroomAbvGr":1,"LotArea":12582,"SalePrice":229144},{"OverallQual":1,"GrLivArea":2193,"GarageCars":0,"TotalBsmtSF":1460,"YearBuilt":1986,"FullBath":1,"BedroomAbvGr":5,"LotArea":14337,"SalePrice":178950},{"OverallQual":4,"GrLivArea":2071,"GarageCars":2,"TotalBsmtSF":1647,"YearBuilt":1998,"FullBath":2,"BedroomAbvGr":3,"LotArea":6576,"SalePrice":235000},{"OverallQual":8,"GrLivArea":2800,"GarageCars":2,"TotalBsmtSF":1773,"YearBuilt":1978,"FullBath":3,"BedroomAbvGr":1,"LotArea":8471,"SalePrice":343023},{"OverallQual":5,"GrLivArea":3203,"GarageCars":3,"TotalBsmtSF":1760,"YearBuilt":1991,"FullBath":3,"BedroomAbvGr":1,"LotArea":6815,"SalePrice":355326},{"OverallQual":6,"GrLivArea":3894,"GarageCars":3,"TotalBsmtSF":1060,"YearBuilt":1968,"FullBath":3,"BedroomAbvGr":1,"LotArea":2011,"SalePrice":352990},{"OverallQual":6,"GrLivArea":1992,"GarageCars":0,"TotalBsmtSF":1148,"YearBuilt":1996,"FullBath":1,"BedroomAbvGr":1,"LotArea":7907,"SalePrice":184623},{"OverallQual":3,"GrLivArea":3624,"GarageCars":0,"TotalBsmtSF":532,"YearBuilt":2008,"FullBath":0,"BedroomAbvGr":2,"LotArea":13130,"SalePrice":241072},{"OverallQual":3,"GrLivArea":895,"GarageCars":2,"TotalBsmtSF":1302,"YearBuilt":1955,"FullBath":3,"BedroomAbvGr":3,"LotArea":9002,"SalePrice":156623},{"OverallQual":3,"GrLivArea":2131,"GarageCars":1,"TotalBsmtSF":1024,"YearBuilt":2019,"FullBath":1,"BedroomAbvGr":1,"LotArea":3735,"SalePrice":190988},{"OverallQual":4,"GrLivArea":1712,"GarageCars":3,"TotalBsmtSF":831,"YearBuilt":1985,"FullBath":3,"BedroomAbvGr":3,"LotArea":3100,"SalePrice":238693},{"OverallQual":4,"GrLivArea":2739,"GarageCars":3,"TotalBsmtSF":1939,"YearBuilt":1974,"FullBath":0,"BedroomAbvGr":2,"LotArea":4785,"SalePrice":289107},{"OverallQual":9,"GrLivArea":614,"GarageCars":1,"TotalBsmtSF":2200,"YearBuilt":2015,"FullBath":3,"BedroomAbvGr":4,"LotArea":14917,"SalePrice":263814},{"OverallQual":10,"GrLivArea":899,"GarageCars":3,"TotalBsmtSF":825,"YearBuilt":2004,"FullBath":0,"BedroomAbvGr":2,"LotArea":2105,"SalePrice":220562},{"OverallQual":1,"GrLivArea":3375,"GarageCars":0,"TotalBsmtSF":924,"YearBuilt":1984,"FullBath":1,"BedroomAbvGr":1,"LotArea":9151,"SalePrice":189331},{"OverallQual":8,"GrLivArea":3540,"GarageCars":2,"TotalBsmtSF":1903,"YearBuilt":2023,"FullBath":3,"BedroomAbvGr":3,"LotArea":7495,"SalePrice":420415},{"OverallQual":10,"GrLivArea":1719,"GarageCars":0,"TotalBsmtSF":1793,"YearBuilt":1974,"FullBath":0,"BedroomAbvGr":3,"LotArea":11435,"SalePrice":224204},{"OverallQual":1,"GrLivArea":2765,"GarageCars":3,"TotalBsmtSF":1936,"YearBuilt":1988,"FullBath":3,"BedroomAbvGr":4,"LotArea":14323,"SalePrice":290763},{"OverallQual":7,"GrLivArea":2852,"GarageCars":0,"TotalBsmtSF":2276,"YearBuilt":1969,"FullBath":2,"BedroomAbvGr":5,"LotArea":10227,"SalePrice":284508},{"OverallQual":7,"GrLivArea":3046,"GarageCars":3,"TotalBsmtSF":1222,"YearBuilt":1986,"FullBath":0,"BedroomAbvGr":5,"LotArea":13151,"SalePrice":338807},{"OverallQual":9,"GrLivArea":3396,"GarageCars":0,"TotalBsmtSF":1577,"YearBuilt":1988,"FullBath":0,"BedroomAbvGr":2,"LotArea":5719,"SalePrice":314526},{"OverallQual":10,"GrLivArea":917,"GarageCars":0,"TotalBsmtSF":1114,"YearBuilt":1991,"FullBath":1,"BedroomAbvGr":4,"LotArea":8770,"SalePrice":184839},{"OverallQual":7,"GrLivArea":835,"GarageCars":1,"TotalBsmtSF":2436,"YearBuilt":1975,"FullBath":2,"BedroomAbvGr":1,"LotArea":9426,"SalePrice":178408},{"OverallQual":7,"GrLivArea":801,"GarageCars":1,"TotalBsmtSF":2428,"YearBuilt":2020,"FullBath":0,"BedroomAbvGr":1,"LotArea":9117,"SalePrice":193656},{"OverallQual":8,"GrLivArea":2482,"GarageCars":0,"TotalBsmtSF":1218,"YearBuilt":2009,"FullBath":3,"BedroomAbvGr":3,"LotArea":3286,"SalePrice":301875},{"OverallQual":9,"GrLivArea":589,"GarageCars":1,"TotalBsmtSF":2157,"YearBuilt":1964,"FullBath":0,"BedroomAbvGr":1,"LotArea":9123,"SalePrice":161577},{"OverallQual":1,"GrLivArea":3286,"GarageCars":2,"TotalBsmtSF":1127,"YearBuilt":1954,"FullBath":0,"BedroomAbvGr":1,"LotArea":12748,"SalePrice":206832},{"OverallQual":8,"GrLivArea":952,"GarageCars":0,"TotalBsmtSF":1919,"YearBuilt":1992,"FullBath":0,"BedroomAbvGr":5,"LotArea":11382,"SalePrice":203205},{"OverallQual":2,"GrLivArea":1684,"GarageCars":1,"TotalBsmtSF":2206,"YearBuilt":1965,"FullBath":1,"BedroomAbvGr":3,"LotArea":3177,"SalePrice":186675},{"OverallQual":10,"GrLivArea":1940,"GarageCars":1,"TotalBsmtSF":1969,"YearBuilt":1967,"FullBath":1,"BedroomAbvGr":5,"LotArea":5374,"SalePrice":290569},{"OverallQual":7,"GrLivArea":1560,"GarageCars":0,"TotalBsmtSF":1658,"YearBuilt":1969,"FullBath":2,"BedroomAbvGr":1,"LotArea":8059,"SalePrice":177106},{"OverallQual":6,"GrLivArea":1217,"GarageCars":3,"TotalBsmtSF":963,"YearBuilt":2008,"FullBath":2,"BedroomAbvGr":5,"LotArea":9629,"SalePrice":252115},{"OverallQual":8,"GrLivArea":3282,"GarageCars":1,"TotalBsmtSF":324,"YearBuilt":2021,"FullBath":0,"BedroomAbvGr":3,"LotArea":10325,"SalePrice":296238},{"OverallQual":1,"GrLivArea":2285,"GarageCars":2,"TotalBsmtSF":1460,"YearBuilt":1966,"FullBath":0,"BedroomAbvGr":1,"LotArea":8704,"SalePrice":154885},{"OverallQual":1,"GrLivArea":1890,"GarageCars":1,"TotalBsmtSF":1009,"YearBuilt":2003,"FullBath":0,"BedroomAbvGr":5,"LotArea":9693,"SalePrice":159684},{"OverallQual":9,"GrLivArea":1240,"GarageCars":0,"TotalBsmtSF":2055,"YearBuilt":2020,"FullBath":0,"BedroomAbvGr":1,"LotArea":5040,"SalePrice":212206},{"OverallQual":2,"GrLivArea":2406,"GarageCars":2,"TotalBsmtSF":2425,"YearBuilt":2023,"FullBath":0,"BedroomAbvGr":4,"LotArea":14289,"SalePrice":288640},{"OverallQual":7,"GrLivArea":3751,"GarageCars":1,"TotalBsmtSF":1172,"YearBuilt":1961,"FullBath":1,"BedroomAbvGr":1,"LotArea":5610,"SalePrice":303396},{"OverallQual":9,"GrLivArea":2130,"GarageCars":3,"TotalBsmtSF":2335,"YearBuilt":2009,"FullBath":0,"BedroomAbvGr":4,"LotArea":8813,"SalePrice":341755},{"OverallQual":1,"GrLivArea":2805,"GarageCars":1,"TotalBsmtSF":1618,"YearBuilt":1981,"FullBath":3,"BedroomAbvGr":4,"LotArea":7249,"SalePrice":259421},{"OverallQual":10,"GrLivArea":2273,"GarageCars":1,"TotalBsmtSF":1973,"YearBuilt":1966,"FullBath":3,"BedroomAbvGr":4,"LotArea":3241,"SalePrice":334401},{"OverallQual":3,"GrLivArea":3657,"GarageCars":1,"TotalBsmtSF":438,"YearBuilt":1969,"FullBath":1,"BedroomAbvGr":5,"LotArea":8780,"SalePrice":246427},{"OverallQual":7,"GrLivArea":3414,"GarageCars":0,"TotalBsmtSF":1176,"YearBuilt":1986,"FullBath":2,"BedroomAbvGr":5,"LotArea":11852,"SalePrice":320091},{"OverallQual":4,"GrLivArea":3459,"GarageCars":0,"TotalBsmtSF":1642,"YearBuilt":1974,"FullBath":1,"BedroomAbvGr":1,"LotArea":7101,"SalePrice":272774},{"OverallQual":5,"GrLivArea":1156,"GarageCars":2,"TotalBsmtSF":542,"YearBuilt":1976,"FullBath":2,"BedroomAbvGr":4,"LotArea":8674,"SalePrice":173807},{"OverallQual":1,"GrLivArea":3004,"GarageCars":3,"TotalBsmtSF":2488,"YearBuilt":1959,"FullBath":1,"BedroomAbvGr":2,"LotArea":12699,"SalePrice":266480},{"OverallQual":4,"GrLivArea":745,"GarageCars":1,"TotalBsmtSF":1401,"YearBuilt":1956,"FullBath":1,"BedroomAbvGr":5,"LotArea":7243,"SalePrice":133297},{"OverallQual":3,"GrLivArea":1812,"GarageCars":1,"TotalBsmtSF":535,"YearBuilt":1968,"FullBath":2,"BedroomAbvGr":2,"LotArea":7189,"SalePrice":163560},{"OverallQual":8,"GrLivArea":3550,"GarageCars":3,"TotalBsmtSF":836,"YearBuilt":2002,"FullBath":3,"BedroomAbvGr":5,"LotArea":12037,"SalePrice":388292},{"OverallQual":8,"GrLivArea":1175,"GarageCars":0,"TotalBsmtSF":1114,"YearBuilt":2006,"FullBath":0,"BedroomAbvGr":3,"LotArea":7280,"SalePrice":190938},{"OverallQual":6,"GrLivArea":3002,"GarageCars":1,"TotalBsmtSF":1502,"YearBuilt":2001,"FullBath":3,"BedroomAbvGr":1,"LotArea":13479,"SalePrice":306773},{"OverallQual":8,"GrLivArea":3827,"GarageCars":2,"TotalBsmtSF":2458,"YearBuilt":1989,"FullBath":0,"BedroomAbvGr":5,"LotArea":6760,"SalePrice":397482},{"OverallQual":3,"GrLivArea":2182,"GarageCars":3,"TotalBsmtSF":1058,"YearBuilt":1974,"FullBath":0,"BedroomAbvGr":4,"LotArea":8807,"SalePrice":226280},{"OverallQual":7,"GrLivArea":3349,"GarageCars":2,"TotalBsmtSF":1715,"YearBuilt":2002,"FullBath":1,"BedroomAbvGr":2,"LotArea":12658,"SalePrice":335769},{"OverallQual":10,"GrLivArea":2000,"GarageCars":3,"TotalBsmtSF":2394,"YearBuilt":2006,"FullBath":3,"BedroomAbvGr":4,"LotArea":10906,"SalePrice":385176},{"OverallQual":6,"GrLivArea":1135,"GarageCars":2,"TotalBsmtSF":1826,"YearBuilt":1983,"FullBath":2,"BedroomAbvGr":5,"LotArea":3316,"SalePrice":221531},{"OverallQual":4,"GrLivArea":3670,"GarageCars":2,"TotalBsmtSF":362,"YearBuilt":1952,"FullBath":2,"BedroomAbvGr":5,"LotArea":8721,"SalePrice":300159},{"OverallQual":10,"GrLivArea":680,"GarageCars":1,"TotalBsmtSF":2480,"YearBuilt":1950,"FullBath":2,"BedroomAbvGr":1,"LotArea":13081,"SalePrice":213952},{"OverallQual":3,"GrLivArea":2811,"GarageCars":3,"TotalBsmtSF":366,"YearBuilt":1979,"FullBath":3,"BedroomAbvGr":4,"LotArea":11900,"SalePrice":271772},{"OverallQual":2,"GrLivArea":3964,"GarageCars":0,"TotalBsmtSF":2268,"YearBuilt":1999,"FullBath":3,"BedroomAbvGr":1,"LotArea":13380,"SalePrice":306748},{"OverallQual":8,"GrLivArea":2570,"GarageCars":1,"TotalBsmtSF":675,"YearBuilt":2010,"FullBath":1,"BedroomAbvGr":1,"LotArea":3804,"SalePrice":275894},{"OverallQual":8,"GrLivArea":1333,"GarageCars":1,"TotalBsmtSF":1330,"YearBuilt":1968,"FullBath":1,"BedroomAbvGr":4,"LotArea":13608,"SalePrice":199783},{"OverallQual":9,"GrLivArea":3210,"GarageCars":1,"TotalBsmtSF":1313,"YearBuilt":2017,"FullBath":2,"BedroomAbvGr":3,"LotArea":2340,"SalePrice":358541},{"OverallQual":8,"GrLivArea":869,"GarageCars":0,"TotalBsmtSF":1905,"YearBuilt":1987,"FullBath":0,"BedroomAbvGr":2,"LotArea":5225,"SalePrice":158414},{"OverallQual":7,"GrLivArea":3037,"GarageCars":1,"TotalBsmtSF":903,"YearBuilt":2023,"FullBath":0,"BedroomAbvGr":1,"LotArea":2406,"SalePrice":302296},{"OverallQual":5,"GrLivArea":3794,"GarageCars":1,"TotalBsmtSF":1552,"YearBuilt":2011,"FullBath":3,"BedroomAbvGr":1,"LotArea":6255,"SalePrice":346423},{"OverallQual":5,"GrLivArea":1384,"GarageCars":1,"TotalBsmtSF":1484,"YearBuilt":2006,"FullBath":3,"BedroomAbvGr":4,"LotArea":14686,"SalePrice":220557},{"OverallQual":6,"GrLivArea":3965,"GarageCars":0,"TotalBsmtSF":645,"YearBuilt":1965,"FullBath":2,"BedroomAbvGr":2,"LotArea":3012,"SalePrice":304695},{"OverallQual":4,"GrLivArea":1351,"GarageCars":2,"TotalBsmtSF":874,"YearBuilt":1966,"FullBath":0,"BedroomAbvGr":4,"LotArea":12853,"SalePrice":135416},{"OverallQual":7,"GrLivArea":3804,"GarageCars":2,"TotalBsmtSF":1254,"YearBuilt":2011,"FullBath":2,"BedroomAbvGr":2,"LotArea":7548,"SalePrice":394317},{"OverallQual":8,"GrLivArea":1508,"GarageCars":1,"TotalBsmtSF":426,"YearBuilt":1994,"FullBath":1,"BedroomAbvGr":4,"LotArea":8257,"SalePrice":226986},{"OverallQual":2,"GrLivArea":627,"GarageCars":0,"TotalBsmtSF":2442,"YearBuilt":1967,"FullBath":0,"BedroomAbvGr":1,"LotArea":7252,"SalePrice":89957},{"OverallQual":6,"GrLivArea":3475,"GarageCars":2,"TotalBsmtSF":2473,"YearBuilt":1994,"FullBath":3,"BedroomAbvGr":2,"LotArea":12693,"SalePrice":361922},{"OverallQual":1,"GrLivArea":2095,"GarageCars":0,"TotalBsmtSF":2456,"YearBuilt":1963,"FullBath":2,"BedroomAbvGr":2,"LotArea":8284,"SalePrice":184178},{"OverallQual":5,"GrLivArea":3438,"GarageCars":3,"TotalBsmtSF":1266,"YearBuilt":2003,"FullBath":0,"BedroomAbvGr":1,"LotArea":9373,"SalePrice":329906},{"OverallQual":7,"GrLivArea":1050,"GarageCars":0,"TotalBsmtSF":1418,"YearBuilt":2000,"FullBath":1,"BedroomAbvGr":2,"LotArea":7472,"SalePrice":182738},{"OverallQual":10,"GrLivArea":3306,"GarageCars":0,"TotalBsmtSF":1379,"YearBuilt":2008,"FullBath":0,"BedroomAbvGr":2,"LotArea":14046,"SalePrice":337737},{"OverallQual":6,"GrLivArea":575,"GarageCars":2,"TotalBsmtSF":1175,"YearBuilt":1974,"FullBath":1,"BedroomAbvGr":2,"LotArea":3826,"SalePrice":137796},{"OverallQual":9,"GrLivArea":3991,"GarageCars":2,"TotalBsmtSF":1983,"YearBuilt":1988,"FullBath":3,"BedroomAbvGr":5,"LotArea":8549,"SalePrice":424406},{"OverallQual":10,"GrLivArea":616,"GarageCars":1,"TotalBsmtSF":374,"YearBuilt":1959,"FullBath":1,"BedroomAbvGr":4,"LotArea":11654,"SalePrice":144602},{"OverallQual":2,"GrLivArea":3940,"GarageCars":1,"TotalBsmtSF":2092,"YearBuilt":1986,"FullBath":2,"BedroomAbvGr":1,"LotArea":7962,"SalePrice":296129},{"OverallQual":2,"GrLivArea":3610,"GarageCars":3,"TotalBsmtSF":2136,"YearBuilt":2014,"FullBath":2,"BedroomAbvGr":5,"LotArea":8936,"SalePrice":382768},{"OverallQual":9,"GrLivArea":3913,"GarageCars":2,"TotalBsmtSF":1362,"YearBuilt":1961,"FullBath":3,"BedroomAbvGr":1,"LotArea":7047,"SalePrice":381347},{"OverallQual":3,"GrLivArea":2319,"GarageCars":3,"TotalBsmtSF":1505,"YearBuilt":1953,"FullBath":2,"BedroomAbvGr":3,"LotArea":14265,"SalePrice":213583},{"OverallQual":6,"GrLivArea":3843,"GarageCars":3,"TotalBsmtSF":524,"YearBuilt":1960,"FullBath":0,"BedroomAbvGr":1,"LotArea":12829,"SalePrice":288405},{"OverallQual":10,"GrLivArea":1848,"GarageCars":0,"TotalBsmtSF":431,"YearBuilt":1961,"FullBath":2,"BedroomAbvGr":5,"LotArea":13253,"SalePrice":223120},{"OverallQual":2,"GrLivArea":2826,"GarageCars":0,"TotalBsmtSF":1945,"YearBuilt":1997,"FullBath":0,"BedroomAbvGr":4,"LotArea":11917,"SalePrice":207814},{"OverallQual":7,"GrLivArea":2474,"GarageCars":2,"TotalBsmtSF":305,"YearBuilt":1961,"FullBath":3,"BedroomAbvGr":1,"LotArea":2145,"SalePrice":252495},{"OverallQual":8,"GrLivArea":3431,"GarageCars":0,"TotalBsmtSF":1605,"YearBuilt":1975,"FullBath":0,"BedroomAbvGr":3,"LotArea":2009,"SalePrice":304175},{"OverallQual":8,"GrLivArea":1199,"GarageCars":2,"TotalBsmtSF":1653,"YearBuilt":2005,"FullBath":1,"BedroomAbvGr":5,"LotArea":14040,"SalePrice":275955},{"OverallQual":7,"GrLivArea":3569,"GarageCars":0,"TotalBsmtSF":2232,"YearBuilt":1965,"FullBath":2,"BedroomAbvGr":2,"LotArea":6443,"SalePrice":327834},{"OverallQual":1,"GrLivArea":3309,"GarageCars":3,"TotalBsmtSF":2151,"YearBuilt":1957,"FullBath":2,"BedroomAbvGr":4,"LotArea":13015,"SalePrice":300918},{"OverallQual":3,"GrLivArea":1619,"GarageCars":3,"TotalBsmtSF":1758,"YearBuilt":1985,"FullBath":3,"BedroomAbvGr":5,"LotArea":2987,"SalePrice":251426},{"OverallQual":3,"GrLivArea":2186,"GarageCars":0,"TotalBsmtSF":360,"YearBuilt":1952,"FullBath":2,"BedroomAbvGr":2,"LotArea":8570,"SalePrice":129160},{"OverallQual":1,"GrLivArea":3825,"GarageCars":2,"TotalBsmtSF":2269,"YearBuilt":1993,"FullBath":3,"BedroomAbvGr":5,"LotArea":4472,"SalePrice":331479},{"OverallQual":4,"GrLivArea":1184,"GarageCars":3,"TotalBsmtSF":602,"YearBuilt":2017,"FullBath":3,"BedroomAbvGr":3,"LotArea":5610,"SalePrice":235176},{"OverallQual":7,"GrLivArea":1125,"GarageCars":0,"TotalBsmtSF":392,"YearBuilt":1957,"FullBath":0,"BedroomAbvGr":4,"LotArea":7445,"SalePrice":136537},{"OverallQual":7,"GrLivArea":912,"GarageCars":1,"TotalBsmtSF":2134,"YearBuilt":1967,"FullBath":3,"BedroomAbvGr":5,"LotArea":2148,"SalePrice":210516},{"OverallQual":2,"GrLivArea":2135,"GarageCars":0,"TotalBsmtSF":1904,"YearBuilt":1961,"FullBath":3,"BedroomAbvGr":3,"LotArea":12106,"SalePrice":174649},{"OverallQual":7,"GrLivArea":1420,"GarageCars":2,"TotalBsmtSF":1349,"YearBuilt":2000,"FullBath":3,"BedroomAbvGr":2,"LotArea":6882,"SalePrice":260686},{"OverallQual":3,"GrLivArea":1228,"GarageCars":0,"TotalBsmtSF":310,"YearBuilt":1995,"FullBath":0,"BedroomAbvGr":5,"LotArea":9121,"SalePrice":131309},{"OverallQual":8,"GrLivArea":1457,"GarageCars":2,"TotalBsmtSF":2360,"YearBuilt":1950,"FullBath":2,"BedroomAbvGr":2,"LotArea":3125,"SalePrice":231894},{"OverallQual":4,"GrLivArea":784,"GarageCars":2,"TotalBsmtSF":1946,"YearBuilt":1963,"FullBath":1,"BedroomAbvGr":1,"LotArea":2207,"SalePrice":135385},{"OverallQual":3,"GrLivArea":654,"GarageCars":2,"TotalBsmtSF":1789,"YearBuilt":1959,"FullBath":0,"BedroomAbvGr":4,"LotArea":10212,"SalePrice":137842},{"OverallQual":10,"GrLivArea":504,"GarageCars":0,"TotalBsmtSF":2458,"YearBuilt":1989,"FullBath":3,"BedroomAbvGr":5,"LotArea":3300,"SalePrice":215533},{"OverallQual":9,"GrLivArea":3647,"GarageCars":1,"TotalBsmtSF":619,"YearBuilt":2018,"FullBath":2,"BedroomAbvGr":5,"LotArea":6358,"SalePrice":379512},{"OverallQual":5,"GrLivArea":1909,"GarageCars":1,"TotalBsmtSF":981,"YearBuilt":1983,"FullBath":2,"BedroomAbvGr":2,"LotArea":11206,"SalePrice":190530},{"OverallQual":3,"GrLivArea":3238,"GarageCars":2,"TotalBsmtSF":1120,"YearBuilt":1997,"FullBath":2,"BedroomAbvGr":5,"LotArea":14075,"SalePrice":311531},{"OverallQual":10,"GrLivArea":3018,"GarageCars":1,"TotalBsmtSF":664,"YearBuilt":1956,"FullBath":3,"BedroomAbvGr":4,"LotArea":14208,"SalePrice":310812},{"OverallQual":2,"GrLivArea":1275,"GarageCars":2,"TotalBsmtSF":816,"YearBuilt":1953,"FullBath":2,"BedroomAbvGr":2,"LotArea":12754,"SalePrice":127783},{"OverallQual":10,"GrLivArea":3517,"GarageCars":2,"TotalBsmtSF":2165,"YearBuilt":1962,"FullBath":3,"BedroomAbvGr":1,"LotArea":2236,"SalePrice":405010},{"OverallQual":4,"GrLivArea":3925,"GarageCars":2,"TotalBsmtSF":1182,"YearBuilt":1968,"FullBath":0,"BedroomAbvGr":4,"LotArea":4137,"SalePrice":317360},{"OverallQual":9,"GrLivArea":1592,"GarageCars":0,"TotalBsmtSF":2339,"YearBuilt":2015,"FullBath":3,"BedroomAbvGr":1,"LotArea":14987,"SalePrice":299313},{"OverallQual":6,"GrLivArea":1015,"GarageCars":2,"TotalBsmtSF":900,"YearBuilt":1964,"FullBath":0,"BedroomAbvGr":4,"LotArea":9979,"SalePrice":161478},{"OverallQual":8,"GrLivArea":3467,"GarageCars":1,"TotalBsmtSF":1284,"YearBuilt":1979,"FullBath":2,"BedroomAbvGr":1,"LotArea":11715,"SalePrice":321817},{"OverallQual":9,"GrLivArea":536,"GarageCars":2,"TotalBsmtSF":1730,"YearBuilt":2011,"FullBath":0,"BedroomAbvGr":5,"LotArea":4496,"SalePrice":236028},{"OverallQual":4,"GrLivArea":2341,"GarageCars":0,"TotalBsmtSF":636,"YearBuilt":2016,"FullBath":1,"BedroomAbvGr":2,"LotArea":14757,"SalePrice":190903},{"OverallQual":8,"GrLivArea":2582,"GarageCars":0,"TotalBsmtSF":1420,"YearBuilt":1989,"FullBath":2,"BedroomAbvGr":3,"LotArea":14944,"SalePrice":283097},{"OverallQual":4,"GrLivArea":2136,"GarageCars":0,"TotalBsmtSF":2270,"YearBuilt":2008,"FullBath":1,"BedroomAbvGr":3,"LotArea":12060,"SalePrice":251273},{"OverallQual":9,"GrLivArea":3747,"GarageCars":2,"TotalBsmtSF":2053,"YearBuilt":1957,"FullBath":0,"BedroomAbvGr":1,"LotArea":8542,"SalePrice":371266},{"OverallQual":1,"GrLivArea":2316,"GarageCars":1,"TotalBsmtSF":2235,"YearBuilt":1996,"FullBath":0,"BedroomAbvGr":1,"LotArea":13556,"SalePrice":183022},{"OverallQual":1,"GrLivArea":546,"GarageCars":0,"TotalBsmtSF":2275,"YearBuilt":1978,"FullBath":3,"BedroomAbvGr":5,"LotArea":7752,"SalePrice":134900},{"OverallQual":9,"GrLivArea":3274,"GarageCars":0,"TotalBsmtSF":1946,"YearBuilt":1978,"FullBath":0,"BedroomAbvGr":2,"LotArea":5530,"SalePrice":319994},{"OverallQual":2,"GrLivArea":3450,"GarageCars":3,"TotalBsmtSF":1576,"YearBuilt":1995,"FullBath":2,"BedroomAbvGr":5,"LotArea":13827,"SalePrice":331441},{"OverallQual":5,"GrLivArea":1396,"GarageCars":1,"TotalBsmtSF":1023,"YearBuilt":1989,"FullBath":0,"BedroomAbvGr":5,"LotArea":11160,"SalePrice":183279},{"OverallQual":9,"GrLivArea":1069,"GarageCars":0,"TotalBsmtSF":2019,"YearBuilt":2000,"FullBath":1,"BedroomAbvGr":1,"LotArea":13022,"SalePrice":204186},{"OverallQual":2,"GrLivArea":1325,"GarageCars":0,"TotalBsmtSF":429,"YearBuilt":1983,"FullBath":2,"BedroomAbvGr":2,"LotArea":14135,"SalePrice":92706},{"OverallQual":2,"GrLivArea":1059,"GarageCars":3,"TotalBsmtSF":1733,"YearBuilt":1978,"FullBath":1,"BedroomAbvGr":3,"LotArea":9327,"SalePrice":177081},{"OverallQual":9,"GrLivArea":2068,"GarageCars":1,"TotalBsmtSF":802,"YearBuilt":1956,"FullBath":2,"BedroomAbvGr":4,"LotArea":6211,"SalePrice":243134},{"OverallQual":10,"GrLivArea":1581,"GarageCars":1,"TotalBsmtSF":1546,"YearBuilt":1989,"FullBath":1,"BedroomAbvGr":2,"LotArea":9000,"SalePrice":267965},{"OverallQual":3,"GrLivArea":3722,"GarageCars":1,"TotalBsmtSF":1407,"YearBuilt":1998,"FullBath":1,"BedroomAbvGr":1,"LotArea":8097,"SalePrice":303345},{"OverallQual":9,"GrLivArea":1080,"GarageCars":3,"TotalBsmtSF":858,"YearBuilt":2003,"FullBath":3,"BedroomAbvGr":2,"LotArea":9421,"SalePrice":273332},{"OverallQual":4,"GrLivArea":1116,"GarageCars":1,"TotalBsmtSF":2362,"YearBuilt":2004,"FullBath":1,"BedroomAbvGr":5,"LotArea":11732,"SalePrice":186354},{"OverallQual":3,"GrLivArea":2641,"GarageCars":2,"TotalBsmtSF":2242,"YearBuilt":1989,"FullBath":3,"BedroomAbvGr":1,"LotArea":7699,"SalePrice":289461},{"OverallQual":3,"GrLivArea":3590,"GarageCars":2,"TotalBsmtSF":2422,"YearBuilt":1988,"FullBath":0,"BedroomAbvGr":4,"LotArea":6107,"SalePrice":324686},{"OverallQual":2,"GrLivArea":519,"GarageCars":2,"TotalBsmtSF":938,"YearBuilt":1986,"FullBath":1,"BedroomAbvGr":1,"LotArea":11884,"SalePrice":99107},{"OverallQual":6,"GrLivArea":1471,"GarageCars":2,"TotalBsmtSF":327,"YearBuilt":1956,"FullBath":3,"BedroomAbvGr":2,"LotArea":11873,"SalePrice":174291},{"OverallQual":5,"GrLivArea":2257,"GarageCars":0,"TotalBsmtSF":633,"YearBuilt":2008,"FullBath":0,"BedroomAbvGr":2,"LotArea":13238,"SalePrice":202549},{"OverallQual":1,"GrLivArea":856,"GarageCars":1,"TotalBsmtSF":2208,"YearBuilt":1998,"FullBath":3,"BedroomAbvGr":4,"LotArea":2707,"SalePrice":153184},{"OverallQual":8,"GrLivArea":1577,"GarageCars":0,"TotalBsmtSF":425,"YearBuilt":1958,"FullBath":1,"BedroomAbvGr":4,"LotArea":3798,"SalePrice":173782},{"OverallQual":2,"GrLivArea":2281,"GarageCars":0,"TotalBsmtSF":1619,"YearBuilt":2006,"FullBath":1,"BedroomAbvGr":4,"LotArea":7051,"SalePrice":204861},{"OverallQual":1,"GrLivArea":1330,"GarageCars":3,"TotalBsmtSF":528,"YearBuilt":1980,"FullBath":2,"BedroomAbvGr":4,"LotArea":9227,"SalePrice":169134},{"OverallQual":8,"GrLivArea":1865,"GarageCars":2,"TotalBsmtSF":874,"YearBuilt":2010,"FullBath":3,"BedroomAbvGr":5,"LotArea":7435,"SalePrice":294804},{"OverallQual":8,"GrLivArea":1622,"GarageCars":3,"TotalBsmtSF":655,"YearBuilt":2014,"FullBath":2,"BedroomAbvGr":4,"LotArea":5725,"SalePrice":296330},{"OverallQual":7,"GrLivArea":1869,"GarageCars":0,"TotalBsmtSF":767,"YearBuilt":2002,"FullBath":2,"BedroomAbvGr":3,"LotArea":7010,"SalePrice":241610},{"OverallQual":1,"GrLivArea":2927,"GarageCars":0,"TotalBsmtSF":1548,"YearBuilt":1963,"FullBath":2,"BedroomAbvGr":5,"LotArea":11686,"SalePrice":220538},{"OverallQual":1,"GrLivArea":2794,"GarageCars":3,"TotalBsmtSF":953,"YearBuilt":1971,"FullBath":0,"BedroomAbvGr":5,"LotArea":3343,"SalePrice":216575},{"OverallQual":1,"GrLivArea":3596,"GarageCars":2,"TotalBsmtSF":961,"YearBuilt":1954,"FullBath":1,"BedroomAbvGr":4,"LotArea":6225,"SalePrice":260809},{"OverallQual":2,"GrLivArea":2048,"GarageCars":3,"TotalBsmtSF":1936,"YearBuilt":1974,"FullBath":3,"BedroomAbvGr":2,"LotArea":7299,"SalePrice":249896},{"OverallQual":8,"GrLivArea":535,"GarageCars":1,"TotalBsmtSF":2015,"YearBuilt":1965,"FullBath":0,"BedroomAbvGr":3,"LotArea":12733,"SalePrice":172803},{"OverallQual":4,"GrLivArea":2609,"GarageCars":2,"TotalBsmtSF":1632,"YearBuilt":2017,"FullBath":3,"BedroomAbvGr":1,"LotArea":3442,"SalePrice":303727},{"OverallQual":6,"GrLivArea":3349,"GarageCars":0,"TotalBsmtSF":1672,"YearBuilt":1996,"FullBath":1,"BedroomAbvGr":4,"LotArea":4475,"SalePrice":290773},{"OverallQual":6,"GrLivArea":996,"GarageCars":3,"TotalBsmtSF":915,"YearBuilt":1959,"FullBath":0,"BedroomAbvGr":4,"LotArea":12966,"SalePrice":162744},{"OverallQual":8,"GrLivArea":2282,"GarageCars":0,"TotalBsmtSF":2163,"YearBuilt":1996,"FullBath":2,"BedroomAbvGr":4,"LotArea":10533,"SalePrice":311099},{"OverallQual":9,"GrLivArea":1491,"GarageCars":3,"TotalBsmtSF":1841,"YearBuilt":1953,"FullBath":0,"BedroomAbvGr":2,"LotArea":6616,"SalePrice":251730},{"OverallQual":7,"GrLivArea":2944,"GarageCars":0,"TotalBsmtSF":1992,"YearBuilt":1980,"FullBath":0,"BedroomAbvGr":1,"LotArea":4665,"SalePrice":277789},{"OverallQual":4,"GrLivArea":1012,"GarageCars":0,"TotalBsmtSF":1146,"YearBuilt":2000,"FullBath":2,"BedroomAbvGr":3,"LotArea":4852,"SalePrice":135390},{"OverallQual":7,"GrLivArea":1376,"GarageCars":1,"TotalBsmtSF":922,"YearBuilt":1971,"FullBath":0,"BedroomAbvGr":4,"LotArea":5097,"SalePrice":179950},{"OverallQual":4,"GrLivArea":1228,"GarageCars":3,"TotalBsmtSF":1236,"YearBuilt":1986,"FullBath":3,"BedroomAbvGr":5,"LotArea":6437,"SalePrice":228168},{"OverallQual":8,"GrLivArea":1181,"GarageCars":0,"TotalBsmtSF":1554,"YearBuilt":1986,"FullBath":0,"BedroomAbvGr":2,"LotArea":11667,"SalePrice":166363},{"OverallQual":5,"GrLivArea":1515,"GarageCars":0,"TotalBsmtSF":377,"YearBuilt":1974,"FullBath":3,"BedroomAbvGr":5,"LotArea":10258,"SalePrice":176871},{"OverallQual":4,"GrLivArea":3201,"GarageCars":1,"TotalBsmtSF":773,"YearBuilt":1997,"FullBath":3,"BedroomAbvGr":4,"LotArea":7539,"SalePrice":302167},{"OverallQual":7,"GrLivArea":1626,"GarageCars":1,"TotalBsmtSF":410,"YearBuilt":2015,"FullBath":0,"BedroomAbvGr":1,"LotArea":8869,"SalePrice":183475},{"OverallQual":10,"GrLivArea":1203,"GarageCars":3,"TotalBsmtSF":412,"YearBuilt":2008,"FullBath":2,"BedroomAbvGr":2,"LotArea":8652,"SalePrice":283089},{"OverallQual":7,"GrLivArea":3152,"GarageCars":0,"TotalBsmtSF":1958,"YearBuilt":1974,"FullBath":3,"BedroomAbvGr":5,"LotArea":3679,"SalePrice":326572},{"OverallQual":4,"GrLivArea":2179,"GarageCars":1,"TotalBsmtSF":2128,"YearBuilt":1982,"FullBath":1,"BedroomAbvGr":1,"LotArea":14098,"SalePrice":222449},{"OverallQual":6,"GrLivArea":3856,"GarageCars":3,"TotalBsmtSF":1201,"YearBuilt":2022,"FullBath":1,"BedroomAbvGr":4,"LotArea":8602,"SalePrice":380236},{"OverallQual":5,"GrLivArea":2403,"GarageCars":0,"TotalBsmtSF":416,"YearBuilt":2008,"FullBath":2,"BedroomAbvGr":1,"LotArea":12382,"SalePrice":213838},{"OverallQual":2,"GrLivArea":3955,"GarageCars":1,"TotalBsmtSF":2290,"YearBuilt":1969,"FullBath":3,"BedroomAbvGr":1,"LotArea":5138,"SalePrice":294884},{"OverallQual":9,"GrLivArea":2215,"GarageCars":2,"TotalBsmtSF":1596,"YearBuilt":1954,"FullBath":0,"BedroomAbvGr":3,"LotArea":7203,"SalePrice":281530},{"OverallQual":1,"GrLivArea":3964,"GarageCars":0,"TotalBsmtSF":417,"YearBuilt":2011,"FullBath":3,"BedroomAbvGr":4,"LotArea":5179,"SalePrice":287916},{"OverallQual":1,"GrLivArea":2149,"GarageCars":0,"TotalBsmtSF":394,"YearBuilt":1979,"FullBath":2,"BedroomAbvGr":2,"LotArea":10555,"SalePrice":122139},{"OverallQual":5,"GrLivArea":2016,"GarageCars":1,"TotalBsmtSF":2255,"YearBuilt":1962,"FullBath":0,"BedroomAbvGr":4,"LotArea":4368,"SalePrice":212892},{"OverallQual":3,"GrLivArea":1480,"GarageCars":0,"TotalBsmtSF":504,"YearBuilt":1998,"FullBath":2,"BedroomAbvGr":5,"LotArea":4863,"SalePrice":156829},{"OverallQual":9,"GrLivArea":1273,"GarageCars":1,"TotalBsmtSF":2381,"YearBuilt":2022,"FullBath":2,"BedroomAbvGr":3,"LotArea":14168,"SalePrice":272938},{"OverallQual":3,"GrLivArea":3848,"GarageCars":0,"TotalBsmtSF":2165,"YearBuilt":1978,"FullBath":0,"BedroomAbvGr":2,"LotArea":14743,"SalePrice":263661},{"OverallQual":5,"GrLivArea":1037,"GarageCars":1,"TotalBsmtSF":406,"YearBuilt":2021,"FullBath":2,"BedroomAbvGr":2,"LotArea":14611,"SalePrice":189831},{"OverallQual":3,"GrLivArea":1791,"GarageCars":0,"TotalBsmtSF":497,"YearBuilt":1988,"FullBath":2,"BedroomAbvGr":5,"LotArea":12526,"SalePrice":177294},{"OverallQual":7,"GrLivArea":3370,"GarageCars":2,"TotalBsmtSF":2289,"YearBuilt":2019,"FullBath":2,"BedroomAbvGr":1,"LotArea":12823,"SalePrice":400262},{"OverallQual":9,"GrLivArea":1284,"GarageCars":0,"TotalBsmtSF":1728,"YearBuilt":2004,"FullBath":0,"BedroomAbvGr":1,"LotArea":6431,"SalePrice":196450},{"OverallQual":1,"GrLivArea":1095,"GarageCars":0,"TotalBsmtSF":501,"YearBuilt":1961,"FullBath":3,"BedroomAbvGr":5,"LotArea":10597,"SalePrice":82494},{"OverallQual":5,"GrLivArea":2565,"GarageCars":1,"TotalBsmtSF":2294,"YearBuilt":1950,"FullBath":2,"BedroomAbvGr":4,"LotArea":6399,"SalePrice":259988},{"OverallQual":7,"GrLivArea":1198,"GarageCars":2,"TotalBsmtSF":1925,"YearBuilt":2019,"FullBath":0,"BedroomAbvGr":3,"LotArea":14777,"SalePrice":258761},{"OverallQual":3,"GrLivArea":1566,"GarageCars":2,"TotalBsmtSF":1771,"YearBuilt":1966,"FullBath":1,"BedroomAbvGr":5,"LotArea":14598,"SalePrice":186202},{"OverallQual":10,"GrLivArea":1648,"GarageCars":3,"TotalBsmtSF":1954,"YearBuilt":1969,"FullBath":2,"BedroomAbvGr":2,"LotArea":4359,"SalePrice":317598},{"OverallQual":6,"GrLivArea":3237,"GarageCars":2,"TotalBsmtSF":2492,"YearBuilt":1956,"FullBath":1,"BedroomAbvGr":1,"LotArea":12593,"SalePrice":316070},{"OverallQual":2,"GrLivArea":1253,"GarageCars":0,"TotalBsmtSF":719,"YearBuilt":1992,"FullBath":2,"BedroomAbvGr":2,"LotArea":5083,"SalePrice":115204},{"OverallQual":3,"GrLivArea":895,"GarageCars":1,"TotalBsmtSF":717,"YearBuilt":1995,"FullBath":3,"BedroomAbvGr":4,"LotArea":12917,"SalePrice":150912},{"OverallQual":1,"GrLivArea":3495,"GarageCars":1,"TotalBsmtSF":1792,"YearBuilt":1954,"FullBath":2,"BedroomAbvGr":5,"LotArea":4978,"SalePrice":250604},{"OverallQual":9,"GrLivArea":1496,"GarageCars":3,"TotalBsmtSF":2217,"YearBuilt":1985,"FullBath":2,"BedroomAbvGr":4,"LotArea":11769,"SalePrice":316608},{"OverallQual":3,"GrLivArea":3414,"GarageCars":3,"TotalBsmtSF":2154,"YearBuilt":2002,"FullBath":3,"BedroomAbvGr":2,"LotArea":3689,"SalePrice":352583},{"OverallQual":8,"GrLivArea":3920,"GarageCars":0,"TotalBsmtSF":841,"YearBuilt":2010,"FullBath":1,"BedroomAbvGr":4,"LotArea":9010,"SalePrice":360609},{"OverallQual":2,"GrLivArea":2187,"GarageCars":0,"TotalBsmtSF":2490,"YearBuilt":1972,"FullBath":2,"BedroomAbvGr":2,"LotArea":11424,"SalePrice":188426},{"OverallQual":4,"GrLivArea":2029,"GarageCars":3,"TotalBsmtSF":2190,"YearBuilt":1981,"FullBath":3,"BedroomAbvGr":3,"LotArea":10564,"SalePrice":289968},{"OverallQual":3,"GrLivArea":1106,"GarageCars":2,"TotalBsmtSF":1096,"YearBuilt":1962,"FullBath":1,"BedroomAbvGr":4,"LotArea":11153,"SalePrice":145539},{"OverallQual":4,"GrLivArea":3998,"GarageCars":0,"TotalBsmtSF":2451,"YearBuilt":2021,"FullBath":2,"BedroomAbvGr":1,"LotArea":13811,"SalePrice":341701},{"OverallQual":7,"GrLivArea":1581,"GarageCars":3,"TotalBsmtSF":1764,"YearBuilt":2003,"FullBath":0,"BedroomAbvGr":2,"LotArea":10853,"SalePrice":264708},{"OverallQual":4,"GrLivArea":2321,"GarageCars":1,"TotalBsmtSF":1235,"YearBuilt":1964,"FullBath":1,"BedroomAbvGr":1,"LotArea":6406,"SalePrice":181535},{"OverallQual":9,"GrLivArea":2861,"GarageCars":3,"TotalBsmtSF":2375,"YearBuilt":1951,"FullBath":3,"BedroomAbvGr":4,"LotArea":10636,"SalePrice":353246},{"OverallQual":3,"GrLivArea":619,"GarageCars":2,"TotalBsmtSF":1363,"YearBuilt":2006,"FullBath":2,"BedroomAbvGr":4,"LotArea":5683,"SalePrice":175831},{"OverallQual":10,"GrLivArea":1615,"GarageCars":2,"TotalBsmtSF":1635,"YearBuilt":1972,"FullBath":0,"BedroomAbvGr":3,"LotArea":8787,"SalePrice":243993},{"OverallQual":1,"GrLivArea":2989,"GarageCars":1,"TotalBsmtSF":1614,"YearBuilt":1970,"FullBath":1,"BedroomAbvGr":4,"LotArea":9397,"SalePrice":239816},{"OverallQual":7,"GrLivArea":3244,"GarageCars":3,"TotalBsmtSF":2326,"YearBuilt":2011,"FullBath":2,"BedroomAbvGr":1,"LotArea":14200,"SalePrice":378236},{"OverallQual":8,"GrLivArea":896,"GarageCars":2,"TotalBsmtSF":836,"YearBuilt":1992,"FullBath":1,"BedroomAbvGr":1,"LotArea":10435,"SalePrice":207531},{"OverallQual":6,"GrLivArea":3559,"GarageCars":0,"TotalBsmtSF":1491,"YearBuilt":2010,"FullBath":1,"BedroomAbvGr":3,"LotArea":12793,"SalePrice":303459},{"OverallQual":2,"GrLivArea":2390,"GarageCars":3,"TotalBsmtSF":347,"YearBuilt":2003,"FullBath":2,"BedroomAbvGr":2,"LotArea":2140,"SalePrice":240319},{"OverallQual":4,"GrLivArea":3339,"GarageCars":0,"TotalBsmtSF":1365,"YearBuilt":1975,"FullBath":3,"BedroomAbvGr":1,"LotArea":14345,"SalePrice":262938},{"OverallQual":8,"GrLivArea":3761,"GarageCars":1,"TotalBsmtSF":1515,"YearBuilt":2018,"FullBath":1,"BedroomAbvGr":3,"LotArea":9102,"SalePrice":368086},{"OverallQual":5,"GrLivArea":3551,"GarageCars":3,"TotalBsmtSF":1469,"YearBuilt":1958,"FullBath":2,"BedroomAbvGr":3,"LotArea":9285,"SalePrice":308101},{"OverallQual":6,"GrLivArea":2431,"GarageCars":1,"TotalBsmtSF":1292,"YearBuilt":1975,"FullBath":0,"BedroomAbvGr":2,"LotArea":5874,"SalePrice":217440},{"OverallQual":3,"GrLivArea":3761,"GarageCars":2,"TotalBsmtSF":350,"YearBuilt":1967,"FullBath":1,"BedroomAbvGr":5,"LotArea":4817,"SalePrice":270247},{"OverallQual":1,"GrLivArea":3160,"GarageCars":0,"TotalBsmtSF":2372,"YearBuilt":1973,"FullBath":3,"BedroomAbvGr":5,"LotArea":7291,"SalePrice":269284},{"OverallQual":7,"GrLivArea":3337,"GarageCars":1,"TotalBsmtSF":2348,"YearBuilt":2004,"FullBath":3,"BedroomAbvGr":4,"LotArea":7016,"SalePrice":381469},{"OverallQual":8,"GrLivArea":2392,"GarageCars":3,"TotalBsmtSF":662,"YearBuilt":2005,"FullBath":3,"BedroomAbvGr":2,"LotArea":13023,"SalePrice":324766},{"OverallQual":4,"GrLivArea":1639,"GarageCars":0,"TotalBsmtSF":368,"YearBuilt":1981,"FullBath":1,"BedroomAbvGr":3,"LotArea":8228,"SalePrice":131861},{"OverallQual":9,"GrLivArea":1727,"GarageCars":0,"TotalBsmtSF":620,"YearBuilt":1991,"FullBath":0,"BedroomAbvGr":5,"LotArea":8764,"SalePrice":209564},{"OverallQual":5,"GrLivArea":3509,"GarageCars":1,"TotalBsmtSF":1328,"YearBuilt":1981,"FullBath":3,"BedroomAbvGr":2,"LotArea":11196,"SalePrice":309728},{"OverallQual":9,"GrLivArea":3808,"GarageCars":3,"TotalBsmtSF":2110,"YearBuilt":1960,"FullBath":0,"BedroomAbvGr":2,"LotArea":10841,"SalePrice":384804},{"OverallQual":10,"GrLivArea":2979,"GarageCars":3,"TotalBsmtSF":2243,"YearBuilt":1952,"FullBath":3,"BedroomAbvGr":5,"LotArea":9843,"SalePrice":405664},{"OverallQual":1,"GrLivArea":1337,"GarageCars":2,"TotalBsmtSF":2433,"YearBuilt":1987,"FullBath":0,"BedroomAbvGr":3,"LotArea":14149,"SalePrice":170137},{"OverallQual":6,"GrLivArea":2868,"GarageCars":2,"TotalBsmtSF":355,"YearBuilt":2003,"FullBath":1,"BedroomAbvGr":1,"LotArea":8894,"SalePrice":253397},{"OverallQual":1,"GrLivArea":3021,"GarageCars":0,"TotalBsmtSF":2294,"YearBuilt":1984,"FullBath":3,"BedroomAbvGr":4,"LotArea":14640,"SalePrice":250335},{"OverallQual":5,"GrLivArea":3618,"GarageCars":3,"TotalBsmtSF":309,"YearBuilt":2022,"FullBath":1,"BedroomAbvGr":3,"LotArea":4349,"SalePrice":351453},{"OverallQual":2,"GrLivArea":3921,"GarageCars":3,"TotalBsmtSF":2061,"YearBuilt":2007,"FullBath":1,"BedroomAbvGr":3,"LotArea":12617,"SalePrice":346529},{"OverallQual":4,"GrLivArea":2431,"GarageCars":1,"TotalBsmtSF":1929,"YearBuilt":1995,"FullBath":1,"BedroomAbvGr":2,"LotArea":3249,"SalePrice":249294},{"OverallQual":6,"GrLivArea":3113,"GarageCars":0,"TotalBsmtSF":659,"YearBuilt":1987,"FullBath":3,"BedroomAbvGr":3,"LotArea":13563,"SalePrice":283053},{"OverallQual":4,"GrLivArea":1512,"GarageCars":1,"TotalBsmtSF":2321,"YearBuilt":2013,"FullBath":1,"BedroomAbvGr":2,"LotArea":14960,"SalePrice":225010},{"OverallQual":1,"GrLivArea":3767,"GarageCars":2,"TotalBsmtSF":2394,"YearBuilt":1991,"FullBath":2,"BedroomAbvGr":4,"LotArea":8099,"SalePrice":309211},{"OverallQual":8,"GrLivArea":1395,"GarageCars":2,"TotalBsmtSF":2188,"YearBuilt":1965,"FullBath":3,"BedroomAbvGr":3,"LotArea":7291,"SalePrice":267838},{"OverallQual":5,"GrLivArea":1492,"GarageCars":1,"TotalBsmtSF":2175,"YearBuilt":2011,"FullBath":1,"BedroomAbvGr":2,"LotArea":11218,"SalePrice":211664},{"OverallQual":5,"GrLivArea":1350,"GarageCars":1,"TotalBsmtSF":1503,"YearBuilt":2012,"FullBath":3,"BedroomAbvGr":1,"LotArea":14111,"SalePrice":232781},{"OverallQual":8,"GrLivArea":3483,"GarageCars":0,"TotalBsmtSF":1612,"YearBuilt":1967,"FullBath":1,"BedroomAbvGr":4,"LotArea":8295,"SalePrice":319876},{"OverallQual":8,"GrLivArea":1743,"GarageCars":0,"TotalBsmtSF":989,"YearBuilt":1975,"FullBath":0,"BedroomAbvGr":2,"LotArea":13543,"SalePrice":204688},{"OverallQual":6,"GrLivArea":2764,"GarageCars":1,"TotalBsmtSF":1505,"YearBuilt":2014,"FullBath":0,"BedroomAbvGr":2,"LotArea":9574,"SalePrice":298745},{"OverallQual":10,"GrLivArea":987,"GarageCars":3,"TotalBsmtSF":1441,"YearBuilt":1970,"FullBath":2,"BedroomAbvGr":5,"LotArea":11738,"SalePrice":285161},{"OverallQual":1,"GrLivArea":643,"GarageCars":1,"TotalBsmtSF":2179,"YearBuilt":2023,"FullBath":3,"BedroomAbvGr":1,"LotArea":10264,"SalePrice":135263},{"OverallQual":3,"GrLivArea":2125,"GarageCars":0,"TotalBsmtSF":1441,"YearBuilt":1982,"FullBath":1,"BedroomAbvGr":3,"LotArea":9446,"SalePrice":180067},{"OverallQual":1,"GrLivArea":1846,"GarageCars":1,"TotalBsmtSF":580,"YearBuilt":2012,"FullBath":0,"BedroomAbvGr":1,"LotArea":10234,"SalePrice":129364},{"OverallQual":5,"GrLivArea":2707,"GarageCars":0,"TotalBsmtSF":1346,"YearBuilt":2020,"FullBath":2,"BedroomAbvGr":5,"LotArea":4817,"SalePrice":275810},{"OverallQual":2,"GrLivArea":1666,"GarageCars":1,"TotalBsmtSF":825,"YearBuilt":1982,"FullBath":0,"BedroomAbvGr":3,"LotArea":12828,"SalePrice":147226},{"OverallQual":5,"GrLivArea":2506,"GarageCars":2,"TotalBsmtSF":342,"YearBuilt":1979,"FullBath":2,"BedroomAbvGr":2,"LotArea":12139,"SalePrice":251312},{"OverallQual":3,"GrLivArea":1629,"GarageCars":3,"TotalBsmtSF":1930,"YearBuilt":1966,"FullBath":0,"BedroomAbvGr":4,"LotArea":7699,"SalePrice":209025},{"OverallQual":10,"GrLivArea":2395,"GarageCars":2,"TotalBsmtSF":2187,"YearBuilt":1953,"FullBath":1,"BedroomAbvGr":4,"LotArea":11135,"SalePrice":328413},{"OverallQual":9,"GrLivArea":2697,"GarageCars":3,"TotalBsmtSF":784,"YearBuilt":1960,"FullBath":3,"BedroomAbvGr":4,"LotArea":10105,"SalePrice":318772},{"OverallQual":9,"GrLivArea":2205,"GarageCars":0,"TotalBsmtSF":1444,"YearBuilt":2016,"FullBath":0,"BedroomAbvGr":2,"LotArea":6146,"SalePrice":278333},{"OverallQual":5,"GrLivArea":3044,"GarageCars":0,"TotalBsmtSF":1058,"YearBuilt":1998,"FullBath":0,"BedroomAbvGr":4,"LotArea":13207,"SalePrice":240556},{"OverallQual":8,"GrLivArea":2955,"GarageCars":2,"TotalBsmtSF":1580,"YearBuilt":1957,"FullBath":3,"BedroomAbvGr":2,"LotArea":8012,"SalePrice":327766},{"OverallQual":3,"GrLivArea":3640,"GarageCars":2,"TotalBsmtSF":584,"YearBuilt":1990,"FullBath":1,"BedroomAbvGr":2,"LotArea":9842,"SalePrice":285461},{"OverallQual":9,"GrLivArea":3401,"GarageCars":1,"TotalBsmtSF":2269,"YearBuilt":2004,"FullBath":2,"BedroomAbvGr":1,"LotArea":12603,"SalePrice":376248},{"OverallQual":10,"GrLivArea":2353,"GarageCars":2,"TotalBsmtSF":303,"YearBuilt":1994,"FullBath":2,"BedroomAbvGr":2,"LotArea":14868,"SalePrice":301751},{"OverallQual":5,"GrLivArea":2310,"GarageCars":0,"TotalBsmtSF":1219,"YearBuilt":1955,"FullBath":1,"BedroomAbvGr":4,"LotArea":5273,"SalePrice":174716},{"OverallQual":6,"GrLivArea":2992,"GarageCars":1,"TotalBsmtSF":1238,"YearBuilt":1960,"FullBath":2,"BedroomAbvGr":3,"LotArea":10785,"SalePrice":265591},{"OverallQual":8,"GrLivArea":3824,"GarageCars":1,"TotalBsmtSF":1554,"YearBuilt":1952,"FullBath":0,"BedroomAbvGr":4,"LotArea":12294,"SalePrice":319341},{"OverallQual":9,"GrLivArea":1372,"GarageCars":0,"TotalBsmtSF":866,"YearBuilt":2022,"FullBath":3,"BedroomAbvGr":1,"LotArea":5267,"SalePrice":236743},{"OverallQual":3,"GrLivArea":1691,"GarageCars":0,"TotalBsmtSF":1502,"YearBuilt":2008,"FullBath":1,"BedroomAbvGr":3,"LotArea":11208,"SalePrice":197888},{"OverallQual":4,"GrLivArea":2827,"GarageCars":2,"TotalBsmtSF":1319,"YearBuilt":2012,"FullBath":3,"BedroomAbvGr":4,"LotArea":13530,"SalePrice":301044},{"OverallQual":10,"GrLivArea":2258,"GarageCars":3,"TotalBsmtSF":1199,"YearBuilt":2015,"FullBath":0,"BedroomAbvGr":3,"LotArea":13214,"SalePrice":327036},{"OverallQual":7,"GrLivArea":3670,"GarageCars":1,"TotalBsmtSF":437,"YearBuilt":2000,"FullBath":2,"BedroomAbvGr":5,"LotArea":4989,"SalePrice":350830},{"OverallQual":7,"GrLivArea":1970,"GarageCars":0,"TotalBsmtSF":2487,"YearBuilt":1988,"FullBath":1,"BedroomAbvGr":4,"LotArea":10632,"SalePrice":242713},{"OverallQual":3,"GrLivArea":2991,"GarageCars":1,"TotalBsmtSF":2492,"YearBuilt":1993,"FullBath":2,"BedroomAbvGr":5,"LotArea":11600,"SalePrice":305681},{"OverallQual":3,"GrLivArea":3568,"GarageCars":3,"TotalBsmtSF":1011,"YearBuilt":2011,"FullBath":2,"BedroomAbvGr":1,"LotArea":11958,"SalePrice":341383},{"OverallQual":1,"GrLivArea":3873,"GarageCars":2,"TotalBsmtSF":777,"YearBuilt":1994,"FullBath":2,"BedroomAbvGr":2,"LotArea":2632,"SalePrice":294974},{"OverallQual":7,"GrLivArea":2323,"GarageCars":2,"TotalBsmtSF":1326,"YearBuilt":1985,"FullBath":3,"BedroomAbvGr":2,"LotArea":6445,"SalePrice":300153},{"OverallQual":3,"GrLivArea":1024,"GarageCars":0,"TotalBsmtSF":2355,"YearBuilt":1983,"FullBath":2,"BedroomAbvGr":4,"LotArea":2963,"SalePrice":146669},{"OverallQual":1,"GrLivArea":1508,"GarageCars":3,"TotalBsmtSF":560,"YearBuilt":2022,"FullBath":2,"BedroomAbvGr":1,"LotArea":13794,"SalePrice":192605},{"OverallQual":6,"GrLivArea":1477,"GarageCars":1,"TotalBsmtSF":2163,"YearBuilt":1952,"FullBath":0,"BedroomAbvGr":1,"LotArea":7782,"SalePrice":154991},{"OverallQual":4,"GrLivArea":2643,"GarageCars":1,"TotalBsmtSF":903,"YearBuilt":1963,"FullBath":3,"BedroomAbvGr":1,"LotArea":11793,"SalePrice":236075},{"OverallQual":1,"GrLivArea":2135,"GarageCars":0,"TotalBsmtSF":774,"YearBuilt":2012,"FullBath":0,"BedroomAbvGr":5,"LotArea":14329,"SalePrice":155462},{"OverallQual":2,"GrLivArea":3671,"GarageCars":2,"TotalBsmtSF":2155,"YearBuilt":2004,"FullBath":0,"BedroomAbvGr":3,"LotArea":12756,"SalePrice":319207},{"OverallQual":6,"GrLivArea":764,"GarageCars":2,"TotalBsmtSF":1062,"YearBuilt":2020,"FullBath":1,"BedroomAbvGr":5,"LotArea":13421,"SalePrice":225589},{"OverallQual":9,"GrLivArea":3947,"GarageCars":0,"TotalBsmtSF":2416,"YearBuilt":1981,"FullBath":3,"BedroomAbvGr":1,"LotArea":6037,"SalePrice":395010},{"OverallQual":5,"GrLivArea":1353,"GarageCars":1,"TotalBsmtSF":2074,"YearBuilt":1951,"FullBath":1,"BedroomAbvGr":1,"LotArea":13371,"SalePrice":167670},{"OverallQual":7,"GrLivArea":1133,"GarageCars":2,"TotalBsmtSF":493,"YearBuilt":2014,"FullBath":3,"BedroomAbvGr":3,"LotArea":13695,"SalePrice":234312},{"OverallQual":1,"GrLivArea":3408,"GarageCars":3,"TotalBsmtSF":2437,"YearBuilt":1973,"FullBath":3,"BedroomAbvGr":2,"LotArea":2769,"SalePrice":328244},{"OverallQual":6,"GrLivArea":1641,"GarageCars":1,"TotalBsmtSF":1968,"YearBuilt":1975,"FullBath":0,"BedroomAbvGr":4,"LotArea":9622,"SalePrice":220641},{"OverallQual":6,"GrLivArea":1456,"GarageCars":2,"TotalBsmtSF":2297,"YearBuilt":1958,"FullBath":3,"BedroomAbvGr":2,"LotArea":2661,"SalePrice":224163},{"OverallQual":3,"GrLivArea":2187,"GarageCars":1,"TotalBsmtSF":2228,"YearBuilt":1979,"FullBath":1,"BedroomAbvGr":1,"LotArea":4408,"SalePrice":227398},{"OverallQual":2,"GrLivArea":550,"GarageCars":3,"TotalBsmtSF":1831,"YearBuilt":1950,"FullBath":0,"BedroomAbvGr":4,"LotArea":9052,"SalePrice":128342},{"OverallQual":5,"GrLivArea":3646,"GarageCars":0,"TotalBsmtSF":1093,"YearBuilt":1962,"FullBath":1,"BedroomAbvGr":2,"LotArea":2285,"SalePrice":255905},{"OverallQual":7,"GrLivArea":3675,"GarageCars":0,"TotalBsmtSF":823,"YearBuilt":1981,"FullBath":1,"BedroomAbvGr":1,"LotArea":12030,"SalePrice":306422}],"priceStats":{"min":82494,"max":435291,"mean":252262.90333333332,"median":251292.5},"priceHistogram":{"counts":[4,1,13,9,18,27,19,26,22,19,21,20,32,22,16,10,8,7,3,3],"edges":[82494.0,100134.0,117774.0,135414.0,153053.0,170693.0,188333.0,205973.0,223613.0,241253.0,258892.0,276532.0,294172.0,311812.0,329452.0,347092.0,364732.0,382371.0,400011.0,417651.0,435291.0]}}</script>
+<script>
+(function(){
+"use strict";
+
+const D = JSON.parse(document.getElementById('dashboard-data').textContent);
+
+const COLOR = {
+  copper:'#CB8858', sage:'#7FA88C', slate:'#5C7A99', brick:'#B85C4F',
+  text:'#EDEAE2', mute:'#78859A', grid:'rgba(237,234,226,0.07)'
+};
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = COLOR.mute;
+Chart.defaults.borderColor = COLOR.grid;
+
+function fmtMoney(n){
+  const sign = n<0 ? '-' : '';
+  n = Math.abs(n);
+  if(n>=1000) return sign+'$' + (n/1000).toFixed(1).replace(/\.0$/,'') + 'K';
+  return sign+'$' + Math.round(n).toLocaleString();
+}
+function fmtMoneyFull(n){ return (n<0?'-':'') + '$' + Math.round(Math.abs(n)).toLocaleString(); }
+
+let charts = {};
+function destroy(key){ if(charts[key]){ charts[key].destroy(); delete charts[key]; } }
+
+/* ================= KPIs ================= */
+function renderKPIs(){
+  document.getElementById('kpiR2').textContent = D.metrics.r2.toFixed(3);
+  document.getElementById('kpiRmse').textContent = fmtMoneyFull(D.metrics.rmse);
+  document.getElementById('kpiRmseDelta').textContent = `≈ ${(D.metrics.rmse/D.priceStats.mean*100).toFixed(1)}% of mean price`;
+
+  const topFeature = Object.entries(D.correlations).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))[0];
+  document.getElementById('kpiTopFeature').textContent = topFeature[0];
+  document.getElementById('kpiTopFeatureDelta').textContent = `r = ${topFeature[1].toFixed(2)} with price`;
+}
+
+/* ================= PRICE HISTOGRAM ================= */
+function renderPriceHist(){
+  const h = D.priceHistogram;
+  const labels = h.edges.slice(0,-1).map((e,i)=>fmtMoney(e));
+  destroy('priceHist');
+  charts.priceHist = new Chart(document.getElementById('priceHistChart'),{
+    type:'bar',
+    data:{ labels, datasets:[{ data:h.counts, backgroundColor:'rgba(203,136,88,0.7)', borderRadius:4, maxBarThickness:36 }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=>c.parsed.y+' houses'}} },
+      scales:{ x:{ grid:{display:false}, ticks:{maxRotation:45,font:{size:10}} }, y:{ grid:{color:COLOR.grid}, ticks:{precision:0} } }
+    }
+  });
+}
+
+/* ================= CORRELATION BAR ================= */
+function renderCorr(){
+  const sorted = Object.entries(D.correlations).sort((a,b)=>b[1]-a[1]);
+  destroy('corr');
+  charts.corr = new Chart(document.getElementById('corrChart'),{
+    type:'bar',
+    data:{ labels: sorted.map(s=>s[0]), datasets:[{
+      data: sorted.map(s=>s[1]),
+      backgroundColor: sorted.map(s=> s[1]>=0 ? COLOR.sage : COLOR.brick),
+      borderRadius:5, maxBarThickness:30
+    }]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=>'r = '+c.parsed.x.toFixed(3)}} },
+      scales:{ x:{ min:-0.2, max:1, grid:{color:COLOR.grid} }, y:{ grid:{display:false} } }
+    }
+  });
+  const strongest = sorted[0], weakest = sorted[sorted.length-1];
+  document.getElementById('corrInsight').innerHTML =
+    `<strong>Observation:</strong> <span class="flag">${strongest[0]}</span> (r = ${strongest[1].toFixed(2)}) is the standout predictor. <span class="flag neg">${weakest[0]}</span> (r = ${weakest[1].toFixed(2)}) shows almost no relationship with price on its own in this dataset.`;
+}
+
+/* ================= ACTUAL VS PREDICTED ================= */
+function renderActualPred(){
+  const points = D.actual.map((a,i)=>({x:a, y:D.predicted[i]}));
+  const lims = [Math.min(...D.actual, ...D.predicted), Math.max(...D.actual, ...D.predicted)];
+  destroy('actualPred');
+  charts.actualPred = new Chart(document.getElementById('actualPredChart'),{
+    type:'scatter',
+    data:{ datasets:[
+      { label:'Test houses', data:points, backgroundColor:'rgba(203,136,88,0.75)', pointRadius:5, pointHoverRadius:7 },
+      { label:'Perfect prediction', data:[{x:lims[0],y:lims[0]},{x:lims[1],y:lims[1]}], type:'line',
+        borderColor:'rgba(237,234,226,0.4)', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ position:'top', align:'end', labels:{boxWidth:10,boxHeight:10,color:COLOR.mute,font:{size:11}} },
+        tooltip:{ callbacks:{ label:(c)=> c.datasetIndex===0 ? `Actual ${fmtMoneyFull(c.raw.x)}, Predicted ${fmtMoneyFull(c.raw.y)}` : null } } },
+      scales:{
+        x:{ title:{display:true,text:'Actual price',color:COLOR.mute,font:{size:11}}, grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} },
+        y:{ title:{display:true,text:'Predicted price',color:COLOR.mute,font:{size:11}}, grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} }
+      }
+    }
+  });
+}
+
+/* ================= RESIDUALS ================= */
+function renderResiduals(){
+  const points = D.predicted.map((p,i)=>({x:p, y:D.residuals[i]}));
+  destroy('residual');
+  charts.residual = new Chart(document.getElementById('residualChart'),{
+    type:'scatter',
+    data:{ datasets:[
+      { label:'Residual', data:points, backgroundColor:'rgba(92,122,153,0.75)', pointRadius:5, pointHoverRadius:7 }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=>`Predicted ${fmtMoneyFull(c.raw.x)}, Residual ${fmtMoneyFull(c.raw.y)}`}} },
+      scales:{
+        x:{ title:{display:true,text:'Predicted price',color:COLOR.mute,font:{size:11}}, grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} },
+        y:{ title:{display:true,text:'Residual (actual - predicted)',color:COLOR.mute,font:{size:11}}, grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} }
+      }
+    },
+    plugins:[{
+      id:'zeroLine',
+      afterDatasetsDraw(chart){
+        const {ctx, scales} = chart;
+        const y0 = scales.y.getPixelForValue(0);
+        ctx.save();
+        ctx.strokeStyle = 'rgba(184,92,79,0.6)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6,4]);
+        ctx.beginPath();
+        ctx.moveTo(scales.x.left, y0);
+        ctx.lineTo(scales.x.right, y0);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }]
+  });
+
+  document.getElementById('perfInsight').innerHTML =
+    `<strong>Observation:</strong> points cluster tightly along the diagonal in the actual-vs-predicted chart, and residuals scatter randomly above and below zero with no funnel shape or curve — the model isn't systematically over- or under-predicting at any price range.`;
+}
+
+/* ================= COEFFICIENTS ================= */
+function renderCoef(){
+  const entries = Object.entries(D.coefficients).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+  destroy('coef');
+  charts.coef = new Chart(document.getElementById('coefChart'),{
+    type:'bar',
+    data:{ labels: entries.map(e=>e[0]), datasets:[{
+      data: entries.map(e=>e[1]),
+      backgroundColor: entries.map(e=> e[1]>=0 ? COLOR.sage : COLOR.brick),
+      borderRadius:5, maxBarThickness:30
+    }]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=> fmtMoneyFull(c.parsed.x) + ' per unit'}} },
+      scales:{ x:{ grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} }, y:{ grid:{display:false} } }
+    }
+  });
+  const top = entries[0];
+  document.getElementById('coefInsight').innerHTML =
+    `<strong>Observation:</strong> <span class="flag">${top[0]}</span> has the largest per-unit effect (${fmtMoneyFull(top[1])} per unit), but remember scale matters — a feature with a small per-unit coefficient can still dominate if it varies over a wide range (like square footage).`;
+}
+
+/* ================= REGULARISATION COMPARE ================= */
+function renderCompare(){
+  const grid = document.getElementById('compareGrid');
+  const best = Object.entries(D.modelCompare).sort((a,b)=>b[1].r2-a[1].r2)[0][0];
+  grid.innerHTML = Object.entries(D.modelCompare).map(([name, m])=>`
+    <div class="compare-card ${name===best?'best':''}">
+      <div class="cname">${name}</div>
+      <div class="cr2">R² ${m.r2.toFixed(4)}</div>
+      <div class="crmse">RMSE ${fmtMoneyFull(m.rmse)}</div>
+      ${name===best ? '<div class="badge">Best fit</div>' : ''}
+    </div>`).join('');
+
+  const r2s = Object.values(D.modelCompare).map(m=>m.r2);
+  const spread = Math.max(...r2s) - Math.min(...r2s);
+  document.getElementById('compareInsight').innerHTML =
+    `<strong>Observation:</strong> all three models land within <span class="flag">${spread.toFixed(4)} R²</span> of each other — regularisation makes essentially no difference here. With only 7 features and no severe multicollinearity, there's little overfitting for Ridge or Lasso to correct.`;
+}
+
+/* ================= PREDICTION TOOL ================= */
+const FEATURE_CONFIG = {
+  GrLivArea:    { label:'Living Area', unit:'sq ft', step:10, isKey:true, badge:'⭐ Primary Driver', badgeClass:'primary' },
+  OverallQual:  { label:'Overall Quality', unit:'/10', step:1, isKey:true, badge:'High Impact', badgeClass:'high' },
+  GarageCars:   { label:'Garage Capacity', unit:'cars', step:1, isKey:true, badge:'High Impact', badgeClass:'high' },
+  TotalBsmtSF:  { label:'Basement Area', unit:'sq ft', step:10, isKey:true, badge:'Key Impact', badgeClass:'moderate' },
+  FullBath:     { label:'Full Bathrooms', unit:'baths', step:1, isKey:true, badge:'Key Impact', badgeClass:'moderate' },
+  YearBuilt:    { label:'Year Built', unit:'', step:1, isKey:false, badge:'Moderate Impact', badgeClass:'moderate' },
+  BedroomAbvGr: { label:'Bedrooms', unit:'rooms', step:1, isKey:false, badge:'Minor Impact', badgeClass:'minor' },
+  LotArea:      { label:'Lot Area', unit:'sq ft', step:50, isKey:false, badge:'Minor Impact', badgeClass:'minor' }
+};
+
+const ORDERED_FEATURES = ['GrLivArea', 'OverallQual', 'GarageCars', 'TotalBsmtSF', 'FullBath', 'YearBuilt', 'BedroomAbvGr', 'LotArea'];
+const KEY_FEATURES = ['GrLivArea', 'OverallQual', 'GarageCars', 'TotalBsmtSF', 'FullBath'];
+
+let currentMode = 'key'; // 'key' or 'all'
+let currentInputs = {};
+D.featureNames.forEach(f=>{ currentInputs[f] = Math.round(D.featureStats[f].mean); });
+
+function formatVal(f, v){
+  const cfg = FEATURE_CONFIG[f];
+  if(!cfg) return v;
+  if(f === 'OverallQual') return `${v} / 10`;
+  if(f === 'GarageCars') return `${v} ${v===1?'car':'cars'}`;
+  if(f === 'FullBath') return `${v} ${v===1?'bath':'baths'}`;
+  if(f === 'BedroomAbvGr') return `${v} ${v===1?'bed':'beds'}`;
+  if(f === 'YearBuilt') return `${v}`;
+  return `${Number(v).toLocaleString()} ${cfg.unit}`.trim();
+}
+
+function buildFields(){
+  const container = document.getElementById('fieldsContainer');
+  const activeFeatures = currentMode === 'key' ? KEY_FEATURES : ORDERED_FEATURES;
+  
+  const subText = document.getElementById('formSubText');
+  const heldNote = document.getElementById('heldFeaturesNote');
+  if(subText && heldNote){
+    if(currentMode === 'key'){
+      subText.textContent = 'Top 5 price drivers (less noise, high impact)';
+      heldNote.style.display = 'block';
+      heldNote.innerHTML = '<strong>Baseline Info:</strong> Secondary features (Year Built: ' + Math.round(D.featureStats.YearBuilt.mean) + ', Bedrooms: ' + Math.round(D.featureStats.BedroomAbvGr.mean) + ', Lot Area: ' + Math.round(D.featureStats.LotArea.mean).toLocaleString() + ' sq ft) are held at dataset averages.';
+    } else {
+      subText.textContent = 'All 8 features used by the regression model';
+      heldNote.style.display = 'none';
+    }
+  }
+
+  container.innerHTML = activeFeatures.map(f=>{
+    const cfg = FEATURE_CONFIG[f] || { label: f, step: 1, badge: '', badgeClass: 'minor' };
+    const stat = D.featureStats[f];
+    return `
+      <div class="field">
+        <div class="field-header">
+          <div class="field-title-wrap">
+            <span class="field-name">${cfg.label}</span>
+            <span class="impact-badge ${cfg.badgeClass}">${cfg.badge}</span>
+          </div>
+          <span class="fval" id="val-${f}">${formatVal(f, currentInputs[f])}</span>
+        </div>
+        <input type="range" id="input-${f}" min="${stat.min}" max="${stat.max}" step="${cfg.step}" value="${currentInputs[f]}">
+      </div>`;
+  }).join('');
+
+  activeFeatures.forEach(f=>{
+    const slider = document.getElementById(`input-${f}`);
+    if(slider){
+      slider.addEventListener('input', (e)=>{
+        currentInputs[f] = parseFloat(e.target.value);
+        const valEl = document.getElementById(`val-${f}`);
+        if(valEl) valEl.textContent = formatVal(f, currentInputs[f]);
+        runPrediction();
+      });
+    }
+  });
+}
+
+function setMode(mode){
+  currentMode = mode;
+  document.getElementById('modeKeyBtn').classList.toggle('active', mode === 'key');
+  document.getElementById('modeAllBtn').classList.toggle('active', mode === 'all');
+  buildFields();
+  runPrediction();
+}
+
+function predictedAtMeans(){
+  let p = D.intercept;
+  D.featureNames.forEach(f=>{ p += D.coefficients[f] * D.featureStats[f].mean; });
+  return p;
+}
+
+function runPrediction(){
+  let predicted = D.intercept;
+  D.featureNames.forEach(f=>{ predicted += D.coefficients[f] * currentInputs[f]; });
+
+  document.getElementById('predictedPrice').textContent = fmtMoneyFull(predicted);
+
+  const below = D.sampleRows.filter(r=>r.SalePrice < predicted).length;
+  const pct = (below / D.sampleRows.length * 100).toFixed(0);
+  document.getElementById('predictedContext').innerHTML =
+    `Higher than <b>${pct}%</b> of the 300 houses in this dataset`;
+
+  // contribution breakdown vs average house
+  const baseline = predictedAtMeans();
+  const activeFeatures = currentMode === 'key' ? KEY_FEATURES : ORDERED_FEATURES;
+  const contributions = activeFeatures.map(f=>({
+    feature: FEATURE_CONFIG[f]?.label || f,
+    value: D.coefficients[f] * (currentInputs[f] - D.featureStats[f].mean)
+  })).sort((a,b)=>Math.abs(b.value)-Math.abs(a.value));
+
+  document.getElementById('avgPriceLabel').textContent = fmtMoneyFull(baseline);
+
+  destroy('contribution');
+  charts.contribution = new Chart(document.getElementById('contributionChart'),{
+    type:'bar',
+    data:{ labels: contributions.map(c=>c.feature), datasets:[{
+      data: contributions.map(c=>c.value),
+      backgroundColor: contributions.map(c=> c.value>=0 ? COLOR.sage : COLOR.brick),
+      borderRadius:5, maxBarThickness:28
+    }]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=> (c.parsed.x>=0?'+':'') + fmtMoneyFull(c.parsed.x)}} },
+      scales:{ x:{ grid:{color:COLOR.grid}, ticks:{callback:(v)=>fmtMoney(v)} }, y:{ grid:{display:false} } }
+    }
+  });
+
+  // market position: histogram with a marker line at predicted price
+  const h = D.priceHistogram;
+  const labels = h.edges.slice(0,-1).map(e=>fmtMoney(e));
+  let markerBin = 0;
+  for(let i=0;i<h.edges.length-1;i++){
+    if(predicted >= h.edges[i] && predicted <= h.edges[i+1]) markerBin = i;
+  }
+  if(predicted > h.edges[h.edges.length-1]) markerBin = h.counts.length-1;
+  if(predicted < h.edges[0]) markerBin = 0;
+
+  destroy('marketPosition');
+  charts.marketPosition = new Chart(document.getElementById('marketPositionChart'),{
+    type:'bar',
+    data:{ labels, datasets:[{
+      data: h.counts,
+      backgroundColor: h.counts.map((_,i)=> i===markerBin ? COLOR.copper : 'rgba(92,122,153,0.45)'),
+      borderRadius:4, maxBarThickness:30
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:(c)=>c.parsed.y+' houses'}} },
+      scales:{ x:{ grid:{display:false}, ticks:{maxRotation:45,font:{size:9}} }, y:{ grid:{color:COLOR.grid}, ticks:{precision:0} } }
+    }
+  });
+}
+
+document.getElementById('modeKeyBtn').addEventListener('click', ()=> setMode('key'));
+document.getElementById('modeAllBtn').addEventListener('click', ()=> setMode('all'));
+
+document.getElementById('randomBtn').addEventListener('click', ()=>{
+  const row = D.sampleRows[Math.floor(Math.random()*D.sampleRows.length)];
+  D.featureNames.forEach(f=>{
+    currentInputs[f] = row[f];
+    const el = document.getElementById(`input-${f}`);
+    if(el) el.value = row[f];
+    const valEl = document.getElementById(`val-${f}`);
+    if(valEl) valEl.textContent = formatVal(f, row[f]);
+  });
+  runPrediction();
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  D.featureNames.forEach(f=>{
+    const meanVal = Math.round(D.featureStats[f].mean);
+    currentInputs[f] = meanVal;
+    const el = document.getElementById(`input-${f}`);
+    if(el) el.value = meanVal;
+    const valEl = document.getElementById(`val-${f}`);
+    if(valEl) valEl.textContent = formatVal(f, meanVal);
+  });
+  runPrediction();
+});
+
+/* ================= INIT ================= */
+renderKPIs();
+renderPriceHist();
+renderCorr();
+renderActualPred();
+renderResiduals();
+renderCoef();
+renderCompare();
+buildFields();
+runPrediction();
+
+/* ================= scroll-spy nav ================= */
+const navLinks = Array.from(document.querySelectorAll('#sectionNav a'));
+const sections = navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+const spy = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id = '#'+entry.target.id;
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
+    }
+  });
+}, { rootMargin:'-40% 0px -50% 0px', threshold:0 });
+sections.forEach(s=>{ if(s) spy.observe(s); });
+
+})();
+</script>
+</body>
+</html>
