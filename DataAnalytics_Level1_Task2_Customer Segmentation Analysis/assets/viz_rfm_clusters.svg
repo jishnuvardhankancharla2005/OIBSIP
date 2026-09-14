@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070D18"/>
+      <stop offset="50%" stop-color="#0D1627"/>
+      <stop offset="100%" stop-color="#050912"/>
+    </linearGradient>
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#152136"/>
+      <stop offset="100%" stop-color="#0E1726"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow4" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glowCluster" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <style>
+      .title { font-family: 'Segoe UI', -apple-system, Roboto, sans-serif; font-weight: 700; fill: #F8FAFC; }
+      .sub { font-family: 'Segoe UI', -apple-system, Roboto, sans-serif; fill: #94A3B8; font-size: 13px; }
+      .label { font-family: 'Segoe UI', -apple-system, Roboto, sans-serif; fill: #64748B; font-size: 11px; }
+      .val { font-family: 'Segoe UI', -apple-system, Roboto, sans-serif; font-weight: 600; fill: #F1F5F9; font-size: 13px; }
+      .mono { font-family: 'SFMono-Regular', Consolas, Menlo, monospace; }
+
+      @keyframes pulseCentroid {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.7; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="440" rx="18" fill="url(#bgGrad4)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Top Header -->
+  <g transform="translate(36, 30)">
+    <rect x="0" y="0" width="32" height="32" rx="8" fill="rgba(245,158,11,0.15)" stroke="#F59E0B" stroke-width="1"/>
+    <!-- Scatter plot icon -->
+    <circle cx="10" cy="22" r="2.5" fill="#EF4444"/>
+    <circle cx="14" cy="18" r="2.5" fill="#3B82F6"/>
+    <circle cx="18" cy="12" r="3" fill="#10B981"/>
+    <circle cx="23" cy="8" r="3" fill="#F59E0B"/>
+    <text x="44" y="16" class="title" font-size="18">2D Feature Space Cluster Scatter Plot &amp; Strategic Playbooks</text>
+    <text x="44" y="32" class="sub">Recency vs Monetary Hyperplane Separation with Cluster Centroids (μ₁ – μ₄)</text>
+
+    <!-- Legend Pill -->
+    <g transform="translate(680, 4)">
+      <circle cx="0" cy="10" r="4" fill="#F59E0B"/>
+      <text x="8" y="14" class="label" font-size="10.5" fill="#FCD34D">High-Val</text>
+      <circle cx="65" cy="10" r="4" fill="#10B981"/>
+      <text x="73" y="14" class="label" font-size="10.5" fill="#6EE7B7">Loyal</text>
+      <circle cx="120" cy="10" r="4" fill="#3B82F6"/>
+      <text x="128" y="14" class="label" font-size="10.5" fill="#93C5FD">New</text>
+      <circle cx="170" cy="10" r="4" fill="#EF4444"/>
+      <text x="178" y="14" class="label" font-size="10.5" fill="#FCA5A5">At-Risk</text>
+    </g>
+  </g>
+
+  <!-- Left Main Scatter Visual -->
+  <g transform="translate(36, 80)" filter="url(#shadow4)">
+    <rect width="520" height="330" rx="14" fill="url(#cardGrad4)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    
+    <text x="24" y="28" class="title" font-size="14">Recency vs Monetary Scatter (N = 1,534)</text>
+    <text x="24" y="44" class="label">X-Axis: Recency (Days since order) · Y-Axis: Total Spend ($)</text>
+
+    <!-- Canvas -->
+    <g transform="translate(30, 65)">
+      <!-- Y Grid -->
+      <line x1="40" y1="0" x2="460" y2="0" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+      <text x="32" y="4" class="mono label" text-anchor="end">$3.5k</text>
+
+      <line x1="40" y1="48" x2="460" y2="48" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+      <text x="32" y="52" class="mono label" text-anchor="end">$2.5k</text>
+
+      <line x1="40" y1="96" x2="460" y2="96" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+      <text x="32" y="100" class="mono label" text-anchor="end">$1.5k</text>
+
+      <line x1="40" y1="144" x2="460" y2="144" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+      <text x="32" y="148" class="mono label" text-anchor="end">$500</text>
+
+      <line x1="40" y1="192" x2="460" y2="192" stroke="rgba(255,255,255,0.12)"/>
+      <text x="32" y="196" class="mono label" text-anchor="end">$0</text>
+
+      <!-- Scatter Points Clusters -->
+      <!-- Cluster 3 (Gold): High Monetary ($1,500 - $3,500), Low-to-Mid Recency (50-400d) -->
+      <g fill="#F59E0B" opacity="0.75">
+        <circle cx="100" cy="30" r="3.5"/><circle cx="120" cy="45" r="4"/><circle cx="90" cy="55" r="3.5"/>
+        <circle cx="150" cy="25" r="4.5"/><circle cx="160" cy="60" r="3.5"/><circle cx="180" cy="40" r="4"/>
+        <circle cx="130" cy="75" r="3.5"/><circle cx="210" cy="50" r="4"/><circle cx="110" cy="85" r="3"/>
+        <circle cx="170" cy="70" r="3.5"/><circle cx="230" cy="65" r="4"/><circle cx="190" cy="88" r="3.5"/>
+      </g>
+      <!-- Centroid μ3 -->
+      <circle cx="150" cy="55" r="7" fill="#F59E0B" stroke="#FDE68A" stroke-width="2" filter="url(#glowCluster)"/>
+      <text x="162" y="52" class="mono" font-size="10" font-weight="700" fill="#FDE68A">μ₃ ($2,180)</text>
+
+      <!-- Cluster 2 (Teal): Loyal Repeat ($800 - $2,000), Very Low Recency (0-250d) -->
+      <g fill="#10B981" opacity="0.75">
+        <circle cx="60" cy="110" r="3.5"/><circle cx="75" cy="95" r="4"/><circle cx="85" cy="120" r="3.5"/>
+        <circle cx="70" cy="135" r="4"/><circle cx="95" cy="105" r="3.5"/><circle cx="110" cy="115" r="4"/>
+        <circle cx="130" cy="125" r="3.5"/><circle cx="120" cy="140" r="4"/><circle cx="140" cy="110" r="3.5"/>
+        <circle cx="105" cy="130" r="3.5"/><circle cx="80" cy="145" r="3"/><circle cx="150" cy="135" r="3.5"/>
+      </g>
+      <!-- Centroid μ2 -->
+      <circle cx="100" cy="122" r="7" fill="#10B981" stroke="#A7F3D0" stroke-width="2" filter="url(#glowCluster)"/>
+      <text x="112" y="120" class="mono" font-size="10" font-weight="700" fill="#A7F3D0">μ₂ ($1,420)</text>
+
+      <!-- Cluster 0 (Blue): New / Recent (<$600), Recency 0-250d -->
+      <g fill="#3B82F6" opacity="0.75">
+        <circle cx="55" cy="175" r="3"/><circle cx="65" cy="165" r="3.5"/><circle cx="80" cy="178" r="3"/>
+        <circle cx="70" cy="182" r="3.5"/><circle cx="90" cy="170" r="3"/><circle cx="110" cy="175" r="3.5"/>
+        <circle cx="130" cy="180" r="3"/><circle cx="120" cy="168" r="3.5"/><circle cx="145" cy="172" r="3"/>
+        <circle cx="100" cy="185" r="3"/><circle cx="85" cy="160" r="3"/><circle cx="140" cy="184" r="3"/>
+      </g>
+      <!-- Centroid μ0 -->
+      <circle cx="90" cy="175" r="6" fill="#3B82F6" stroke="#BFDBFE" stroke-width="2"/>
+      <text x="100" y="172" class="mono" font-size="10" font-weight="700" fill="#BFDBFE">μ₀ ($340)</text>
+
+      <!-- Cluster 1 (Red): Lapsed / At-Risk (<$600), High Recency (500-1095d) -->
+      <g fill="#EF4444" opacity="0.75">
+        <circle cx="280" cy="178" r="3"/><circle cx="310" cy="172" r="3.5"/><circle cx="330" cy="182" r="3"/>
+        <circle cx="360" cy="168" r="3.5"/><circle cx="380" cy="175" r="3"/><circle cx="400" cy="180" r="3.5"/>
+        <circle cx="300" cy="185" r="3"/><circle cx="340" cy="170" r="3.5"/><circle cx="370" cy="184" r="3"/>
+        <circle cx="420" cy="176" r="3.5"/><circle cx="430" cy="182" r="3"/><circle cx="390" cy="165" r="3.5"/>
+      </g>
+      <!-- Centroid μ1 -->
+      <circle cx="360" cy="176" r="6" fill="#EF4444" stroke="#FECACA" stroke-width="2"/>
+      <text x="372" y="172" class="mono" font-size="10" font-weight="700" fill="#FECACA">μ₁ ($290)</text>
+
+      <!-- X Axis labels -->
+      <g transform="translate(0, 210)" class="mono label" text-anchor="middle">
+        <text x="60" y="0">0d</text>
+        <text x="150" y="0">250d</text>
+        <text x="250" y="0">500d</text>
+        <text x="350" y="0">750d</text>
+        <text x="440" y="0">1,095d</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right Playbook Directives Card -->
+  <g transform="translate(574, 80)" filter="url(#shadow4)">
+    <rect width="390" height="330" rx="14" fill="url(#cardGrad4)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    
+    <text x="22" y="28" class="title" font-size="13.5">Prescriptive Marketing Directives</text>
+
+    <!-- Strategy 1 -->
+    <g transform="translate(20, 46)">
+      <rect width="350" height="60" rx="8" fill="rgba(245,158,11,0.07)" stroke="rgba(245,158,11,0.2)"/>
+      <text x="14" y="22" class="title" font-size="12" fill="#FCD34D">VIP Margin Preservation</text>
+      <text x="14" y="38" class="label" font-size="10.5">Strictly avoid discounting for Cluster 3.</text>
+      <text x="14" y="50" class="label" font-size="10.5">Offer concierge support &amp; early drop access.</text>
+    </g>
+
+    <!-- Strategy 2 -->
+    <g transform="translate(20, 114)">
+      <rect width="350" height="60" rx="8" fill="rgba(16,185,129,0.07)" stroke="rgba(16,185,129,0.2)"/>
+      <text x="14" y="22" class="title" font-size="12" fill="#6EE7B7">Loyalty Compounding &amp; Bundling</text>
+      <text x="14" y="38" class="label" font-size="10.5">Reward repeat habits for Cluster 2 (3.6x freq).</text>
+      <text x="14" y="50" class="label" font-size="10.5">Cross-sell complementary categories.</text>
+    </g>
+
+    <!-- Strategy 3 -->
+    <g transform="translate(20, 182)">
+      <rect width="350" height="60" rx="8" fill="rgba(59,130,246,0.07)" stroke="rgba(59,130,246,0.2)"/>
+      <text x="14" y="22" class="title" font-size="12" fill="#93C5FD">2nd-Order Activation Journey</text>
+      <text x="14" y="38" class="label" font-size="10.5">Automate 30-day onboarding coupon for Cluster 0</text>
+      <text x="14" y="50" class="label" font-size="10.5">to convert single purchase into multi-order.</text>
+    </g>
+
+    <!-- Strategy 4 -->
+    <g transform="translate(20, 250)">
+      <rect width="350" height="60" rx="8" fill="rgba(239,68,68,0.07)" stroke="rgba(239,68,68,0.2)"/>
+      <text x="14" y="22" class="title" font-size="12" fill="#FCA5A5">Low-Cost Win-Back Limit</text>
+      <text x="14" y="38" class="label" font-size="10.5">Automated email re-engagement for Cluster 1.</text>
+      <text x="14" y="50" class="label" font-size="10.5">Cap paid ad retargeting to protect CAC.</text>
+    </g>
+  </g>
+</svg>

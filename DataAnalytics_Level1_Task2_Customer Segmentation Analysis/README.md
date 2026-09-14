@@ -112,6 +112,10 @@ $$z = \frac{x - \mu}{\sigma}$$
   $$s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$$
   *Observation:* $K=4$ achieves a strong silhouette coefficient while offering simpler, superior business explainability compared to higher cluster counts.
 
+<div align="center">
+  <img src="assets/viz_cluster_validation.svg" alt="Optimal Cluster Validation & Customer Personas" width="100%" />
+</div>
+
 ---
 
 ## 👥 Customer Personas & Action Matrix
@@ -135,6 +139,10 @@ $$z = \frac{x - \mu}{\sigma}$$
 │    At-Risk           │ Low Frequency/Spend  │ Automated emails only; cap budget. │
 └──────────────────────┴──────────────────────┴────────────────────────────────────┘
 ```
+
+<div align="center">
+  <img src="assets/viz_rfm_clusters.svg" alt="2D RFM Cluster Feature Space & Strategic Playbooks" width="100%" />
+</div>
 
 ### Detailed Segment Breakdown
 
@@ -173,7 +181,9 @@ OIBSIP_DataAnalytics_Level1_Task2/
 └── 🎨 assets/                       # Visual assets & vector diagrams
     ├── banner.png                   # High-resolution project hero banner
     ├── header_animated.svg          # Animated gradient SVG badge header
-    └── architecture_animated.svg    # Animated end-to-end architecture pipeline
+    ├── architecture_animated.svg    # Animated end-to-end architecture pipeline
+    ├── viz_cluster_validation.svg   # Elbow & Silhouette validation curves
+    └── viz_rfm_clusters.svg         # 2D RFM cluster scatter & strategic directives
 ```
 
 ---

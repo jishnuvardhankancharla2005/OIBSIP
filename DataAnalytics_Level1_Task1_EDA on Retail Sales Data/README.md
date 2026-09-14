@@ -107,6 +107,10 @@ The dashboard (`dashboard.html`) is built from scratch using vanilla CSS and Jav
 
 ## 🔍 Exploratory Data Analysis (EDA) Findings
 
+<p align="center">
+  <img src="assets/viz_sales_trends.svg" alt="Retail Sales Revenue & Category Dynamics Visualization" width="100%" />
+</p>
+
 ### 1. Revenue & Category Performance
 | Product Category | Total Revenue | Transaction Count | Avg Price / Unit | Total Units Sold |
 |:---|:---:|:---:|:---:|:---:|
@@ -118,6 +122,10 @@ The dashboard (`dashboard.html`) is built from scratch using vanilla CSS and Jav
 ### 2. Demographic Breakdown
 - **Gender Balance:** Transactions split almost evenly: **51.0% Female** ($232,840 revenue) and **49.0% Male** ($223,160 revenue). Average spend per visit is identical ($456.55 for Female vs $455.43 for Male).
 - **Age Distribution:** Customers range uniformly from **18 to 64 years old**, with no clustering in youth or retirement cohorts.
+
+<p align="center">
+  <img src="assets/viz_correlation_matrix.svg" alt="Pearson Correlation Matrix & Demographic Anomaly Heatmaps" width="100%" />
+</p>
 
 ### 3. Pearson Correlation Analysis
 ```
@@ -178,17 +186,15 @@ OIBSIP_DataAnalytics_Level1_Task1/
 ├── DataAnalytics-Level1-Task1-RetailSalesEDA/
 │   ├── assets/
 │   │   ├── banner.svg                  # Animated SVG Hero Banner
-│   │   └── architecture.svg            # Animated SVG Architecture & Pipeline
+│   │   ├── architecture.svg            # Animated SVG Architecture & Pipeline
+│   │   ├── viz_sales_trends.svg        # Revenue Curves & Category Share Visual
+│   │   └── viz_correlation_matrix.svg  # Correlation & Demographic Matrix Heatmap
 │   │
 │   ├── dashboard.html                  # Standalone Reactive BI Dashboard
 │   ├── Retail_Sales_EDA.ipynb          # Comprehensive Python EDA Notebook
 │   ├── Retail_Sales_EDA.html           # Full HTML Export of Jupyter EDA
 │   ├── retail_sales_dataset.csv        # Source Transactional Dataset (1,000 rows)
 │   └── README.md                       # Subfolder Project Documentation
-│
-├── assets/                             # Root Mirror for Asset Resolution
-│   ├── banner.svg
-│   └── architecture.svg
 │
 └── README.md                           # Master Project README
 ```
