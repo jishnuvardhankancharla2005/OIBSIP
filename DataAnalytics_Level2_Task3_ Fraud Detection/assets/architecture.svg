@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 430" width="100%" height="100%">
+  <defs>
+    <linearGradient id="panelBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#181E2B" />
+      <stop offset="100%" stop-color="#11151F" />
+    </linearGradient>
+
+    <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glowRedArch" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .node-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13.5px; fill: #E6E9F0; }
+      .node-sub { font-family: 'Inter', sans-serif; font-size: 11px; fill: #767E93; }
+      .node-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; }
+      .flow-path { stroke: rgba(230,234,242,0.25); stroke-width: 2; fill: none; stroke-dasharray: 6 5; }
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -44; }
+      }
+      .flowing-line {
+        animation: dashFlow 2s linear infinite;
+      }
+      @keyframes pulseNode {
+        0%, 100% { stroke-opacity: 0.3; }
+        50% { stroke-opacity: 0.9; }
+      }
+      .node-active { animation: pulseNode 2.5s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" rx="18" fill="#0D1017" stroke="rgba(230,234,242,0.08)" stroke-width="1.5" />
+
+  <!-- Flow Conduits with animated moving dots -->
+  <g>
+    <!-- Path 1 -> 2 -->
+    <line x1="245" y1="210" x2="295" y2="210" class="flow-path flowing-line" />
+    <circle r="4" fill="#5C7A99">
+      <animateMotion path="M 245 210 L 295 210" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <polygon points="295,210 286,205 286,215" fill="#5C7A99" />
+
+    <!-- Path 2 -> 3 -->
+    <line x1="515" y1="210" x2="565" y2="210" class="flow-path flowing-line" />
+    <circle r="4" fill="#E0A33E">
+      <animateMotion path="M 515 210 L 565 210" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <polygon points="565,210 556,205 556,215" fill="#E0A33E" />
+
+    <!-- Path 3 -> 4 -->
+    <line x1="795" y1="210" x2="845" y2="210" class="flow-path flowing-line" />
+    <circle r="4" fill="#4FA88F">
+      <animateMotion path="M 795 210 L 845 210" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <polygon points="845,210 836,205 836,215" fill="#4FA88F" />
+  </g>
+
+  <!-- Stage 1: Data Ingestion -->
+  <g transform="translate(35, 45)">
+    <rect width="210" height="340" rx="12" fill="url(#panelBg)" stroke="rgba(230,234,242,0.12)" stroke-width="1" />
+    <rect x="16" y="18" width="80" height="20" rx="4" fill="rgba(92,122,153,0.2)" />
+    <circle cx="26" cy="28" r="3" fill="#5C7A99">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <text x="34" y="32" class="node-badge" fill="#5C7A99">STAGE 01</text>
+    <text x="16" y="62" class="node-title">Raw Ingestion</text>
+    <text x="16" y="80" class="node-sub">10,000 Banking Records</text>
+
+    <rect x="16" y="100" width="178" height="50" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="120" class="node-badge" fill="#E6E9F0">Imbalance Ratio</text>
+    <text x="26" y="137" class="node-sub">151 Fraud (1.51%) · 9,849 Legit</text>
+
+    <rect x="16" y="160" width="178" height="50" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="180" class="node-badge" fill="#E6E9F0">Feature Space</text>
+    <text x="26" y="197" class="node-sub">8 Raw Behavioral Signals</text>
+
+    <rect x="16" y="220" width="178" height="92" rx="6" fill="rgba(216,87,74,0.08)" stroke="rgba(216,87,74,0.4)" stroke-width="1" class="node-active" />
+    <circle cx="28" cy="242" r="4" fill="#D8574A">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" />
+    </circle>
+    <text x="36" y="246" class="node-badge" fill="#D8574A">Baseline Trap</text>
+    <text x="26" y="264" class="node-sub">Predict-Zero classifier</text>
+    <text x="26" y="280" class="node-sub">achieves 98.5% accuracy</text>
+    <text x="26" y="296" class="node-sub" fill="#D8574A" font-weight="600">with 0% fraud detection!</text>
+  </g>
+
+  <!-- Stage 2: Preprocessing & SMOTE Isolation -->
+  <g transform="translate(295, 45)">
+    <rect width="220" height="340" rx="12" fill="url(#panelBg)" stroke="rgba(230,234,242,0.12)" stroke-width="1" />
+    <rect x="16" y="18" width="80" height="20" rx="4" fill="rgba(224,163,62,0.2)" />
+    <circle cx="26" cy="28" r="3" fill="#E0A33E">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <text x="34" y="32" class="node-badge" fill="#E0A33E">STAGE 02</text>
+    <text x="16" y="62" class="node-title">Preprocessing</text>
+    <text x="16" y="80" class="node-sub">Leakage-Proof Stratification</text>
+
+    <rect x="16" y="100" width="188" height="50" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="120" class="node-badge" fill="#E6E9F0">Stratified Split</text>
+    <text x="26" y="137" class="node-sub">80% Train · 20% Pristine Test</text>
+
+    <rect x="16" y="160" width="188" height="66" rx="6" fill="rgba(79,168,143,0.09)" stroke="rgba(79,168,143,0.4)" stroke-width="1" class="node-active" />
+    <circle cx="28" cy="180" r="4" fill="#4FA88F">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" repeatCount="indefinite" />
+    </circle>
+    <text x="36" y="184" class="node-badge" fill="#4FA88F">SMOTE Resampling</text>
+    <text x="26" y="200" class="node-sub">Synthesize minority class</text>
+    <text x="26" y="215" class="node-sub" fill="#4FA88F" font-weight="600">ONLY in training fold!</text>
+
+    <rect x="16" y="235" width="188" height="77" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="255" class="node-badge" fill="#E6E9F0">Encoding &amp; Scaling</text>
+    <text x="26" y="272" class="node-sub">StandardScaler (fit on train)</text>
+    <text x="26" y="288" class="node-sub">One-Hot (drop_first) dummy</text>
+  </g>
+
+  <!-- Stage 3: Dual Models Training -->
+  <g transform="translate(565, 45)">
+    <rect width="230" height="340" rx="12" fill="url(#panelBg)" stroke="rgba(230,234,242,0.12)" stroke-width="1" />
+    <rect x="16" y="18" width="80" height="20" rx="4" fill="rgba(216,87,74,0.2)" />
+    <circle cx="26" cy="28" r="3" fill="#D8574A">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+    <text x="34" y="32" class="node-badge" fill="#D8574A">STAGE 03</text>
+    <text x="16" y="62" class="node-title">Dual Classifiers</text>
+    <text x="16" y="80" class="node-sub">Linear vs. Non-linear Ensembles</text>
+
+    <!-- Model 1: Logistic Regression -->
+    <rect x="16" y="100" width="198" height="92" rx="6" fill="#0D1017" stroke="rgba(92,122,153,0.35)" />
+    <text x="26" y="120" class="node-badge" fill="#5C7A99">Logistic Regression</text>
+    <text x="26" y="138" class="node-sub">ROC-AUC: 0.993 · Recall: 93.3%</text>
+    <text x="26" y="154" class="node-sub">High recall / conservative</text>
+    <text x="26" y="170" class="node-sub">Log-odds feature interpretability</text>
+
+    <!-- Model 2: Random Forest -->
+    <rect x="16" y="202" width="198" height="110" rx="6" fill="#0D1017" stroke="rgba(216,87,74,0.4)" />
+    <text x="26" y="222" class="node-badge" fill="#D8574A">Random Forest (200 trees)</text>
+    <text x="26" y="240" class="node-sub">ROC-AUC: 0.998 · F1: 0.780</text>
+    <text x="26" y="256" class="node-sub">Precision: 79.3% · Recall: 76.7%</text>
+    <text x="26" y="272" class="node-sub">Optimal non-linear boundaries</text>
+    <text x="26" y="288" class="node-sub" fill="#D8574A" font-weight="600">Best F1 &amp; Lowest False Alarms</text>
+  </g>
+
+  <!-- Stage 4: Interactive Web Dashboard -->
+  <g transform="translate(845, 45)">
+    <rect width="220" height="340" rx="12" fill="url(#panelBg)" stroke="rgba(79,168,143,0.3)" stroke-width="1.5" class="node-active" />
+    <rect x="16" y="18" width="80" height="20" rx="4" fill="rgba(79,168,143,0.2)" />
+    <circle cx="26" cy="28" r="3" fill="#4FA88F">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" repeatCount="indefinite" />
+    </circle>
+    <text x="34" y="32" class="node-badge" fill="#4FA88F">STAGE 04</text>
+    <text x="16" y="62" class="node-title">Interactive App</text>
+    <text x="16" y="80" class="node-sub">The Fraud Desk Dashboard</text>
+
+    <rect x="16" y="100" width="188" height="50" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="120" class="node-badge" fill="#4FA88F">Client-Side Scorer</text>
+    <text x="26" y="137" class="node-sub">Runs 30-tree surrogate in JS</text>
+
+    <rect x="16" y="160" width="188" height="50" rx="6" fill="#0D1017" stroke="rgba(230,234,242,0.06)" />
+    <text x="26" y="180" class="node-badge" fill="#E0A33E">Live Threshold Sweeper</text>
+    <text x="26" y="197" class="node-sub">Live Precision vs. Recall slider</text>
+
+    <rect x="16" y="220" width="188" height="92" rx="6" fill="#0D1017" stroke="rgba(216,87,74,0.3)" />
+    <text x="26" y="240" class="node-badge" fill="#D8574A">⚡ Key Risk Drivers</text>
+    <text x="26" y="258" class="node-sub">Prioritizes Top 5 Signals</text>
+    <text x="26" y="274" class="node-sub">Multi-CDN fallback system</text>
+    <text x="26" y="290" class="node-sub" fill="#4FA88F">100% Offline-Ready</text>
+  </g>
+</svg>

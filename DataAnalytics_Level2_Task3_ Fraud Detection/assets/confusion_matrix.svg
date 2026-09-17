@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" width="100%" height="100%">
+  <defs>
+    <style>
+      .cm-hdr { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; fill: #E6E9F0; }
+      .cm-sub { font-family: 'Inter', sans-serif; font-size: 12px; fill: #767E93; }
+      .m-title { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; fill: #E6E9F0; }
+      .m-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; }
+      .cell-val { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; text-anchor: middle; }
+      .cell-sub { font-family: 'Inter', sans-serif; font-size: 10.5px; text-anchor: middle; }
+      .axis-txt { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; fill: #767E93; text-anchor: middle; }
+      
+      @keyframes caughtPulse {
+        0%, 100% { stroke-opacity: 0.3; }
+        50% { stroke-opacity: 1; filter: drop-shadow(0 0 6px rgba(79,168,143,0.8)); }
+      }
+      .tp-cell { animation: caughtPulse 2.5s ease-in-out infinite; }
+
+      @keyframes alertPulse {
+        0%, 100% { stroke-opacity: 0.3; }
+        50% { stroke-opacity: 1; filter: drop-shadow(0 0 6px rgba(216,87,74,0.8)); }
+      }
+      .fp-cell { animation: alertPulse 2.5s ease-in-out infinite 0.5s; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" rx="18" fill="#151A24" stroke="rgba(230,234,242,0.09)" stroke-width="1.5" />
+
+  <!-- Header Section -->
+  <text x="45" y="44" class="cm-hdr">Evaluation Matrix: High Recall vs. High Precision</text>
+  <text x="45" y="66" class="cm-sub">Evaluated on the 2,000-sample test set (30 Actual Fraud · 1,970 Legitimate) at standard 0.50 threshold.</text>
+
+  <!-- ================= MATRIX 1: LOGISTIC REGRESSION (LEFT) ================= -->
+  <g transform="translate(60, 100)">
+    <!-- Model Card Header -->
+    <rect x="0" y="0" width="410" height="320" rx="14" fill="#0D1017" stroke="rgba(92,122,153,0.3)" stroke-width="1.5" />
+    <rect x="20" y="16" width="90" height="20" rx="4" fill="rgba(92,122,153,0.2)" />
+    <text x="28" y="30" class="m-badge" fill="#5C7A99">HIGH RECALL</text>
+    <text x="120" y="31" class="m-title">Logistic Regression</text>
+
+    <!-- Stat Pill -->
+    <text x="20" y="64" font-family="'Inter', sans-serif" font-size="12" fill="#AEB4C4">Catches <tspan fill="#4FA88F" font-weight="700">93.3% of fraud</tspan> with 69 false alarms</text>
+
+    <!-- Column Headers: Predicted -->
+    <text x="175" y="96" class="axis-txt">PRED: LEGIT</text>
+    <text x="315" y="96" class="axis-txt">PRED: FRAUD</text>
+
+    <!-- Row 1: Actual Legit -->
+    <text x="80" y="145" class="axis-txt" text-anchor="end">ACTUAL LEGIT</text>
+    <!-- TN: 1901 -->
+    <rect x="95" y="110" width="130" height="65" rx="8" fill="rgba(79,168,143,0.18)" stroke="rgba(79,168,143,0.4)" stroke-width="1.5" />
+    <text x="160" y="145" class="cell-val" fill="#E6E9F0">1,901</text>
+    <text x="160" y="162" class="cell-sub" fill="#4FA88F">TN · Cleared</text>
+
+    <!-- FP: 69 (False Alarms) -->
+    <rect x="235" y="110" width="130" height="65" rx="8" fill="rgba(216,87,74,0.14)" stroke="#D8574A" stroke-width="1.5" class="fp-cell" />
+    <text x="300" y="145" class="cell-val" fill="#D8574A">69</text>
+    <text x="300" y="162" class="cell-sub" fill="#D8574A">FP · False Alarm</text>
+
+    <!-- Row 2: Actual Fraud -->
+    <text x="80" y="220" class="axis-txt" text-anchor="end">ACTUAL FRAUD</text>
+    <!-- FN: 2 -->
+    <rect x="95" y="185" width="130" height="65" rx="8" fill="rgba(216,87,74,0.1)" stroke="rgba(230,234,242,0.1)" stroke-width="1" />
+    <text x="160" y="220" class="cell-val" fill="#767E93">2</text>
+    <text x="160" y="237" class="cell-sub" fill="#767E93">FN · Missed</text>
+
+    <!-- TP: 28 (Caught) -->
+    <rect x="235" y="185" width="130" height="65" rx="8" fill="rgba(79,168,143,0.35)" stroke="#4FA88F" stroke-width="2" class="tp-cell" />
+    <text x="300" y="220" class="cell-val" fill="#4FA88F">28</text>
+    <text x="300" y="237" class="cell-sub" fill="#E6E9F0" font-weight="700">TP · CAUGHT (93.3%)</text>
+
+    <!-- Bottom Metric Strip -->
+    <g transform="translate(20, 275)">
+      <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">Precision: <tspan fill="#E6E9F0">28.9%</tspan></text>
+      <text x="135" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">Recall: <tspan fill="#4FA88F" font-weight="700">93.3%</tspan></text>
+      <text x="260" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">F1: <tspan fill="#E6E9F0">0.441</tspan></text>
+    </g>
+  </g>
+
+  <!-- ================= MATRIX 2: RANDOM FOREST (RIGHT) ================= -->
+  <g transform="translate(530, 100)">
+    <rect x="0" y="0" width="410" height="320" rx="14" fill="#0D1017" stroke="rgba(216,87,74,0.4)" stroke-width="1.5" />
+    <rect x="20" y="16" width="90" height="20" rx="4" fill="rgba(216,87,74,0.2)" />
+    <text x="28" y="30" class="m-badge" fill="#D8574A">BEST F1-SCORE</text>
+    <text x="120" y="31" class="m-title">Random Forest (200 Trees)</text>
+
+    <!-- Stat Pill -->
+    <text x="20" y="64" font-family="'Inter', sans-serif" font-size="12" fill="#AEB4C4"><tspan fill="#4FA88F" font-weight="700">79.3% precision</tspan> with only 6 false alarms</text>
+
+    <!-- Column Headers -->
+    <text x="175" y="96" class="axis-txt">PRED: LEGIT</text>
+    <text x="315" y="96" class="axis-txt">PRED: FRAUD</text>
+
+    <!-- Row 1: Actual Legit -->
+    <text x="80" y="145" class="axis-txt" text-anchor="end">ACTUAL LEGIT</text>
+    <!-- TN: 1964 -->
+    <rect x="95" y="110" width="130" height="65" rx="8" fill="rgba(79,168,143,0.24)" stroke="rgba(79,168,143,0.5)" stroke-width="1.5" />
+    <text x="160" y="145" class="cell-val" fill="#E6E9F0">1,964</text>
+    <text x="160" y="162" class="cell-sub" fill="#4FA88F">TN · Cleared</text>
+
+    <!-- FP: 6 (Very few false alarms!) -->
+    <rect x="235" y="110" width="130" height="65" rx="8" fill="rgba(216,87,74,0.12)" stroke="rgba(230,234,242,0.2)" stroke-width="1" />
+    <text x="300" y="145" class="cell-val" fill="#E0A33E">6</text>
+    <text x="300" y="162" class="cell-sub" fill="#E0A33E">FP · Only 6 Alarms!</text>
+
+    <!-- Row 2: Actual Fraud -->
+    <text x="80" y="220" class="axis-txt" text-anchor="end">ACTUAL FRAUD</text>
+    <!-- FN: 7 -->
+    <rect x="95" y="185" width="130" height="65" rx="8" fill="rgba(216,87,74,0.1)" stroke="rgba(230,234,242,0.1)" stroke-width="1" />
+    <text x="160" y="220" class="cell-val" fill="#767E93">7</text>
+    <text x="160" y="237" class="cell-sub" fill="#767E93">FN · Missed</text>
+
+    <!-- TP: 23 (Caught) -->
+    <rect x="235" y="185" width="130" height="65" rx="8" fill="rgba(79,168,143,0.35)" stroke="#4FA88F" stroke-width="2" class="tp-cell" />
+    <text x="300" y="220" class="cell-val" fill="#4FA88F">23</text>
+    <text x="300" y="237" class="cell-sub" fill="#E6E9F0" font-weight="700">TP · CAUGHT (76.7%)</text>
+
+    <!-- Bottom Metric Strip -->
+    <g transform="translate(20, 275)">
+      <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">Precision: <tspan fill="#4FA88F" font-weight="700">79.3%</tspan></text>
+      <text x="135" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">Recall: <tspan fill="#E6E9F0">76.7%</tspan></text>
+      <text x="260" y="16" font-family="'JetBrains Mono', monospace" font-size="11" fill="#767E93">F1: <tspan fill="#D8574A" font-weight="700">0.780</tspan></text>
+    </g>
+  </g>
+</svg>

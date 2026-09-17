@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 390" width="100%" height="100%">
+  <defs>
+    <linearGradient id="barGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D8574A" />
+      <stop offset="100%" stop-color="#F2796D" />
+    </linearGradient>
+    <linearGradient id="barGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E0A33E" />
+      <stop offset="100%" stop-color="#F5BA58" />
+    </linearGradient>
+    <linearGradient id="barGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4FA88F" />
+      <stop offset="100%" stop-color="#6ED6B7" />
+    </linearGradient>
+    <linearGradient id="barGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5C7A99" />
+      <stop offset="100%" stop-color="#7C9DBF" />
+    </linearGradient>
+    <style>
+      .hdr { font-family:'Fraunces', serif; font-size: 20px; fill: #E6E9F0; font-weight: 600; }
+      .subhdr { font-family:'Inter', sans-serif; font-size: 12px; fill: #767E93; }
+      .fname { font-family:'JetBrains Mono', monospace; font-size: 13px; fill: #E6E9F0; font-weight: 600; }
+      .fdesc { font-family:'Inter', sans-serif; font-size: 11.5px; fill: #AEB4C4; }
+      .fval { font-family:'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; }
+      @keyframes barPulse {
+        0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 2px rgba(216,87,74,0.4)); }
+        50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(216,87,74,0.8)); }
+      }
+      .anim-bar-1 { animation: barPulse 2.5s ease-in-out infinite; }
+      .anim-bar-2 { animation: barPulse 2.8s ease-in-out infinite 0.4s; }
+      .anim-bar-3 { animation: barPulse 3.1s ease-in-out infinite 0.8s; }
+    </style>
+  </defs>
+
+  <!-- Card Base -->
+  <rect width="100%" height="100%" rx="18" fill="#151A24" stroke="rgba(230,234,242,0.09)" stroke-width="1.5" />
+
+  <!-- Header Section -->
+  <text x="35" y="44" class="hdr">Model Interpretability: The Top 5 Predictive Risk Drivers</text>
+  <text x="35" y="66" class="subhdr">Combined, these 5 features govern 91.6% of all machine learning decision boundaries in both models.</text>
+
+  <!-- Feature 1: Device Trust Score -->
+  <g transform="translate(35, 95)">
+    <circle cx="-10" cy="12" r="3" fill="#D8574A">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="16" class="fname">01. device_trust_score</text>
+    <text x="240" y="16" class="fdesc">Lower trust indicates emulators, rooted operating systems, or bot environments.</text>
+    <text x="965" y="16" class="fval" fill="#D8574A">24.2%</text>
+    <rect x="0" y="26" width="1030" height="9" rx="4.5" fill="rgba(230,234,242,0.06)" />
+    <rect x="0" y="26" width="249" height="9" rx="4.5" fill="url(#barGrad1)" class="anim-bar-1">
+      <animate attributeName="width" values="240;255;240" dur="3s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Feature 2: Transaction Hour -->
+  <g transform="translate(35, 150)">
+    <circle cx="-10" cy="12" r="3" fill="#D8574A">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="16" class="fname">02. transaction_hour</text>
+    <text x="240" y="16" class="fdesc">Fraud concentrates heavily between 00:00 - 04:00 AM while legitimate traffic sleeps.</text>
+    <text x="965" y="16" class="fval" fill="#D8574A">24.2%</text>
+    <rect x="0" y="26" width="1030" height="9" rx="4.5" fill="rgba(230,234,242,0.06)" />
+    <rect x="0" y="26" width="249" height="9" rx="4.5" fill="url(#barGrad1)" class="anim-bar-2">
+      <animate attributeName="width" values="240;255;240" dur="3.4s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Feature 3: Foreign Transaction -->
+  <g transform="translate(35, 205)">
+    <circle cx="-10" cy="12" r="3" fill="#E0A33E">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="16" class="fname">03. foreign_transaction</text>
+    <text x="240" y="16" class="fdesc">Cross-border transactions incur over 2.2x increased log-odds of fraudulent intent.</text>
+    <text x="965" y="16" class="fval" fill="#E0A33E">16.2%</text>
+    <rect x="0" y="26" width="1030" height="9" rx="4.5" fill="rgba(230,234,242,0.06)" />
+    <rect x="0" y="26" width="167" height="9" rx="4.5" fill="url(#barGrad2)" class="anim-bar-3">
+      <animate attributeName="width" values="160;172;160" dur="3.2s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Feature 4: Velocity Last 24h -->
+  <g transform="translate(35, 260)">
+    <circle cx="-10" cy="12" r="3" fill="#4FA88F">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2.2s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="16" class="fname">04. velocity_last_24h</text>
+    <text x="240" y="16" class="fdesc">Rapid succession of charges reveals bot card testing and hasty credit line draining.</text>
+    <text x="965" y="16" class="fval" fill="#4FA88F">14.3%</text>
+    <rect x="0" y="26" width="1030" height="9" rx="4.5" fill="rgba(230,234,242,0.06)" />
+    <rect x="0" y="26" width="147" height="9" rx="4.5" fill="url(#barGrad3)">
+      <animate attributeName="width" values="142;152;142" dur="3.6s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Feature 5: Location Mismatch -->
+  <g transform="translate(35, 315)">
+    <circle cx="-10" cy="12" r="3" fill="#5C7A99">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    <text x="0" y="16" class="fname">05. location_mismatch</text>
+    <text x="240" y="16" class="fdesc">IP geolocation vs. cardholder home base mismatch flags stolen credential exploitation.</text>
+    <text x="965" y="16" class="fval" fill="#5C7A99">12.8%</text>
+    <rect x="0" y="26" width="1030" height="9" rx="4.5" fill="rgba(230,234,242,0.06)" />
+    <rect x="0" y="26" width="132" height="9" rx="4.5" fill="url(#barGrad4)">
+      <animate attributeName="width" values="128;138;128" dur="3s" repeatCount="indefinite" />
+    </rect>
+  </g>
+</svg>

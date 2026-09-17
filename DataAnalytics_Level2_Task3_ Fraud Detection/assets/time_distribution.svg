@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fraudBarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B5B" />
+      <stop offset="100%" stop-color="#D8574A" />
+    </linearGradient>
+    <linearGradient id="legitBarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#55B89D" />
+      <stop offset="100%" stop-color="#357D69" />
+    </linearGradient>
+    <filter id="glowZone" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .chart-hdr { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; fill: #E6E9F0; }
+      .chart-sub { font-family: 'Inter', sans-serif; font-size: 12px; fill: #767E93; }
+      .bar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #767E93; text-anchor: middle; }
+      @keyframes threatPulse {
+        0%, 100% { fill-opacity: 0.12; stroke-opacity: 0.4; }
+        50% { fill-opacity: 0.28; stroke-opacity: 0.9; }
+      }
+      .threat-window {
+        animation: threatPulse 2.5s ease-in-out infinite;
+      }
+      @keyframes barGrow {
+        0%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(1.06); }
+      }
+      .pulsing-bar {
+        transform-origin: bottom;
+        animation: barGrow 2s ease-in-out infinite;
+      }
+      @keyframes scannerX {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(780px); }
+      }
+      .sweep-line {
+        animation: scannerX 8s linear infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" rx="18" fill="#151A24" stroke="rgba(230,234,242,0.09)" stroke-width="1.5" />
+
+  <!-- Header -->
+  <text x="45" y="44" class="chart-hdr">Exploratory Discovery: 24-Hour Fraud vs. Legitimate Distribution</text>
+  <text x="45" y="66" class="chart-sub">Fraud surges drastically during overnight hours (00:00 – 04:00 AM) exactly when legitimate volume dips to daily lows.</text>
+
+  <!-- Plot Canvas (X: 80 to 920, Y: 110 to 350) -->
+  <g transform="translate(80, 100)">
+    <!-- High Threat Zone Highlight (Hours 0 to 4: X=0 to X=170) -->
+    <rect x="-10" y="0" width="180" height="230" rx="8" fill="rgba(216,87,74,0.18)" stroke="#D8574A" stroke-width="1.5" stroke-dasharray="4 3" class="threat-window" />
+
+    <!-- Threat Callout Badge -->
+    <g transform="translate(15, -15)">
+      <rect x="0" y="0" width="130" height="24" rx="6" fill="#D8574A" filter="url(#glowZone)" opacity="0.3" />
+      <rect x="0" y="0" width="130" height="24" rx="6" fill="#0D1017" stroke="#D8574A" stroke-width="1.5" />
+      <circle cx="12" cy="12" r="3.5" fill="#D8574A">
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" />
+      </circle>
+      <text x="22" y="16" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" fill="#E6E9F0">PEAK THREAT ZONE</text>
+    </g>
+
+    <!-- Moving Radar Scanline -->
+    <line x1="0" y1="0" x2="0" y2="230" stroke="rgba(224,163,62,0.6)" stroke-width="1.5" stroke-dasharray="3 3" class="sweep-line" />
+
+    <!-- Baseline Floor -->
+    <line x1="0" y1="230" x2="800" y2="230" stroke="rgba(230,234,242,0.2)" stroke-width="1" />
+
+    <!-- 24 Hour Bars (width=22, step=33) -->
+    <!-- Hours 00 to 03: High Fraud Bars -->
+    <!-- H0: Legit=120, Fraud=85 -->
+    <rect x="5" y="125" width="22" height="105" rx="3" fill="url(#legitBarGrad)" opacity="0.7" />
+    <rect x="5" y="45" width="22" height="78" rx="3" fill="url(#fraudBarGrad)" class="pulsing-bar" />
+    <text x="16" y="248" class="bar-label" fill="#D8574A" font-weight="700">00</text>
+
+    <!-- H1: Legit=115, Fraud=80 -->
+    <rect x="38" y="130" width="22" height="100" rx="3" fill="url(#legitBarGrad)" opacity="0.7" />
+    <rect x="38" y="52" width="22" height="76" rx="3" fill="url(#fraudBarGrad)" class="pulsing-bar" />
+    <text x="49" y="248" class="bar-label" fill="#D8574A" font-weight="700">01</text>
+
+    <!-- H2: Legit=110, Fraud=65 -->
+    <rect x="71" y="138" width="22" height="92" rx="3" fill="url(#legitBarGrad)" opacity="0.7" />
+    <rect x="71" y="76" width="22" height="60" rx="3" fill="url(#fraudBarGrad)" class="pulsing-bar" />
+    <text x="82" y="248" class="bar-label" fill="#D8574A" font-weight="700">02</text>
+
+    <!-- H3: Legit=125, Fraud=72 -->
+    <rect x="104" y="120" width="22" height="110" rx="3" fill="url(#legitBarGrad)" opacity="0.7" />
+    <rect x="104" y="58" width="22" height="60" rx="3" fill="url(#fraudBarGrad)" class="pulsing-bar" />
+    <text x="115" y="248" class="bar-label" fill="#D8574A" font-weight="700">03</text>
+
+    <!-- H4: Legit=130, Fraud=10 -->
+    <rect x="137" y="115" width="22" height="115" rx="3" fill="url(#legitBarGrad)" opacity="0.75" />
+    <rect x="137" y="105" width="22" height="8" rx="2" fill="url(#fraudBarGrad)" />
+    <text x="148" y="248" class="bar-label">04</text>
+
+    <!-- H5 to H23: Normal Legitimate Dominance, Minimal Fraud -->
+    <!-- H5 -->
+    <rect x="170" y="95" width="22" height="135" rx="3" fill="url(#legitBarGrad)" opacity="0.75" />
+    <text x="181" y="248" class="bar-label">05</text>
+    <!-- H6 -->
+    <rect x="203" y="70" width="22" height="160" rx="3" fill="url(#legitBarGrad)" opacity="0.8" />
+    <text x="214" y="248" class="bar-label">06</text>
+    <!-- H7 -->
+    <rect x="236" y="55" width="22" height="175" rx="3" fill="url(#legitBarGrad)" opacity="0.8" />
+    <text x="247" y="248" class="bar-label">07</text>
+    <!-- H8 -->
+    <rect x="269" y="45" width="22" height="185" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="280" y="248" class="bar-label">08</text>
+    <!-- H9 -->
+    <rect x="302" y="40" width="22" height="190" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="313" y="248" class="bar-label">09</text>
+    <!-- H10 -->
+    <rect x="335" y="35" width="22" height="195" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="346" y="248" class="bar-label">10</text>
+    <!-- H11 -->
+    <rect x="368" y="42" width="22" height="188" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="379" y="248" class="bar-label">11</text>
+    <!-- H12 -->
+    <rect x="401" y="30" width="22" height="200" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="412" y="248" class="bar-label">12</text>
+    <!-- H13 -->
+    <rect x="434" y="35" width="22" height="195" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="445" y="248" class="bar-label">13</text>
+    <!-- H14 -->
+    <rect x="467" y="25" width="22" height="205" rx="3" fill="url(#legitBarGrad)" opacity="0.9" />
+    <text x="478" y="248" class="bar-label">14</text>
+    <!-- H15 -->
+    <rect x="500" y="32" width="22" height="198" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="511" y="248" class="bar-label">15</text>
+    <!-- H16 -->
+    <rect x="533" y="38" width="22" height="192" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="544" y="248" class="bar-label">16</text>
+    <!-- H17 -->
+    <rect x="566" y="30" width="22" height="200" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="577" y="248" class="bar-label">17</text>
+    <!-- H18 -->
+    <rect x="599" y="28" width="22" height="202" rx="3" fill="url(#legitBarGrad)" opacity="0.9" />
+    <text x="610" y="248" class="bar-label">18</text>
+    <!-- H19 -->
+    <rect x="632" y="35" width="22" height="195" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="643" y="248" class="bar-label">19</text>
+    <!-- H20 -->
+    <rect x="665" y="40" width="22" height="190" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="676" y="248" class="bar-label">20</text>
+    <!-- H21 -->
+    <rect x="698" y="45" width="22" height="185" rx="3" fill="url(#legitBarGrad)" opacity="0.85" />
+    <text x="709" y="248" class="bar-label">21</text>
+    <!-- H22 -->
+    <rect x="731" y="60" width="22" height="170" rx="3" fill="url(#legitBarGrad)" opacity="0.8" />
+    <text x="742" y="248" class="bar-label">22</text>
+    <!-- H23 -->
+    <rect x="764" y="90" width="22" height="140" rx="3" fill="url(#legitBarGrad)" opacity="0.75" />
+    <text x="775" y="248" class="bar-label">23</text>
+  </g>
+
+  <!-- Legend & Findings (Right Bottom) -->
+  <g transform="translate(80, 375)">
+    <!-- Legend Items -->
+    <rect x="0" y="0" width="12" height="12" rx="3" fill="#D8574A" />
+    <text x="18" y="10" font-family="'Inter', sans-serif" font-size="12" fill="#E6E9F0" font-weight="600">Fraudulent Activity (Stacked Top)</text>
+
+    <rect x="250" y="0" width="12" height="12" rx="3" fill="#4FA88F" />
+    <text x="268" y="10" font-family="'Inter', sans-serif" font-size="12" fill="#E6E9F0" font-weight="600">Legitimate Normal Traffic</text>
+
+    <text x="620" y="10" font-family="'JetBrains Mono', monospace" font-size="11" fill="#E0A33E">⚡ 80%+ of all fraud occurs before 04:00 AM</text>
+  </g>
+</svg>
