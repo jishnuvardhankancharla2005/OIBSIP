@@ -21,7 +21,8 @@
   <a href="#-model-benchmarks--trade-offs">Benchmarks & ROC</a> •
   <a href="#-confusion-matrices">Confusion Matrices</a> •
   <a href="#-interactive-dashboard">Interactive Dashboard</a> •
-  <a href="#-quickstart">Quickstart</a>
+  <a href="#-quickstart">Quickstart</a> •
+  <a href="#-license--acknowledgements">License</a>
 </p>
 
 </div>
@@ -239,6 +240,15 @@ jupyter notebook Fraud_Detection.ipynb
 1. **SMOTE Must Be Isolated**: Synthetic resampling should never be applied before train-test splitting. Doing so causes test set contamination and unrealistically inflated evaluation scores.
 2. **Context Outperforms Amount**: Fraudsters easily manipulate charge amounts to blend into normal volume. Temporal context (`transaction_hour`), hardware identity (`device_trust_score`), and velocity patterns provide far more robust signals.
 3. **Surrogate Client-Side Inference**: Exporting compact tree structures directly into a browser dashboard enables instantaneous risk scoring with zero backend latency and 100% user privacy.
+
+---
+
+## 📜 License & Acknowledgements
+
+* **Dataset:** Credit Card Transaction & Anomaly Detection Dataset (`credit_card_fraud_10k.csv`) — 10,000 retail banking transactions comprising 8 behavioral, contextual, and temporal features curated for imbalanced fraud classification benchmarks.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 2, Task 3.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level2_Task3_%20Fraud%20Detection/LICENSE).
 
 ---
 
