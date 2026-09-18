@@ -231,17 +231,17 @@ xdg-open dashboard.html
 
 ---
 
-## 🎓 Internship & Certification Context
+## 📜 License & Acknowledgements
 
-- **Internship Program:** Oasis Infobyte Data Analytics Internship (OIBSIP)
-- **Track:** Level 2 — Task 1
-- **Domain:** Predictive Modeling & Econometric Analytics
-- **Primary Method:** Multiple Linear Regression (OLS)
-- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **Dataset:** Ames Housing Market Econometric Dataset (`house_prices.csv`) — 1,460 residential transaction records curated for Ordinary Least Squares (OLS) multiple linear regression and parametric valuation modeling.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 2, Task 1.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level2_Task1_Predicting%20House%20Prices%20with%20Linear%20Regression/LICENSE).
 
 ---
 
-## 📜 License
-
-This project is licensed under the **MIT License** — feel free to use, modify, and distribute for educational and commercial applications.
+<div align="center">
+  <b>Developed for Oasis Infobyte Data Analytics Internship (Level 2 · Task 1)</b><br>
+  <i>Built with precision engineering, clean design aesthetics, and robust econometric regression modeling.</i>
+</div>
 

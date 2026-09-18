@@ -27,7 +27,7 @@
 - [Project Structure](#-project-structure)
 - [Quickstart & Installation](#-quickstart--installation)
 - [Technology Stack](#-technology-stack)
-- [Internship Verification](#-internship-verification)
+- [License & Acknowledgements](#-license--acknowledgements)
 
 ---
 
@@ -259,13 +259,12 @@ jupyter notebook Retail_Sales_EDA.ipynb
 
 ---
 
-## 🎓 Internship Verification
+## 📜 License & Acknowledgements
 
-- **Organization:** [Oasis Infobyte](https://oasisinfobyte.com/)
-- **Internship Track:** Data Analytics Internship
-- **Assignment:** Level 1 — Task 1: Retail Sales Exploratory Data Analysis (EDA)
-- **Status:** Completed & Verified
-- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **Dataset:** Retail Sales Dataset (`retail_sales_dataset.csv`) — 1,000 retail transactions spanning January 2023 to January 2024 across Beauty, Clothing, and Electronics categories with demographic, transaction, and monetary attributes.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 1, Task 1.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level1_Task1_EDA%20on%20Retail%20Sales%20Data/LICENSE).
 
 ---
 

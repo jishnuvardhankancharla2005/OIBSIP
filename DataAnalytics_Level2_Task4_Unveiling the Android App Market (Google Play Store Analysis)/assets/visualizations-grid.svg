@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" width="100%" height="480">
+  <defs>
+    <linearGradient id="vBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1013"/>
+      <stop offset="100%" stop-color="#121A1E"/>
+    </linearGradient>
+
+    <linearGradient id="vCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182227"/>
+      <stop offset="100%" stop-color="#121A1D"/>
+    </linearGradient>
+
+    <style>
+      @keyframes floatBubble {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+      .anim-bubble { animation: floatBubble 4s infinite ease-in-out; }
+      .f-head { font-family: 'Archivo', 'Segoe UI', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+      .f-text { font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; }
+      .f-code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" rx="14" fill="url(#vBg)"/>
+  <rect width="100%" height="100%" rx="14" fill="none" stroke="#26333A" stroke-width="1.2"/>
+
+  <!-- Top Title -->
+  <g transform="translate(48, 42)">
+    <text x="0" y="0" fill="#E8EFEC" font-size="20" class="f-head">CORE ANALYTICAL VISUALIZATIONS &amp; EMPIRICAL FINDINGS</text>
+    <text x="0" y="22" fill="#6E817C" font-size="13.5" class="f-text">Four pivotal data stories uncovered from 9,659 applications and 64,295 user reviews</text>
+  </g>
+
+  <!-- 4 Grid Cards (2x2) -->
+  <g transform="translate(48, 86)">
+    <!-- Card 1: Category Top-Heavy Crowding -->
+    <g transform="translate(0, 0)">
+      <rect width="485" height="170" rx="9" fill="url(#vCard)" stroke="#26333A" stroke-width="1"/>
+      <text x="20" y="28" fill="#5FBF8E" font-size="14" class="f-head">01 · Category Density &amp; Monopoly</text>
+      <text x="20" y="46" fill="#A3B3AE" font-size="12" class="f-text">Family &amp; Game hold 29% of apps; Game takes 13.5B installs</text>
+      
+      <!-- Mini Chart Graphic -->
+      <g transform="translate(20, 68)">
+        <text x="0" y="14" fill="#6E817C" class="f-code">FAMILY (1,876 apps)</text>
+        <rect x="140" y="4" width="220" height="12" rx="3" fill="#5FBF8E" opacity="0.85"/>
+        <text x="370" y="14" fill="#E8EFEC" class="f-code">6.2B installs</text>
+
+        <text x="0" y="38" fill="#6E817C" class="f-code">GAME (946 apps)</text>
+        <rect x="140" y="28" width="180" height="12" rx="3" fill="#48A9B5" opacity="0.85"/>
+        <text x="330" y="38" fill="#E8EFEC" class="f-code">13.5B installs</text>
+
+        <text x="0" y="62" fill="#6E817C" class="f-code">TOOLS (829 apps)</text>
+        <rect x="140" y="52" width="140" height="12" rx="3" fill="#E0A54A" opacity="0.85"/>
+        <text x="290" y="62" fill="#E8EFEC" class="f-code">8.1B installs</text>
+
+        <text x="0" y="86" fill="#6E817C" class="f-code">COMMUNICATION</text>
+        <rect x="140" y="76" width="80" height="12" rx="3" fill="#D9705E" opacity="0.85"/>
+        <text x="230" y="86" fill="#E8EFEC" class="f-code">11.0B installs</text>
+      </g>
+    </g>
+
+    <!-- Card 2: Rating Pile Compression -->
+    <g transform="translate(515, 0)">
+      <rect width="485" height="170" rx="9" fill="url(#vCard)" stroke="#26333A" stroke-width="1"/>
+      <text x="20" y="28" fill="#48A9B5" font-size="14" class="f-head">02 · The Rating Compression Heap</text>
+      <text x="20" y="46" fill="#A3B3AE" font-size="12" class="f-text">Store median is 4.3 ★; 76% of apps land between 4.0 and 4.6</text>
+
+      <!-- Distribution Visual Curve -->
+      <g transform="translate(30, 68)">
+        <path d="M 0,80 Q 80,75 140,65 Q 200,50 260,20 Q 300,5 340,25 Q 380,55 420,80" fill="none" stroke="#48A9B5" stroke-width="2.5"/>
+        <polygon points="0,80 80,75 140,65 200,50 260,20 300,5 340,25 380,55 420,80 420,82 0,82" fill="#48A9B5" opacity="0.15"/>
+        <!-- Median Line -->
+        <line x1="290" y1="0" x2="290" y2="82" stroke="#5FBF8E" stroke-width="1.8" stroke-dasharray="3 3"/>
+        <text x="290" y="-4" fill="#5FBF8E" font-size="11" class="f-code" text-anchor="middle">Median 4.3 ★</text>
+        <!-- X Axis -->
+        <line x1="0" y1="82" x2="420" y2="82" stroke="#26333A"/>
+        <text x="0" y="96" fill="#6E817C" class="f-code">1.0 ★</text>
+        <text x="140" y="96" fill="#6E817C" class="f-code">3.0 ★</text>
+        <text x="280" y="96" fill="#A3B3AE" class="f-code">4.3 ★</text>
+        <text x="400" y="96" fill="#6E817C" class="f-code">5.0 ★</text>
+      </g>
+    </g>
+
+    <!-- Card 3: Free vs Paid Reach Paradox -->
+    <g transform="translate(0, 190)">
+      <rect width="485" height="175" rx="9" fill="url(#vCard)" stroke="#26333A" stroke-width="1"/>
+      <text x="20" y="28" fill="#E0A54A" font-size="14" class="f-head">03 · The Reach Cost of Paid Apps</text>
+      <text x="20" y="46" fill="#A3B3AE" font-size="12" class="f-text">Median free app reaches 50× more users than median paid app</text>
+
+      <!-- Reach comparison bars -->
+      <g transform="translate(20, 68)">
+        <text x="0" y="16" fill="#E8EFEC" class="f-code">Free Apps Median Installs</text>
+        <rect x="0" y="24" width="340" height="18" rx="4" fill="#5FBF8E" opacity="0.85"/>
+        <text x="350" y="38" fill="#5FBF8E" font-size="12" class="f-code" font-weight="700">500,000</text>
+
+        <text x="0" y="66" fill="#E8EFEC" class="f-code">Paid Apps Median Installs</text>
+        <rect x="0" y="74" width="45" height="18" rx="4" fill="#D9705E" opacity="0.85"/>
+        <text x="55" y="88" fill="#D9705E" font-size="12" class="f-code" font-weight="700">10,000</text>
+
+        <text x="0" y="104" fill="#6E817C" font-size="11" class="f-text">Split: 92.2% Free (8,903 apps) vs 7.8% Paid (756 apps)</text>
+      </g>
+    </g>
+
+    <!-- Card 4: Stars vs Review Sentiment Gap -->
+    <g transform="translate(515, 190)">
+      <rect width="485" height="175" rx="9" fill="url(#vCard)" stroke="#26333A" stroke-width="1"/>
+      <text x="20" y="28" fill="#D9705E" font-size="14" class="f-head">04 · The Gap Between Stars &amp; Words</text>
+      <text x="20" y="46" fill="#A3B3AE" font-size="12" class="f-text">Review polarity reveals massive sentiment variation stars hide</text>
+
+      <!-- Sentiment vs star contrast -->
+      <g transform="translate(20, 68)">
+        <!-- Positive -->
+        <rect x="0" y="6" width="220" height="24" rx="4" fill="#5FBF8E" opacity="0.8"/>
+        <text x="10" y="22" fill="#0E1417" class="f-code" font-weight="700">64.1% Positive Reviews</text>
+
+        <!-- Neutral -->
+        <rect x="226" y="6" width="80" height="24" rx="4" fill="#E0A54A" opacity="0.8"/>
+        <text x="234" y="22" fill="#0E1417" class="f-code" font-weight="700">14.6%</text>
+
+        <!-- Negative -->
+        <rect x="312" y="6" width="100" height="24" rx="4" fill="#D9705E" opacity="0.8"/>
+        <text x="320" y="22" fill="#0E1417" class="f-code" font-weight="700">21.3% Neg</text>
+
+        <text x="0" y="52" fill="#A3B3AE" font-size="12" class="f-text">• Health &amp; Fitness users write positively 79.8% of the time</text>
+        <text x="0" y="70" fill="#A3B3AE" font-size="12" class="f-text">• Game reviews drop to 56.6% positive despite similar ~4.25★</text>
+        <text x="0" y="88" fill="#6E817C" font-size="11" class="f-code">23-point sentiment gap hidden behind identical ratings</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="100%" height="380">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070B0E"/>
+      <stop offset="50%" stop-color="#0E161A"/>
+      <stop offset="100%" stop-color="#080C0F"/>
+    </linearGradient>
+    
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5FBF8E"/>
+      <stop offset="30%" stop-color="#48A9B5"/>
+      <stop offset="70%" stop-color="#E0A54A"/>
+      <stop offset="100%" stop-color="#D9705E"/>
+    </linearGradient>
+    
+    <linearGradient id="accentGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5FBF8E" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#48A9B5" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B262C" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#131B20" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Animations -->
+    <style>
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.35; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(1.04); }
+      }
+      @keyframes floatSlow {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-8px) rotate(1deg); }
+      }
+      @keyframes dashFlow {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -60; }
+      }
+      @keyframes dotBlink {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.9; }
+      }
+      .anim-glow { animation: pulseGlow 5s infinite ease-in-out; transform-origin: center; }
+      .anim-float { animation: floatSlow 6s infinite ease-in-out; }
+      .anim-dash { stroke-dasharray: 6 8; animation: dashFlow 20s linear infinite; }
+      .anim-blink1 { animation: dotBlink 3s infinite ease-in-out; }
+      .anim-blink2 { animation: dotBlink 4s 1.5s infinite ease-in-out; }
+      .title-text { font-family: 'Archivo', 'Segoe UI', system-ui, -apple-system, sans-serif; font-weight: 800; letter-spacing: -0.03em; }
+      .sub-text { font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; font-weight: 400; }
+      .mono-text { font-family: 'SFMono-Regular', Consolas, 'Fira Code', monospace; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="100%" height="100%" rx="16" fill="url(#bgGrad)"/>
+  <rect width="100%" height="100%" rx="16" fill="none" stroke="#26333A" stroke-width="1.5"/>
+
+  <!-- Matrix Grid -->
+  <g opacity="0.12" stroke="#48A9B5" stroke-width="0.8">
+    <line x1="0" y1="60" x2="1200" y2="60"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="100" y1="0" x2="100" y2="380"/>
+    <line x1="250" y1="0" x2="250" y2="380"/>
+    <line x1="400" y1="0" x2="400" y2="380"/>
+    <line x1="550" y1="0" x2="550" y2="380"/>
+    <line x1="700" y1="0" x2="700" y2="380"/>
+    <line x1="850" y1="0" x2="850" y2="380"/>
+    <line x1="1000" y1="0" x2="1000" y2="380"/>
+    <line x1="1150" y1="0" x2="1150" y2="380"/>
+  </g>
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="150" cy="110" r="160" fill="#5FBF8E" opacity="0.12" filter="url(#glow)" class="anim-glow"/>
+  <circle cx="1060" cy="240" r="180" fill="#48A9B5" opacity="0.1" filter="url(#glow)" class="anim-glow" style="animation-delay: -2.5s;"/>
+  <circle cx="680" cy="80" r="140" fill="#E0A54A" opacity="0.08" filter="url(#glow)" class="anim-glow" style="animation-delay: -1s;"/>
+
+  <!-- Geometric Connecting Flow -->
+  <path d="M 60,320 Q 300,280 500,340 T 950,290 T 1180,310" fill="none" stroke="url(#brandGrad)" stroke-width="2" opacity="0.4" class="anim-dash"/>
+
+  <!-- Left Side: Brand & Visual Iconography -->
+  <g transform="translate(68, 62)">
+    <!-- Play Store Triangular Geometry -->
+    <g class="anim-float">
+      <!-- Glow Underlay -->
+      <polygon points="26,10 92,54 26,98" fill="#5FBF8E" opacity="0.3" filter="url(#glow)"/>
+      <!-- Faceted Triangle Shards -->
+      <path d="M 26,10 L 92,54 L 58,54 Z" fill="#5FBF8E"/>
+      <path d="M 26,98 L 92,54 L 58,54 Z" fill="#48A9B5"/>
+      <path d="M 26,10 L 58,54 L 26,54 Z" fill="#E0A54A"/>
+      <path d="M 26,98 L 58,54 L 26,54 Z" fill="#D9705E"/>
+      <!-- Inner Star Emblem -->
+      <circle cx="50" cy="54" r="8" fill="#0E161A"/>
+      <circle cx="50" cy="54" r="4" fill="#E8EFEC"/>
+    </g>
+
+    <!-- Project Meta Tag -->
+    <g transform="translate(116, 12)">
+      <rect width="210" height="26" rx="13" fill="#1B2429" stroke="#32434B" stroke-width="1"/>
+      <circle cx="14" cy="13" r="4" fill="#5FBF8E" class="anim-blink1"/>
+      <text x="26" y="17.5" fill="#A3B3AE" font-size="11.5" class="mono-text" font-weight="600">OIBSIP · LEVEL 2 · TASK 4</text>
+    </g>
+
+    <!-- Main Title -->
+    <g transform="translate(116, 68)">
+      <text x="0" y="0" fill="#E8EFEC" font-size="34" class="title-text">UNVEILING THE ANDROID APP MARKET</text>
+      <text x="0" y="32" fill="url(#brandGrad)" font-size="20" class="title-text" font-weight="700">Google Play Store Intelligence &amp; Predictive ML Ecosystem</text>
+      <text x="0" y="62" fill="#A3B3AE" font-size="14.5" class="sub-text">
+        Comprehensive statistical audit, review sentiment mining &amp; live in-browser gradient boosting model
+      </text>
+    </g>
+  </g>
+
+  <!-- Right Side Interactive Stat Pods -->
+  <g transform="translate(68, 238)">
+    <!-- Stat 1: Apps -->
+    <g transform="translate(0, 0)">
+      <rect width="248" height="84" rx="10" fill="url(#cardGrad)" stroke="#26333A" stroke-width="1"/>
+      <line x1="0" y1="83" x2="248" y2="83" stroke="#5FBF8E" stroke-width="2" opacity="0.8"/>
+      <text x="18" y="34" fill="#5FBF8E" font-size="23" class="title-text">9,659 Apps</text>
+      <text x="18" y="56" fill="#A3B3AE" font-size="12" class="sub-text">Cleaned &amp; Deduplicated Store Base</text>
+      <text x="18" y="72" fill="#6E817C" font-size="10.5" class="mono-text">10,841 raw records evaluated</text>
+      <circle cx="224" cy="28" r="3.5" fill="#5FBF8E" class="anim-blink1"/>
+    </g>
+
+    <!-- Stat 2: Reviews -->
+    <g transform="translate(268, 0)">
+      <rect width="248" height="84" rx="10" fill="url(#cardGrad)" stroke="#26333A" stroke-width="1"/>
+      <line x1="0" y1="83" x2="248" y2="83" stroke="#48A9B5" stroke-width="2" opacity="0.8"/>
+      <text x="18" y="34" fill="#48A9B5" font-size="23" class="title-text">64,295 Reviews</text>
+      <text x="18" y="56" fill="#A3B3AE" font-size="12" class="sub-text">NLP Polarity &amp; Sentiment Scored</text>
+      <text x="18" y="72" fill="#6E817C" font-size="10.5" class="mono-text">TextBlob linguistic classification</text>
+      <circle cx="224" cy="28" r="3.5" fill="#48A9B5" class="anim-blink2"/>
+    </g>
+
+    <!-- Stat 3: Installs -->
+    <g transform="translate(536, 0)">
+      <rect width="248" height="84" rx="10" fill="url(#cardGrad)" stroke="#26333A" stroke-width="1"/>
+      <line x1="0" y1="83" x2="248" y2="83" stroke="#E0A54A" stroke-width="2" opacity="0.8"/>
+      <text x="18" y="34" fill="#E0A54A" font-size="23" class="title-text">75.3 Billion</text>
+      <text x="18" y="56" fill="#A3B3AE" font-size="12" class="sub-text">Global Installs Tracked</text>
+      <text x="18" y="72" fill="#6E817C" font-size="10.5" class="mono-text">33 distinct Play Store categories</text>
+      <circle cx="224" cy="28" r="3.5" fill="#E0A54A" class="anim-blink1"/>
+    </g>
+
+    <!-- Stat 4: ML Rating Engine -->
+    <g transform="translate(804, 0)">
+      <rect width="260" height="84" rx="10" fill="url(#cardGrad)" stroke="#26333A" stroke-width="1"/>
+      <line x1="0" y1="83" x2="260" y2="83" stroke="#D9705E" stroke-width="2" opacity="0.8"/>
+      <text x="18" y="34" fill="#D9705E" font-size="23" class="title-text">Gradient Boosting</text>
+      <text x="18" y="56" fill="#A3B3AE" font-size="12" class="sub-text">Live In-Browser Rating Predictor</text>
+      <text x="18" y="72" fill="#6E817C" font-size="10.5" class="mono-text">Permutation-screened features</text>
+      <circle cx="236" cy="28" r="3.5" fill="#D9705E" class="anim-blink2"/>
+    </g>
+  </g>
+
+  <!-- Bottom Accent Bar -->
+  <rect x="0" y="375" width="1200" height="5" fill="url(#brandGrad)"/>
+</svg>

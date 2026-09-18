@@ -228,13 +228,16 @@ jupyter notebook Data_Cleaning_Cafe_Sales.ipynb
 
 ---
 
-## 🎓 Internship & Author Details
+## 📜 License & Acknowledgements
 
-- **Program:** Oasis Infobyte Internship in Data Analytics (`OIBSIP`)
-- **Level & Task:** Level 1 — Task 3: *Cleaning Data*
-- **Domain:** Data Analytics, Data Quality Assurance, Business Intelligence
-- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **Dataset:** Cafe Point-of-Sale Transaction Quality Benchmark (`dirty_cafe_sales.csv` & `cleaned_cafe_sales.csv`) — 10,000 retail transaction records subjected to controlled algebraic recovery, deterministic imputation, and 100% data integrity restoration.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 1, Task 3.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level1_Task3_Cleaning%20Data/LICENSE).
+
+---
 
 <div align="center">
-  <sub>Built with precision and engineered for production quality. Released under the MIT License.</sub>
+  <b>Developed for Oasis Infobyte Data Analytics Internship (Level 1 · Task 3)</b><br>
+  <i>Built with precision and engineered for production-grade data quality and algebraic integrity.</i>
 </div>

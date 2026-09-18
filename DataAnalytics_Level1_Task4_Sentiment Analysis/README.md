@@ -238,15 +238,16 @@ python -m http.server 8000
 
 ---
 
-## 🤝 Acknowledgements & Internship Track
+## 📜 License & Acknowledgements
 
-This project was developed as part of the **Oasis Infobyte Data Analytics Internship (Level 1 · Task 4)**.
-- **Dataset:** [Amazon Fine Food Reviews (Kaggle)](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews)
-- **Focus:** Natural Language Processing, Supervised Machine Learning, Imbalanced Data Mitigation & Business Intelligence Dashboarding.
-- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **Dataset:** [Amazon Fine Food Reviews Dataset](https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews) (`sampled_reviews.csv`) — 18,000 stratified, class-balanced consumer food reviews engineered with TF-IDF n-grams for 3-class sentiment classification and text mining.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 1, Task 4.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level1_Task4_Sentiment%20Analysis/LICENSE).
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for Data Science &amp; NLP Excellence · Oasis Infobyte Data Analytics</sub>
+  <b>Developed for Oasis Infobyte Data Analytics Internship (Level 1 · Task 4)</b><br>
+  <i>Built with precision engineering, clean design aesthetics, and advanced NLP text analytics.</i>
 </div>

@@ -216,11 +216,14 @@ $$P(\text{Class} = c \mid \vec{x}) = \frac{1}{M} \sum_{m=1}^{M} \frac{V_m(c)}{\s
 
 ## 📜 License & Acknowledgements
 
-* **Dataset:** P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. *Modeling wine preferences by data mining from physicochemical properties.* Decision Support Systems, Elsevier, 47(4):547-553, 2009. [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/wine+quality).
+* **Dataset:** P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. *Modeling wine preferences by data mining from physicochemical properties.* Decision Support Systems, Elsevier, 47(4):547-553, 2009. [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/wine+quality) (`winequality-red.csv`).
 * **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 2, Task 2.
 * **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
-* **License:** Distributed under the [MIT License](LICENSE).
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level2_Task2_Wine%20Quality%20Prediction/LICENSE).
+
+---
 
 <div align="center">
-  <sub>Crafted with passion for Data Science, Machine Learning, and Enological Analytics.</sub>
+  <b>Developed for Oasis Infobyte Data Analytics Internship (Level 2 · Task 2)</b><br>
+  <i>Built with precision engineering, clean design aesthetics, and enological analytics.</i>
 </div>

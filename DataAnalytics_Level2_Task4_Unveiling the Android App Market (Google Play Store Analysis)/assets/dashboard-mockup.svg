@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 580" width="100%" height="580">
+  <defs>
+    <linearGradient id="dbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E1417"/>
+      <stop offset="100%" stop-color="#080C0E"/>
+    </linearGradient>
+
+    <linearGradient id="sideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151D21"/>
+      <stop offset="100%" stop-color="#11171A"/>
+    </linearGradient>
+
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2429"/>
+      <stop offset="100%" stop-color="#141C20"/>
+    </linearGradient>
+
+    <linearGradient id="rampGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D9705E"/>
+      <stop offset="50%" stop-color="#E0A54A"/>
+      <stop offset="100%" stop-color="#5FBF8E"/>
+    </linearGradient>
+
+    <filter id="cardGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <style>
+      @keyframes dotPulse {
+        0%, 100% { r: 3; opacity: 0.5; }
+        50% { r: 5; opacity: 1; }
+      }
+      @keyframes barGrow {
+        0%, 100% { width: 110px; }
+        50% { width: 140px; }
+      }
+      @keyframes floatSlowUI {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+      }
+      .dot-anim1 { animation: dotPulse 3s infinite ease-in-out; }
+      .dot-anim2 { animation: dotPulse 4s 1s infinite ease-in-out; }
+      .bar-anim { animation: barGrow 5s infinite ease-in-out; }
+      .f-ui { font-family: 'Archivo', 'Segoe UI', system-ui, sans-serif; }
+      .f-body { font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; }
+      .f-mono { font-family: 'SFMono-Regular', Consolas, monospace; }
+    </style>
+  </defs>
+
+  <!-- Browser Window Frame -->
+  <rect width="100%" height="100%" rx="14" fill="url(#dbBg)"/>
+  <rect width="100%" height="100%" rx="14" fill="none" stroke="#26333A" stroke-width="1.5"/>
+
+  <!-- Browser Top Bar -->
+  <rect width="100%" height="40" rx="14" fill="#151D21"/>
+  <rect y="26" width="100%" height="14" fill="#151D21"/>
+  <line x1="0" y1="40" x2="1100" y2="40" stroke="#26333A" stroke-width="1"/>
+
+  <!-- Window Controls -->
+  <circle cx="24" cy="20" r="5" fill="#E74C3C"/>
+  <circle cx="42" cy="20" r="5" fill="#F1C40F"/>
+  <circle cx="60" cy="20" r="5" fill="#2ECC71"/>
+
+  <!-- Browser Search / Address Bar -->
+  <rect x="180" y="10" width="740" height="22" rx="11" fill="#0E1417" stroke="#26333A" stroke-width="0.8"/>
+  <text x="390" y="25" fill="#6E817C" font-size="11.5" class="f-mono">playstore-dashboard.html · Live Single-Page Analytics</text>
+
+  <!-- SIDEBAR (LEFT) -->
+  <g transform="translate(0, 40)">
+    <rect width="190" height="540" fill="url(#sideGrad)"/>
+    <line x1="190" y1="0" x2="190" y2="540" stroke="#26333A" stroke-width="1"/>
+
+    <!-- Brand Logo -->
+    <g transform="translate(20, 22)">
+      <text x="0" y="0" fill="#E8EFEC" font-size="15" class="f-ui" font-weight="700">Play Store</text>
+      <text x="0" y="15" fill="#6E817C" font-size="11" class="f-body">Android market dashboard</text>
+      <line x1="0" y1="28" x2="150" y2="28" stroke="#26333A" stroke-width="1"/>
+    </g>
+
+    <!-- Navigation Buttons -->
+    <g transform="translate(14, 76)">
+      <!-- Overview (Active) -->
+      <g transform="translate(0, 0)">
+        <rect width="162" height="32" rx="6" fill="#1B2429"/>
+        <rect x="0" y="7" width="3" height="18" rx="1.5" fill="#5FBF8E"/>
+        <text x="16" y="21" fill="#E8EFEC" font-size="13" class="f-ui" font-weight="600">Overview</text>
+      </g>
+
+      <!-- Landscape -->
+      <g transform="translate(0, 38)">
+        <text x="16" y="21" fill="#A3B3AE" font-size="13" class="f-ui">Landscape</text>
+      </g>
+
+      <!-- Ratings -->
+      <g transform="translate(0, 74)">
+        <text x="16" y="21" fill="#A3B3AE" font-size="13" class="f-ui">Ratings</text>
+      </g>
+
+      <!-- Money -->
+      <g transform="translate(0, 110)">
+        <text x="16" y="21" fill="#A3B3AE" font-size="13" class="f-ui">Money</text>
+      </g>
+
+      <!-- Sentiment -->
+      <g transform="translate(0, 146)">
+        <text x="16" y="21" fill="#A3B3AE" font-size="13" class="f-ui">Sentiment</text>
+      </g>
+
+      <!-- Predict a rating -->
+      <g transform="translate(0, 182)">
+        <text x="16" y="21" fill="#A3B3AE" font-size="13" class="f-ui">Predict a rating</text>
+      </g>
+    </g>
+
+    <!-- Sidebar Footer -->
+    <g transform="translate(20, 480)">
+      <line x1="0" y1="0" x2="150" y2="0" stroke="#26333A" stroke-width="1"/>
+      <rect y="12" width="108" height="24" rx="12" fill="#1B2429" stroke="#32434B"/>
+      <text x="14" y="28" fill="#A3B3AE" font-size="11" class="f-body">Switch to light</text>
+    </g>
+  </g>
+
+  <!-- MAIN VIEWPORT (RIGHT) -->
+  <g transform="translate(214, 52)">
+    <!-- Header Banner Inside Dashboard -->
+    <g transform="translate(10, 8)">
+      <text x="0" y="20" fill="#E8EFEC" font-size="18" class="f-ui" font-weight="700">What actually moves an app on the Play Store</text>
+      <text x="0" y="38" fill="#A3B3AE" font-size="12" class="f-body">Nine thousand Android apps, cleaned &amp; cross-referenced with 60,000 user reviews.</text>
+    </g>
+
+    <!-- Top KPI Stats Strip -->
+    <g transform="translate(10, 60)">
+      <rect width="840" height="52" rx="7" fill="url(#cardBg)" stroke="#26333A" stroke-width="1"/>
+      <!-- Stat 1 -->
+      <text x="24" y="26" fill="#E8EFEC" font-size="16" class="f-ui" font-weight="700">9,659</text>
+      <text x="24" y="42" fill="#6E817C" font-size="11" class="f-body">Unique cleaned apps</text>
+      <line x1="180" y1="10" x2="180" y2="42" stroke="#26333A"/>
+      <!-- Stat 2 -->
+      <text x="204" y="26" fill="#E8EFEC" font-size="16" class="f-ui" font-weight="700">75.3 Billion</text>
+      <text x="204" y="42" fill="#6E817C" font-size="11" class="f-body">Total installs</text>
+      <line x1="360" y1="10" x2="360" y2="42" stroke="#26333A"/>
+      <!-- Stat 3 -->
+      <text x="384" y="26" fill="#5FBF8E" font-size="16" class="f-ui" font-weight="700">4.3 ★</text>
+      <text x="384" y="42" fill="#6E817C" font-size="11" class="f-body">Median rating</text>
+      <line x1="530" y1="10" x2="530" y2="42" stroke="#26333A"/>
+      <!-- Stat 4 -->
+      <text x="554" y="26" fill="#E8EFEC" font-size="16" class="f-ui" font-weight="700">92.2%</text>
+      <text x="554" y="42" fill="#6E817C" font-size="11" class="f-body">Free download share</text>
+      <line x1="700" y1="10" x2="700" y2="42" stroke="#26333A"/>
+      <!-- Stat 5 -->
+      <text x="724" y="26" fill="#E8EFEC" font-size="16" class="f-ui" font-weight="700">15.1%</text>
+      <text x="724" y="42" fill="#6E817C" font-size="11" class="f-body">Unrated apps</text>
+    </g>
+
+    <!-- Main Hero: Scatter Dot Map -->
+    <g transform="translate(10, 126)">
+      <rect width="840" height="210" rx="8" fill="#141D21" stroke="#26333A" stroke-width="1"/>
+      <text x="20" y="26" fill="#E8EFEC" font-size="14" class="f-ui" font-weight="600">The market, one dot per app (log installs vs log reviews)</text>
+      
+      <!-- Axis Lines -->
+      <line x1="50" y1="45" x2="50" y2="180" stroke="#26333A" stroke-width="1"/>
+      <line x1="50" y1="180" x2="810" y2="180" stroke="#26333A" stroke-width="1"/>
+      <text x="18" y="115" fill="#6E817C" font-size="10" class="f-mono" transform="rotate(-90 18,115)">Reviews →</text>
+      <text x="420" y="196" fill="#6E817C" font-size="10" class="f-mono">Installs →</text>
+
+      <!-- Scatter Dots (Representing apps) -->
+      <!-- High rating dots (green) -->
+      <circle cx="750" cy="60" r="3.5" fill="#5FBF8E" class="dot-anim1"/>
+      <circle cx="720" cy="72" r="3.2" fill="#5FBF8E"/>
+      <circle cx="680" cy="65" r="3.8" fill="#5FBF8E"/>
+      <circle cx="640" cy="85" r="3.2" fill="#5FBF8E" class="dot-anim2"/>
+      <circle cx="580" cy="95" r="3.2" fill="#5FBF8E"/>
+      <circle cx="550" cy="90" r="3.5" fill="#5FBF8E"/>
+      <circle cx="500" cy="110" r="3.2" fill="#5FBF8E"/>
+      <circle cx="460" cy="115" r="3.0" fill="#5FBF8E"/>
+
+      <!-- Mid rating dots (amber) -->
+      <circle cx="690" cy="90" r="3.2" fill="#E0A54A"/>
+      <circle cx="610" cy="110" r="3.2" fill="#E0A54A"/>
+      <circle cx="520" cy="125" r="3.5" fill="#E0A54A"/>
+      <circle cx="430" cy="135" r="3.0" fill="#E0A54A"/>
+      <circle cx="360" cy="145" r="3.2" fill="#E0A54A"/>
+      <circle cx="300" cy="150" r="2.8" fill="#E0A54A"/>
+
+      <!-- Lower rating dots (coral) -->
+      <circle cx="480" cy="148" r="3.0" fill="#D9705E"/>
+      <circle cx="380" cy="160" r="3.0" fill="#D9705E"/>
+      <circle cx="280" cy="165" r="2.5" fill="#D9705E"/>
+      <circle cx="210" cy="170" r="2.5" fill="#D9705E"/>
+      <circle cx="160" cy="172" r="2.5" fill="#D9705E"/>
+
+      <!-- Interactive Highlight Badge -->
+      <g transform="translate(620, 22)">
+        <rect width="180" height="24" rx="4" fill="#1B2429" stroke="#32434B"/>
+        <text x="10" y="16" fill="#5FBF8E" font-size="11" class="f-mono">Subway Surfers: 4.5 ★ · 1B+</text>
+      </g>
+    </g>
+
+    <!-- Two Mini Analytics Cards (Ratings + ML Predictor) -->
+    <g transform="translate(10, 350)">
+      <!-- Left Card: Rating Spread -->
+      <rect width="405" height="155" rx="8" fill="url(#cardBg)" stroke="#26333A" stroke-width="1"/>
+      <text x="18" y="24" fill="#E8EFEC" font-size="13" class="f-ui" font-weight="600">Rating Distribution Heap</text>
+      <text x="18" y="38" fill="#6E817C" font-size="11" class="f-body">Extreme compression into 4.0 - 4.6 star zone</text>
+
+      <!-- Mini Histogram Bars -->
+      <g transform="translate(24, 60)">
+        <rect x="0" y="60" width="16" height="15" fill="#48A9B5" opacity="0.6"/>
+        <rect x="24" y="55" width="16" height="20" fill="#48A9B5" opacity="0.6"/>
+        <rect x="48" y="48" width="16" height="27" fill="#48A9B5" opacity="0.6"/>
+        <rect x="72" y="38" width="16" height="37" fill="#48A9B5" opacity="0.6"/>
+        <rect x="96" y="24" width="16" height="51" fill="#48A9B5" opacity="0.8"/>
+        <rect x="120" y="10" width="16" height="65" fill="#5FBF8E"/>
+        <rect x="144" y="8" width="16" height="67" fill="#5FBF8E"/>
+        <rect x="168" y="14" width="16" height="61" fill="#5FBF8E"/>
+        <rect x="192" y="28" width="16" height="47" fill="#5FBF8E" opacity="0.8"/>
+        <rect x="216" y="46" width="16" height="29" fill="#E0A54A" opacity="0.7"/>
+        <rect x="240" y="58" width="16" height="17" fill="#D9705E" opacity="0.6"/>
+        <line x1="0" y1="76" x2="264" y2="76" stroke="#26333A"/>
+      </g>
+
+      <!-- Right Card: ML Live Predictor -->
+      <g transform="translate(425, 0)">
+        <rect width="415" height="155" rx="8" fill="url(#cardBg)" stroke="#26333A" stroke-width="1"/>
+        <text x="18" y="24" fill="#E8EFEC" font-size="13" class="f-ui" font-weight="600">Gradient Boosting ML Model</text>
+        <text x="18" y="38" fill="#6E817C" font-size="11" class="f-body">Live rating predictor with 6 permutation features</text>
+
+        <!-- Readout & Sliders preview -->
+        <g transform="translate(20, 50)">
+          <rect width="100" height="85" rx="6" fill="#141C20" stroke="#32434B"/>
+          <text x="50" y="44" fill="#5FBF8E" font-size="32" class="f-ui" font-weight="700" text-anchor="middle">4.38</text>
+          <text x="50" y="62" fill="#A3B3AE" font-size="10.5" class="f-body" text-anchor="middle">Predicted Rating</text>
+          <text x="50" y="75" fill="#6E817C" font-size="9" class="f-mono" text-anchor="middle">±0.35 MAE</text>
+        </g>
+
+        <g transform="translate(136, 55)">
+          <text x="0" y="12" fill="#A3B3AE" font-size="11" class="f-body">Reviews: 450k</text>
+          <rect y="18" width="240" height="4" rx="2" fill="#26333A"/>
+          <rect y="18" width="160" height="4" rx="2" fill="#5FBF8E"/>
+
+          <text x="0" y="44" fill="#A3B3AE" font-size="11" class="f-body">Installs: 50M+</text>
+          <rect y="50" width="240" height="4" rx="2" fill="#26333A"/>
+          <rect y="50" width="190" height="4" rx="2" fill="#48A9B5"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -252,14 +252,16 @@ To reproduce the Python clustering pipeline, exploratory data analysis, and char
 
 ---
 
-## 👨‍💻 Author & Acknowledgments
+## 📜 License & Acknowledgements
 
-- **Internship Program:** Oasis Infobyte Data Analytics Internship (**OIBSIP**)
-- **Task:** Level 1, Task 2 — Customer Segmentation Analysis
-- **Domain:** Global E-Commerce & Retail Intelligence
-- **Dataset:** `global_ecommerce_sales.csv`
-- **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **Dataset:** Global E-Commerce & Retail Intelligence Dataset (`global_ecommerce_sales.csv`) — 2,000 multi-market e-commerce transactions across 2023–2025 aggregated into 1,534 unique customer profiles for RFM behavioral segmentation and K-Means clustering.
+* **Internship Program:** OASIS INFOBYTE SIP (OIBSIP) — Data Analytics Internship Level 1, Task 2.
+* **Developer:** [Jishnu Vardhan Kancharla](https://github.com/jishnuvardhankancharla2005)
+* **License:** Distributed under the [MIT License](https://github.com/jishnuvardhankancharla2005/OIBSIP/blob/main/DataAnalytics_Level1_Task2_Customer%20Segmentation%20Analysis/LICENSE).
+
+---
 
 <div align="center">
-  <sub>Built with ❤️ for Oasis Infobyte Data Analytics Internship</sub>
+  <b>Developed for Oasis Infobyte Data Analytics Internship (Level 1 · Task 2)</b><br>
+  <i>Built with precision engineering, clean design aesthetics, and actionable customer intelligence.</i>
 </div>
